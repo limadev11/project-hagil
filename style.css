@@ -1,0 +1,306 @@
+/********** Template CSS **********/
+:root {
+    --primary: #5B8C51;
+    --secondary: #EDDD5E;
+    --light: #F7F7F7;
+    --dark: #404A3D;
+}
+
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+}
+
+.jumbotron {
+    padding: 30px;
+    background-color: var(--light);
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.menu-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu a {
+    display: block;
+    text-decoration: none;
+    color: var(--dark);
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid var(--primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu a:hover {
+    background-color: var(--primary);
+    color: var(--light);
+}
+
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    z-index: 99;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.fw-medium {
+    font-weight: 600 !important;
+}
+
+.fw-semi-bold {
+    font-weight: 500 !important;
+}
+
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+/*** Button ***/
+.btn {
+    transition: .5s;
+    font-weight: 500;
+}
+
+.btn-primary,
+.btn-outline-primary:hover {
+    color: var(--light);
+}
+
+.btn-secondary,
+.btn-outline-secondary:hover {
+    color: var(--dark);
+}
+
+.btn-square {
+    width: 38px;
+    height: 38px;
+}
+
+.btn-sm-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-lg-square {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+/*** Navbar ***/
+.navbar.sticky-top {
+    top: -100px;
+    transition: .5s;
+}
+
+.navbar .navbar-nav .nav-link {
+    margin-right: 35px;
+    padding: 25px 0;
+    color: var(--dark);
+    font-size: 18px;
+    font-weight: 500;
+    outline: none;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+    color: var(--primary);
+}
+
+.navbar .dropdown-toggle::after {
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-nav .nav-link {
+        margin-right: 0;
+        padding: 10px 0;
+    }
+
+    .navbar .navbar-nav {
+        border-top: 1px solid #EEEEEE;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: block;
+        border: none;
+        margin-top: 0;
+        top: 150%;
+        opacity: 0;
+        visibility: hidden;
+        transition: .5s;
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        top: 100%;
+        visibility: visible;
+        transition: .5s;
+        opacity: 1;
+    }
+}
+
+/*** Header ***/
+.carousel-caption {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, .1);
+    z-index: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 15%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: var(--primary);
+    border: 10px solid var(--primary);
+}
+
+@media (max-width: 768px) {
+    #header-carousel .carousel-item {
+        position: relative;
+        min-height: 450px;
+    }
+
+    #header-carousel .carousel-item img,
+    #header-carousel .carousel-item video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/*** Ajuste para vídeos com o mesmo tamanho ***/
+#header-carousel .carousel-item video {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+/*** Ajuste para texto menor ***/
+.carousel-caption p.fs-4 {
+    font-size: 18px;
+}
+
+.carousel-caption h1.display-1 {
+    font-size: 28px;
+}
+
+/*** Section Title ***/
+.section-title {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.section-title::before {
+    position: absolute;
+    content: "";
+    width: calc(100% + 80px);
+    height: 2px;
+    top: 5px;
+    left: -40px;
+    background: var(--primary);
+    z-index: -1;
+}
+
+.section-title::after {
+    position: absolute;
+    content: "";
+    width: calc(100% + 120px);
+    height: 2px;
+    bottom: 6px;
+    left: -60px;
+    background: var(--primary);
+    z-index: -1;
+}
+
+.section-title.text-start::before {
+    width: calc(100% + 40px);
+    left: 0;
+}
+
+.section-title.text-start::after {
+    width: calc(100% + 60px);
+    left: 0;
+}
+
+/*** Outros ajustes ***/
+.product-item .product-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .5);
+    opacity: 0;
+    padding-top: 60px;
+    transition: .5s;
+}
+
+.product-item:hover .product-overlay {
+    opacity: 1;
+    padding-top: 0;
+}
