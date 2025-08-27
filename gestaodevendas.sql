@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Set-2024 às 01:41
--- Versão do servidor: 10.4.24-MariaDB
--- versão do PHP: 8.1.6
+-- Tempo de geração: 03-Out-2024 às 01:05
+-- Versão do servidor: 10.4.25-MariaDB
+-- versão do PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,6 +35,13 @@ CREATE TABLE `admissao` (
   `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `admissao`
+--
+
+INSERT INTO `admissao` (`id`, `idproduto`, `dataentrada`, `preco`, `quantidade`) VALUES
+(4, 0, '2024-09-25', '11.90', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -52,10 +59,10 @@ CREATE TABLE `despesa` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `lancdespesas`
+-- Estrutura da tabela `lancdespesa`
 --
 
-CREATE TABLE `lancdespesas` (
+CREATE TABLE `lancdespesa` (
   `id` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `valor` decimal(10,2) NOT NULL,
@@ -64,11 +71,11 @@ CREATE TABLE `lancdespesas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `lancdespesas`
+-- Extraindo dados da tabela `lancdespesa`
 --
 
-INSERT INTO `lancdespesas` (`id`, `nome`, `valor`, `iddespesa`, `datadespesa`) VALUES
-(3, 'Alimentação', '600.00', 0, '0000-00-00');
+INSERT INTO `lancdespesa` (`id`, `nome`, `valor`, `iddespesa`, `datadespesa`) VALUES
+(6, 'Alimentação', '600.00', 6, '2024-09-25');
 
 -- --------------------------------------------------------
 
@@ -91,7 +98,7 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id`, `nome`, `preco`, `comissao`, `estoque`, `precocusto`, `precovenda`) VALUES
-(6, 'CICLANTHUR213', '11.90', '0.50', 1004, NULL, NULL),
+(6, 'CICLANTHUR', '11.90', '0.50', 1004, '5.90', '11.90'),
 (18, 'CURAE', '11.90', '0.50', 178, NULL, NULL),
 (19, 'ENDECTHOR', '11.90', '0.50', 250, NULL, NULL),
 (20, 'HEPATHOR', '11.90', '0.50', 150, NULL, NULL),
@@ -150,9 +157,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `master`) VALUES
-(7, 'Administrador', 'admin@gmail.com', '123', 'N'),
-(12, 'Lima', 'limadev100@gmail.com', '123', 'S'),
-(14, 'Cristiano Ronaldo', 'Cr7@gmail.com', '343434343545', 'S'),
+(7, 'Administrador', 'admin@gmail.com', '123', 'S'),
+(12, 'Lima', 'limadev100@gmail.com', '123', 'N'),
 (15, 'Joao Victor', 'joao.victormartinsest@gmail.com', 'eusoulindo', 's');
 
 -- --------------------------------------------------------
@@ -166,6 +172,7 @@ CREATE TABLE `venda` (
   `idproduto` int(11) DEFAULT NULL,
   `idvendedor` int(11) DEFAULT NULL,
   `quantidade` int(11) NOT NULL,
+  `valortotal` int(11) NOT NULL,
   `preco` decimal(10,2) NOT NULL,
   `datavenda` date DEFAULT NULL,
   `vlrcomissao` decimal(10,2) DEFAULT NULL,
@@ -198,6 +205,12 @@ INSERT INTO `vendedor` (`id`, `nome`) VALUES
 --
 
 --
+-- Índices para tabela `admissao`
+--
+ALTER TABLE `admissao`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `despesa`
 --
 ALTER TABLE `despesa`
@@ -205,9 +218,9 @@ ALTER TABLE `despesa`
   ADD KEY `idtipodespesa` (`idtipodespesa`);
 
 --
--- Índices para tabela `lancdespesas`
+-- Índices para tabela `lancdespesa`
 --
-ALTER TABLE `lancdespesas`
+ALTER TABLE `lancdespesa`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -248,16 +261,22 @@ ALTER TABLE `vendedor`
 --
 
 --
+-- AUTO_INCREMENT de tabela `admissao`
+--
+ALTER TABLE `admissao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de tabela `despesa`
 --
 ALTER TABLE `despesa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `lancdespesas`
+-- AUTO_INCREMENT de tabela `lancdespesa`
 --
-ALTER TABLE `lancdespesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `lancdespesa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
@@ -269,7 +288,7 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT de tabela `tipodespesa`
 --
 ALTER TABLE `tipodespesa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -281,7 +300,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `vendedor`

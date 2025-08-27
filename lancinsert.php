@@ -95,19 +95,8 @@ if (isset($_POST['submit'])) {
 
                 <div class="form-group">
                     <div class="row" style="margin-top: 30px;">
-                        <!-- Nome -->
-                        <div class="col-md-6">
-                            <label for="nome" style="color:white;">Nome:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
-                        </div>
-                        <div class="row" style="margin-top: 20px;">
-                            <!-- Valor -->
-                            <div class="col-md-6">
-                                <label for="number" style="color:white;">Valor</label>
-                                <input type="number" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-                            <!-- ID Despesas -->
-                            <div class="col-md-6">
+                    <!-- ID Despesas -->
+                    <div class="col-md-6">
                                 <label for="text" style="color:white;">Código da Despesa</label>
                                 <?php
                                         $sqll = 'select * from tipodespesa order by id';
@@ -121,8 +110,20 @@ if (isset($_POST['submit'])) {
                                             }
                                             echo '</select>';
                                         }
-                                        ?>
+                                ?>
+                        </div>
+                        <!-- Nome -->
+                        <div class="col-md-6">
+                            <label for="nome" style="color:white;">Observação:</label>
+                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <!-- Valor -->
+                            <div class="col-md-6">
+                                <label for="number" style="color:white;">Valor</label>
+                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
                             </div>
+                            
                             <div class="col-md-6">
                                 <label for="text" style="color:white;">Data da Despesa</label>
                                 <input type="date" name="datadespesa" class="form-control" style="padding: 9px;" required>

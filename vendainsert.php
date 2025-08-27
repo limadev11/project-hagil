@@ -6,12 +6,14 @@ if (isset($_POST['submit'])) {
     $idproduto = $_POST['idproduto'];
     $idvendedor = $_POST['idvendedor'];
     $quantidade = $_POST['quantidade'];
-    $valortotal = $preço * $quantidade;
     $preco = str_replace(',', '.', $_POST['preco']);
+    $valortotal = $preco * $quantidade;
     $datavenda = $_POST['datavenda'];
-    $vlrcomissao = str_replace(',', '.', $_POST['vlrcomissao']);
-    $vlddesconto = str_replace(',', '.', $_POST['vlddesconto']);
-    $sql = 'insert into venda (idproduto,idvendedor,quantidade,valortotal,preco,datavenda,vlrcomissao,vlddesconto) value ("' . $idproduto . '", "' . $idvendedor . '","' . $quantidade . '","' . $valortotal . '", "' . $preco . '", "' . $datavenda . '", "' . $vlrcomissao . '", "' . $vldddesconto . '")';
+
+    $vlrcomissao = $valortotal * 0.3;
+    $vlddesconto = $valortotal * 0.5;
+
+    $sql = 'insert into venda (idproduto,idvendedor,quantidade,valortotal,preco,datavenda,vlrcomissao,vlddesconto) value ("' . $idproduto . '", "' . $idvendedor . '","' . $quantidade . '","' . $valortotal . '", "' . $preco . '", "' . $datavenda . '", "' . $vlrcomissao . '", "' . $vlddesconto . '")';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -136,26 +138,16 @@ if (isset($_POST['submit'])) {
                     }
                     ?>
                     <!-- Quantidade -->
-                    <label for="quantidade" style="color:white;">Quantidade:</label>
+                    <label for="quantidade" style="color:white;">Quantidade vendida:</label>
                     <input type="text" name="quantidade" class="form-control" required>
-                    <!-- Valor Total -->
-                    <label for="valortotal" style="color:white;">Valor Total:</label>
-                    <input type="text" name="valortotal" class="form-control" required>
+
                     <!-- Preço -->
-                    <label for="preco" style="color:white;">Preço:</label>
+                    <label for="preco" style="color:white;">Preço do Produto:</label>
                     <input type="text" name="preco" class="form-control" required>
 
                     <!-- Data da Venda -->
                     <label for="datavenda" style="color:white;">Data da Venda:</label>
                     <input type="date" name="datavenda" class="form-control" required>
-
-                    <!-- Valor Comissão -->
-                    <label for="vlrcomissao" style="color:white;">Valor da Comissão:</label>
-                    <input type="text" name="vlrcomissao" class="form-control" required>
-
-                    <!-- Valor Desconto -->
-                    <label for="vlddesconto" style="color:white;">Valor do Desconto:</label>
-                    <input type="text" name="vlddesconto" class="form-control" required>
                 </div>
 
                 <!-- Botões -->

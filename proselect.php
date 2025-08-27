@@ -102,11 +102,10 @@ $result = mysqli_query($con, $sql);
                 <tr>
                     <th scope="col" style="background-color: #404A3D; color: white;">ID</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Nome</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Venda</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Custo</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Valor Comissão</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Caixa</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Custo</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Venda</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
                 </tr>
             </thead>
@@ -117,11 +116,10 @@ $result = mysqli_query($con, $sql);
                         echo "<tr>
                 <td>" . $row['id'] . "</td>
                 <td>" . $row['nome'] . "</td>
-                <td>" . $row['preco'] . "</td>
+                <td>" . $row['precovenda'] . "</td>
+                <td>" . $row['precocusto'] . "</td>
                 <td>" . $row['comissao'] . "</td>
                 <td>" . $row['estoque'] . "</td>
-                <td>" . $row['precocusto'] . "</td>
-                <td>" . $row['precovenda'] . "</td>
                 <td>
                     <a href='proupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
                     <a href='prodelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>

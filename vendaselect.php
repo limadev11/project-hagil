@@ -4,7 +4,7 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os venda
-$sql = 'select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, v.vlddesconto
+$sql = 'select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, vlddesconto
     from venda v inner join vendedor e on e.id=v.idvendedor
                  inner join produto p on p.id = v.idproduto';
 
@@ -13,7 +13,7 @@ $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar venda com base no nome fornecido
-    $sql = "select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, v.vlddesconto
+    $sql = "select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, vlddesconto
     from venda v inner join vendedor e on e.id=v.idvendedor
                  inner join produto p on p.id = v.idproduto WHERE p.nome LIKE '%$pesqnome%'";
 } 
@@ -23,7 +23,7 @@ $result = mysqli_query($con, $sql);
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -102,13 +102,13 @@ $result = mysqli_query($con, $sql);
             <thead class="thead-dark">
                 <tr>
                     <th scope="col" style="background-color: #404A3D; color: white;">Código</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">IDV</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Vendedor</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Vendedor</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">IDP</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Produto</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Produto</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Preço</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Data da Venda</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Comissão</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Desconto</th>
@@ -126,9 +126,12 @@ $result = mysqli_query($con, $sql);
                 <td>" . $row['idp'] . "</td>
                 <td>" . $row['produto'] . "</td>
                 <td>" . $row['quantidade'] . "</td>
-                <td>" . $row['valortotal'] . "</td>
                 <td>" . $row['preco'] . "</td>
-                <td>" . $row['datavenda'] . "</td>
+                <td>" . $row['valortotal'] . "</td>
+                <td>" . $datavenda =    
+                substr($row['datavenda'], 8, 2) .
+                substr($row['datavenda'], 4, 4) .
+                substr($row['datavenda'], 0, 4) . "
                 <td>" . $row['vlrcomissao'] . "</td>
                 <td>" . $row['vlddesconto'] . "</td>
                 <td>

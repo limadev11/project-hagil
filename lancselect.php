@@ -4,18 +4,19 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os usuários
-$sql = 'SELECT * FROM lancdespesa ORDER BY nome ASC';
+$sql = 'SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
+  from lancdespesa l inner join tipodespesa t
+       on t.id = l.iddespesa ORDER BY t.nome ASC';
 
 // Pesquisa por nome
 $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar usuários com base no nome fornecido
-    $sql = "SELECT * FROM lancdespesa WHERE nome LIKE '%$pesqnome%' ORDER BY nome ASC";
-} else {
-    // Consulta padrão para listar todos os usuários
-    $sql = 'SELECT * FROM lancdespesa ORDER BY nome ASC';
-}
+    $sql = "SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
+  from lancdespesa l inner join tipodespesa t
+       on t.id = l.iddespesa WHERE t.nome LIKE '%$pesqnome%' ORDER BY t.nome ASC";
+} 
 
 $result = mysqli_query($con, $sql);
 ?>
@@ -103,8 +104,8 @@ $result = mysqli_query($con, $sql);
                 <th scope="col" style="background-color: #404A3D; color: white;">ID</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">Nome</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">Valor</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Código Despesa</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Data da Despesa</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Observação</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">DataDespesa</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
             </tr>
         </thead>
@@ -114,10 +115,14 @@ $result = mysqli_query($con, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>
                 <td>" . $row['id'] . "</td>
-                <td>" . $row['nome'] . "</td>
+                <td>" . $row['despesa'] . "</td>
                 <td>" . $row['valor'] . "</td>
-                <td>" . $row['iddespesa'] . "</td>
-                <td>" . $row['datadespesa'] . "</td>
+                <td>" . $row['observacao'] . "</td>
+                <td>" .
+                $datadespesa = 
+                substr($row['datadespesa'], 8, 2) .
+                substr($row['datadespesa'], 4, 4) .
+                substr($row['datadespesa'], 0, 4) . "
                 <td>
                     <a href='lancupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
                     <a href='lancdelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>

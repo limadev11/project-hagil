@@ -104,13 +104,13 @@ if (isset($_POST['submit'])) {
                         <!-- Nome -->
                         <div class="col">
                             <label for="nome" style="color:white; margin-right: 500px;">Nome:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px; width: 250px;"
+                            <input type="text" name="nome" class="form-control" style="padding: 9px; width: 250px; color: black;"
                                 required>
                         </div>
                         <div class="col">
                             <!-- Preço -->
                             <label for="preco" style="color:white; margin-right: 500px;">Preço:</label>
-                            <input type="text" name="preco" class="form-control" style="padding: 9px; width: 250px;"
+                            <input type="text" name="preco" class="form-control" style="padding: 9px; width: 250px; color: black"
                                 required>
                         </div>
                         
@@ -120,13 +120,13 @@ if (isset($_POST['submit'])) {
                         <div class="col">
                             <!-- Comissão -->
                             <label for="comissao" style="color:white; margin-right: 410px;">Valor da Comissão:</label>
-                            <input type="text" name="comissao" class="form-control" style="padding: 9px; width: 250px;"
+                            <input type="text" name="comissao" class="form-control" style="padding: 9px; width: 250px; color: black"
                                 required>
                         </div>
                         <div class="col">
                             <!-- Estoque -->
-                            <label for="estoque" style="color:white; margin-right: 500px;">Caixa:</label>
-                            <input type="number" name="estoque" class="form-control" style="padding: 9px; width: 250px;"
+                            <label for="estoque" style="color:white; margin-right: 500px; margin-top: 5px;">Estoque:</label>
+                            <input type="number" name="estoque" class="form-control" style="padding: 9px; width: 250px; color: black"
                                 required>
                         </div>
                     </div>
@@ -134,13 +134,13 @@ if (isset($_POST['submit'])) {
                         <div class="col">
                             <!-- Custo -->
                             <label for="precocusto" style="color:white; margin-right: 410px;">Preço Custo:</label>
-                            <input type="text" name="precocusto" class="form-control" style="padding: 9px; width: 250px;"
+                            <input type="text" name="precocusto" class="form-control" style="padding: 9px; width: 250px; color: black"
                                 required>
                         </div>
                         <div class="col">
                             <!-- Venda -->
-                            <label for="precovenda" style="color:white; margin-right: 500px;">Preço Venda:</label>
-                            <input type="text" name="precovenda" class="form-control" style="padding: 9px; width: 250px;"
+                            <label for="precovenda" style="color:white; margin-right: 500px; margin-top: 15px;">Preço Venda:</label>
+                            <input type="text" name="precovenda" class="form-control" style="padding: 9px; width: 250px; color: black"
                                 required>
                         </div>
                     </div>

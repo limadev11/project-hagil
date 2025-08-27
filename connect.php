@@ -4,7 +4,7 @@
   if ($local == 'localhost') {
     $con = new mysqli('localhost', 'root', '', 'gestaodevendas');
   } else {
-    $con = new mysqli('108.179.192.85', 'avisnetc_senac', 'senac123**', 'avisnetc_bi');
+    $con = new mysqli('108.179.192.85', 'avisnetcs_vendas', 'vendas@2024', 'avisnetc_vendas');
   }
 
   // Verifica se houve erro na conexão

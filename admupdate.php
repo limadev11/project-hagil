@@ -84,10 +84,12 @@ if (isset($_POST['submit'])) {
     <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
         <div class="text-center py-5" style="height: 100px; color: black;">
             <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Admissão:</h2>
+            <br>
         </div>
     </div>
     
     <div class="container" style="background-color: #556152;">
+    <br>
         <form method="post">
             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
             <div class="row" style="background-color: #556152;">
@@ -138,6 +140,7 @@ if (isset($_POST['submit'])) {
                     ?>
                     <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
                 </div>
+                <br><br><br>
             </div>
         </form>
     </div>

@@ -7,7 +7,7 @@ $sql = 'select * from lancdespesa where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $nome = $row['nome'];
-$valor = $row['valor'];
+$valor =  str_replace(',', '.', $row['valor']);
 $iddespesa = $row['iddespesa'];
 $datadespesa = $row['datadespesa'];
 if (isset($_POST['submit'])) {
@@ -15,13 +15,10 @@ if (isset($_POST['submit'])) {
     $valor = $_POST['valor'];
     $iddespesa = $_POST['iddespesa'];
     $datadespesa = $_POST['datadespesa'];
-    $sql = 'update usuario set nome="' . $nome .
-            '", valor="' . $valor . '", iddespesa="' . $iddespesa .
-            '", datadespesa="' .  $datadespesa . '" where id=' . $id;
-            echo  $sql;
-     $result = mysqli_query($con, $sql);
+    $sql = 'update lancdespesa set nome="' . $nome . '", valor="' . $valor . '", iddespesa="' . $iddespesa . '", datadespesa="' .  $datadespesa . '" where id=' . $id;
+    $result = mysqli_query($con, $sql);
     if ($result) {
-       header('location: landselect.php');
+    header('location: lancselect.php');
     } else {
         die(mysqli_error($con));
     }
@@ -92,58 +89,69 @@ if (isset($_POST['submit'])) {
                 <div class="row" style="background-color: #556152;">
                     <div class="col-12"> <br><br>
                         <div class="form-floating" style="width: 400px;">
-                            <h4 style="color: white;">Dados do Usuário:</h4>
+                            <h2 style="color: white;">Dados da Despesa:</h2>
                         </div>
                     </div>
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Nome</h5>
+                    <div class="row">
+                        <div class="col-12">
+                                    <h4 for="text" style="color:white;">Código da Despesa</h4>
+                        </div>
+                        <div class="col-9" style="width: 300px; margin-left: 490px;">           
+                                <?php
+                                            $sqll = 'select * from tipodespesa order by id';
+                                            $result = mysqli_query($con, $sqll);
+                                            if ($result) {
+                                                echo '<select 
+                                                    name="iddespesa" class="form-control">';
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo '<option value="' . $row['id'] . '">' .
+                                                        $row['nome'] . '</option>';
+                                                }
+                                                echo '</select>';
+                                            }
+                                    ?> 
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
-                    </div>
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Valor</h5>
+                    <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px">
+                                <h5 style="color: white;">Observação</h5>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="valor" id="valor" value="<?php echo $valor; ?>" required style="width: 350px;">
-                    </div>
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Código Despesa</h5>
+                    <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">Valor</h5>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="valor" id="valor" value="<?php echo $valor; ?>" required style="width: 350px;">
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 700px;"> <br><br>
-                        <input type="text" class="form-control" name="iddespesa" id="iddespesa" value="<?php echo $iddespesa?>">
-                    </div>
-                </div>
-                <br><br>
-                <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Data
-                                 de Despesa</h5>
+                    <div class="row">
+                    <div class="col-12"> <br><br>
+                        <div class="form-floating" style="margin-left: 0px;">
+                            <h5 style="color: white;">Data de Despesa</h5>
+                        </div>
+                        <div style="width: 350px; margin-left: 450px;">
+                            <input type="date" class="form-control" name="datadespesa" id="senha" value="<?php echo $datadespesa?>">
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 700px;"> <br><br>
-                        <input type="text" class="form-control" name="datadespesa" id="senha" value="<?php echo $datadespesa?>">
-                    </div>
-                </div>
-                <br><br>
-                <div class="row" style="background-color: #556152;">
-                    <div class="col">
-                        <button class="btn btn-secondary rounded-pill py-3 px-5" type="button" onclick="window.location.href='menu.php'"> Voltar</button>
-                    </div>
-                    <div class="col">
-                    <?php
-                        echo
-                            "<a href='lancselect.php?selectid={$row['id']}' style='color:white;'>
-                            <button type='button' style='padding: 9px; width: 100px;'
-                            class='btn btn-dark'>Voltar</button></a>";
-                        ?>
-                        <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
+                    <div class="row">
+                        <div class="col">
+                        <br>
+                        <?php
+                            echo
+                                "<a href='lancselect.php?selectid={$row['id']}' style='color:white;'>
+                                <button type='button' style='padding: 9px; width: 100px;'
+                                class='btn btn-dark'>Voltar</button></a>";
+                            ?>
+                            <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
+                        </div>
                     </div>
                 </div>
                 <br>

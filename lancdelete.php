@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="col-md-4 text-center">
-                        <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='lancselect.php'">Voltar</button>
+                        <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='lancselect.php'" style="margin-top: 15px;">Voltar</button>
                         <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3">Deletar</button>
                     </div>
                 </div>

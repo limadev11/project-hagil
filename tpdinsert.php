@@ -88,12 +88,10 @@ if (isset($_POST['submit'])) {
         <br>
 
             <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados do Usuário:</h4>
-
                 <div class="form-group">
                     <div class="row" style="margin-top: 30px;">
                         <!-- Nome -->
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="margin-left: 300px;">
                             <label for="nome" style="color:white;">Nome:</label>
                             <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
                         </div>
@@ -101,7 +99,7 @@ if (isset($_POST['submit'])) {
                         <div class="row">
                             <!-- Botões -->
                             <div class="col text-center">
-                                <a href="ususelect.php">
+                                <a href="tpdselect.php">
                                     <button type="button" style="padding: 9px; width: 100px;"
                                         class="btn btn-dark">Voltar</button>
                                 </a>

@@ -124,7 +124,11 @@ $result = mysqli_query($con, $sql);
                     echo "<tr>
                 <td>" . $row['id'] . "</td>
                 <td>" . $row['nome'] . "</td>
-                <td>" . $row['dataentrada'] . "</td>
+                <td>" . $dataentrada =    
+                substr($row['dataentrada'], 8, 2) .
+                substr($row['dataentrada'], 4, 4) .
+                substr($row['dataentrada'], 0, 4) . "
+                </td>
                 <td>" . $row['preco'] . "</td>
                 <td>" . $row['quantidade'] . "</td>
                 <td>

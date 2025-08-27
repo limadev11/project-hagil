@@ -74,44 +74,44 @@ if (isset($_POST['submit'])) {
 
     <!-- Page Header Start -->
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-        <div class="container text-center py-5" style="height: 100px; color: black;">
-            <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Despesa:</h2>
+        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
+            <div class="container text-center py-5" style="height: 100px; color: black;">
+                <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Despesa:</h2>
+            </div>
+        </div>
+
+        <div class="container" style="background-color: #556152;">
+            <form method="post">
+                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                <div class="row">
+                    <div class="col" style="margin-top: 30px; margin-right: 20px;">
+                        <h5 style="color: white;">Nome da Despesa:</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Parte do Imput -->
+                    <div class="col" style="margin-top: 30px; margin-left: 455px;">
+                        <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>"
+                            required style="width: 350px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row mt-4" style="margin-left: 450px;">
+                        <br><br>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary rounded-pill py-3 px-5" type="button"
+                                onclick="window.location.href='tpdselect.php'">Voltar</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit"
+                                name="submit">Atualizar</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </form>
         </div>
     </div>
-
-    <div class="container" style="background-color: #556152;">
-        <form method="post">
-            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-
-            <div class="row" style="background-color: #556152;">
-                <div class="col-12"> 
-                    <br><br>
-                    <h4 style="color: white;">Dados da Despesa:</h4>
-                </div>
-
-                <div class="col-auto"> 
-                    <br><br>
-                    <h5 style="color: white;">Nome da Despesa:</h5>
-                </div>
-
-                <div class="col-auto" style="margin-right: 520px;"> 
-                    <br><br>
-                    <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-auto">
-                    <button class="btn btn-secondary rounded-pill py-3 px-5" type="button" onclick="window.location.href='menu.php'">Voltar</button>
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
     <!-- Page Header End -->
 

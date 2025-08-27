@@ -24,8 +24,7 @@ if (isset($_POST['submit'])) {
     $vlddesconto = str_replace(',', '.', $_POST['vlddesconto']);
     $idproduto =  $_POST['idproduto'];
     $idvendedor =  $_POST['idvendedor'];
-    $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . 
-     ', quantidade=' . $quantidade . ', preco=' . $preco . ', datavenda="' . $datavenda . 
+    $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . ', quantidade=' . $quantidade . ', preco=' . $preco . ', datavenda="' . $datavenda . 
      '", vlrcomissao=' . $vlrcomissao . ', vlddesconto=' . $vlddesconto . 
         ' where id =' . $id;
     echo $sql;
@@ -97,7 +96,7 @@ if (isset($_POST['submit'])) {
                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                 <div class="row" style="background-color: #556152;">
                     <div class="col-12"> <br><br>
-                        <div class="form-floating" style="width: 400px; margin-left: 300p;">
+                        <div class="form-floating" style="width: 400px; margin-left: 400px;">
                             <h4 style="color: white;">Dados do Produto:</h4>
                         </div>
                     </div>
@@ -198,9 +197,9 @@ if (isset($_POST['submit'])) {
                         <input type="text" class="form-control" name="vlddesconto" id="vlddesconto" value="<?php echo $vlddesconto; ?>" required style="width: 350px;">
                     </div>
                     <!-- </div>ROw -->
-                    <br><br>
-                    <div class="row" style="background-color: #556152;">
-                        <div class="col">
+                    
+                    <div class="col">
+                        <br>
                             <?php
                             echo
                             "<a href='vendaselect.php'color:white;'>
@@ -208,9 +207,8 @@ if (isset($_POST['submit'])) {
                                 class='btn btn-dark'>Não, Voltar</button></a>";
                             ?>
                             <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
-                        </div>
+                        <br><br>
                     </div>
-                    <br>
             </form>
         </div>
     </div>
