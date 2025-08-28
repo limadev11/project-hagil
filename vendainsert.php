@@ -6,14 +6,10 @@ if (isset($_POST['submit'])) {
     $idproduto = $_POST['idproduto'];
     $idvendedor = $_POST['idvendedor'];
     $quantidade = $_POST['quantidade'];
-    $preco = str_replace(',', '.', $_POST['preco']);
-    $valortotal = $preco * $quantidade;
     $datavenda = $_POST['datavenda'];
 
-    $vlrcomissao = $valortotal * 0.3;
-    $vlddesconto = $valortotal * 0.5;
-
-    $sql = 'insert into venda (idproduto,idvendedor,quantidade,valortotal,preco,datavenda,vlrcomissao,vlddesconto) value ("' . $idproduto . '", "' . $idvendedor . '","' . $quantidade . '","' . $valortotal . '", "' . $preco . '", "' . $datavenda . '", "' . $vlrcomissao . '", "' . $vlddesconto . '")';
+    $sql = 'INSERT INTO venda (idproduto, idvendedor, quantidade, datavenda) 
+        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $quantidade . '", "' . $valortotal . '", "' . $preco . '", "' . $datavenda .'")';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -140,10 +136,6 @@ if (isset($_POST['submit'])) {
                     <!-- Quantidade -->
                     <label for="quantidade" style="color:white;">Quantidade vendida:</label>
                     <input type="text" name="quantidade" class="form-control" required>
-
-                    <!-- Preço -->
-                    <label for="preco" style="color:white;">Preço do Produto:</label>
-                    <input type="text" name="preco" class="form-control" required>
 
                     <!-- Data da Venda -->
                     <label for="datavenda" style="color:white;">Data da Venda:</label>
