@@ -4,9 +4,15 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os venda
-$sql = 'select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, vlddesconto
-    from venda v inner join vendedor e on e.id=v.idvendedor
-                 inner join produto p on p.id = v.idproduto';
+$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
+        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
+        p.precovenda * v.quantidade as valortotal
+        from venda v
+        inner join produto p
+        on p.id = v.idproduto
+        inner join vendedor ve
+        on ve.id = v.idvendedor';
+
 
 // Pesquisa por venda
 $pesqnome = '';
@@ -107,11 +113,10 @@ $result = mysqli_query($con, $sql);
                     <th scope="col" style="background-color: #404A3D; color: white;">Código do Produto</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Produto</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Custo</th>
+                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Venda</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Data da Venda</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Comissão</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Desconto</th>
                     <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
                 </tr>
             </thead>
@@ -126,14 +131,13 @@ $result = mysqli_query($con, $sql);
                 <td>" . $row['idp'] . "</td>
                 <td>" . $row['produto'] . "</td>
                 <td>" . $row['quantidade'] . "</td>
-                <td>" . $row['preco'] . "</td>
+                <td>" . $row['precocusto'] . "</td>
+                <td>" . $row['precovenda'] . "</td>
                 <td>" . $row['valortotal'] . "</td>
                 <td>" . $datavenda =    
                 substr($row['datavenda'], 8, 2) .
                 substr($row['datavenda'], 4, 4) .
                 substr($row['datavenda'], 0, 4) . "
-                <td>" . $row['vlrcomissao'] . "</td>
-                <td>" . $row['vlddesconto'] . "</td>
                 <td>
                     <a href='vendaupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
                     <a href='vendadelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>

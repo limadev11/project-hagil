@@ -84,6 +84,7 @@ include('verificalogin.php');
                     <a href="admselect.php" class="nav-item nav-link">Admissão</a>
                     <a href="vendaselect.php" class="nav-item nav-link">Venda</a>
                     <a href="ususelect.php" class="nav-item nav-link">Usuários</a>
+                    <a href="consultageral.php" class="nav-item nav-link">Consulta Geral</a>
                     <a href="logout.php" class="nav-item nav-link active">Sair</a>
                 </div>
             </div>
