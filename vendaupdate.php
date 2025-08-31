@@ -4,28 +4,32 @@ include('verificalogin.php');
 include('connect.php');
 
 $id = $_GET['updateid'];
-$sql = 'select v.id,e.id idv, e.nome vendedor,  p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, v.vlddesconto
-    from venda v inner join vendedor e on e.id=v.idvendedor
-                 inner join produto p on p.id = v.idproduto';
+$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
+        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
+        p.precovenda * v.quantidade as valortotal
+        from venda v
+        inner join produto p
+        on p.id = v.idproduto
+        inner join vendedor ve
+        on ve.id = v.idvendedor';
+
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $quantidade = $row['quantidade'];
-$preco = $row['preco'];
 $datavenda = $row['datavenda'];
-$vlrcomissao =  str_replace(',', '.', $row['vlrcomissao']);
-$vlddesconto = $row['vlddesconto'];
+$precocusto = $row['precocusto'];
+$precovenda = $row['precovenda'];
 $idproduto =  $row['idp'];
 $idvendedor =  $row['idv'];
 if (isset($_POST['submit'])) {
     $quantidade = $_POST['quantidade'];
-    $preco = str_replace(',', '.', $_POST['preco']);
     $datavenda = $_POST['datavenda'];
-    $vlrcomissao = str_replace(',', '.', $_POST['vlrcomissao']);
-    $vlddesconto = str_replace(',', '.', $_POST['vlddesconto']);
+    $precocusto = str_replace(',', '.', $_POST['precocusto']);
+    $precovenda = str_replace(',', '.', $_POST['precovenda']);
     $idproduto =  $_POST['idproduto'];
     $idvendedor =  $_POST['idvendedor'];
-    $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . ', quantidade=' . $quantidade . ', preco=' . $preco . ', datavenda="' . $datavenda . 
-     '", vlrcomissao=' . $vlrcomissao . ', vlddesconto=' . $vlddesconto . 
+    $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . ', quantidade=' . $quantidade . ', datavenda="' . $datavenda . 
+     '", precocusto=' . $precocusto . ', precovenda=' . $precovenda . 
         ' where id =' . $id;
     echo $sql;
     $result = mysqli_query($con, $sql);
@@ -147,17 +151,7 @@ if (isset($_POST['submit'])) {
                         }
                         ?>
                     </div>
-                    <!-- Fim Preço -->
-                    <!-- Preço -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preço:</h5>
-                        </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="preco" id="preco" value="<?php echo $preco; ?>" required style="width: 350px;">
-                    </div>
-                    <!-- Fim Preço -->
+                    <!-- Fim Nome do Vendedor -->
                     <!-- Quantidade -->
                     <div class="col"> <br><br>
                         <div class="form-floating" style="width: 400px;">
@@ -177,24 +171,24 @@ if (isset($_POST['submit'])) {
                     <div class="col" style="margin-right: 520px;"> <br><br>
                         <input type="date" class="form-control" name="datavenda" id="datavenda" value="<?php echo $datavenda; ?>" required style="width: 350px;">
                     </div>
-                    <!-- Comissão -->
+                    <!-- Preco Custo -->
                     <div class="col"> <br><br>
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Comissão:</h5>
+                            <h5 style="color: white;">Preco Custo:</h5>
                         </div>
                     </div>
                     <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="vlrcomissao" id="vlrcomissao" value="<?php echo $vlrcomissao; ?>" required style="width: 350px;">
+                        <input type="number" class="form-control" name="precocusto" id="precocusto" value="<?php echo $precocusto; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Comissão -->
-                    <!-- Desconto -->
+                    <!-- Preco Venda -->
                     <div class="col"> <br><br>
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Desconto:</h5>
+                            <h5 style="color: white;">Preco Venda:</h5>
                         </div>
                     </div>
                     <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="vlddesconto" id="vlddesconto" value="<?php echo $vlddesconto; ?>" required style="width: 350px;">
+                        <input type="number" class="form-control" name="precovenda" id="precovenda" value="<?php echo $precovenda; ?>" required style="width: 350px;">
                     </div>
                     <!-- </div>ROw -->
                     

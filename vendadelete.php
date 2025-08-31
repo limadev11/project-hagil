@@ -5,17 +5,19 @@ include('connect.php');
 
 // Obter o ID do venda a ser excluído
 $id = $_GET['deleteid'];
-$sql = 'select v.id,e.id idv, e.nome vendedor,  p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, v.vlddesconto
-    from venda v inner join vendedor e on e.id=v.idvendedor
-                 inner join produto p on p.id = v.idproduto where v.id = ' .$id;
+$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
+        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
+        p.precovenda * v.quantidade as valortotal
+        from venda v
+        inner join produto p
+        on p.id = v.idproduto
+        inner join vendedor ve
+        on ve.id = v.idvendedor where v.id = ' .$id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 
 $quantidade = $row['quantidade'];
-$preco = $row['preco'];
 $datavenda = $row['datavenda'];
-$vlrcomissao =  str_replace(',', '.', $row['vlrcomissao']);
-$vlddesconto = $row['vlddesconto'];
 $produto =  $row['produto'];
 $vendedor =  $row['vendedor'];
 if (isset($_POST['submit'])) {
@@ -82,39 +84,17 @@ if (isset($_POST['submit'])) {
                     </div>
                     
                     <div class="row mb-3">
-                        <!-- Preço -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Preço:</label>
-                            <input type="text" class="form-control" name="preco" id="preco" value="<?php echo $preco; ?>" required>
-                        </div>
                         <!-- Quantidade -->
                         <div class="col-md-6">
                             <label class="form-label" style="color: white;">Quantidade:</label>
                             <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?php echo $quantidade; ?>" required>
                         </div>
-                    </div>
-
-                    <div class="row mb-3">
                         <!-- Data de Venda -->
                         <div class="col-md-6">
                             <label class="form-label" style="color: white;">Data da venda:</label>
                             <input type="date" class="form-control" name="datavenda" id="datavenda" value="<?php echo $datavenda; ?>" required>
                         </div>
-                        <!-- Comissão -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Comissão:</label>
-                            <input type="text" class="form-control" name="vlrcomissao" id="vlrcomissao" value="<?php echo $vlrcomissao; ?>" required>
-                        </div>
                     </div>
-
-                    <div class="row mb-3">
-                        <!-- Desconto -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Desconto:</label>
-                            <input type="text" class="form-control" name="vlddesconto" id="vlddesconto" value="<?php echo $vlddesconto; ?>" required>
-                        </div>
-                    </div>
-
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='vendaselect.php'">Não, Voltar</button>
                         <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3">Deletar</button>

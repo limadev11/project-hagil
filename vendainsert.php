@@ -7,9 +7,11 @@ if (isset($_POST['submit'])) {
     $idvendedor = $_POST['idvendedor'];
     $quantidade = $_POST['quantidade'];
     $datavenda = $_POST['datavenda'];
+    $idprecocusto = $_POST['idprecocusto'];
+    $precovenda = $_POST['precovenda'];
 
-    $sql = 'INSERT INTO venda (idproduto, idvendedor, quantidade, datavenda) 
-        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $quantidade . '", "' . $valortotal . '", "' . $preco . '", "' . $datavenda .'")';
+    $sql = 'INSERT INTO venda (idproduto, idvendedor, quantidade, precocusto, precovenda, datavenda) 
+        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $quantidade . '", "' . $idprecocusto .'", "' . $precovenda . '", "' . $datavenda .'")';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -140,6 +142,23 @@ if (isset($_POST['submit'])) {
                     <!-- Data da Venda -->
                     <label for="datavenda" style="color:white;">Data da Venda:</label>
                     <input type="date" name="datavenda" class="form-control" required>
+
+                    <!-- Preco Custo -->
+                    <label for="precocusto" style="color:white;">Nome do Vendedor:</label>
+                    <?php
+                    $sqlc = "select * from produto where id =" . $idproduto;
+                    $result = mysqli_query($con, $sqlc);
+                    if ($result) {
+                        echo '<select name="idprecocusto" class="form-control">';
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<option value="' . $row['id'] . '">' . $row['precocusto'] . '</option>';
+                        }
+                        echo '</select>';
+                    }
+                    ?>
+                    <!-- Preço Venda -->
+                    <label for="precovenda" style="color:white;">Preço Venda:</label>
+                    <input type="number" name="precovenda" class="form-control" required>
                 </div>
 
                 <!-- Botões -->

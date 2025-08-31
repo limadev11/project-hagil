@@ -19,9 +19,14 @@ $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar venda com base no nome fornecido
-    $sql = "select v.id, e.nome vendedor, e.id idv, p.id idp, p.nome produto, v.quantidade,v.valortotal, v.preco, v.datavenda, v.vlrcomissao, vlddesconto
-    from venda v inner join vendedor e on e.id=v.idvendedor
-                 inner join produto p on p.id = v.idproduto WHERE p.nome LIKE '%$pesqnome%'";
+    $sql = "select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
+        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
+        p.precovenda * v.quantidade as valortotal
+        from venda v
+        inner join produto p
+        on p.id = v.idproduto
+        inner join vendedor ve
+        on ve.id = v.idvendedor WHERE p.nome LIKE '%$pesqnome%' or ve.nome LIKE '%$pesqnome%';";
 } 
 
 $result = mysqli_query($con, $sql);
@@ -145,10 +150,9 @@ $result = mysqli_query($con, $sql);
               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5'>Nenhum venda encontrado.</td></tr>";
-                }
+                    echo "<tr><td colspan='5'>Nenhuma venda registrada.</td></tr>";
+                }    
                 ?>
-
             </tbody>
         </table>
     </div>
