@@ -23,9 +23,12 @@ include('verificalogin.php');
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Open+Sans:wght@400;500;600&display=swap"
         rel="stylesheet">
 
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -37,21 +40,6 @@ include('verificalogin.php');
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-        /* Define a altura do carrossel */
-        #header-carousel {
-            height: 500px;
-            /* Ajuste a altura conforme necessário */
-        }
-
-        /* Ajusta as imagens para caber dentro do carrossel */
-        #header-carousel img {
-            width: 1920px;
-            height: 720px;
-            object-fit: cover;
-            /* Mantém a proporção das imagens e preenche o carrossel */
-        }
-    </style>
 </head>
 
 <body>
@@ -63,16 +51,14 @@ include('verificalogin.php');
     <!-- Spinner End -->
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <div class="container text-center">
-            <svg class="w-[100px] h-[100px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                width="50" height="50" fill="currentColor" viewBox="0 0 24 24" style="display: block; margin: 0 auto;">
-                <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd" />
-                <hr>
-            </svg> <?php echo $_SESSION['nome']; ?>
+    <!-- Sidebar Vertical -->
 
-            <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-dark bg-dark d-md-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Superar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -84,11 +70,98 @@ include('verificalogin.php');
                     <a href="admselect.php" class="nav-item nav-link">Admissão</a>
                     <a href="vendaselect.php" class="nav-item nav-link">Venda</a>
                     <a href="ususelect.php" class="nav-item nav-link">Usuários</a>
-                    <a href="consultageral.php" class="nav-item nav-link">Consulta Geral</a>
                     <a href="logout.php" class="nav-item nav-link active">Sair</a>
                 </div>
             </div>
     </nav>
+
+    <div class="d-flex">
+        <!-- Sidebar Vertical -->
+        <div class="bg-dark text-white vh-100 p-3 sidebar collapse d-md-block animate__animated animate__fadeInLeft"
+            id="sidebarMenu" style="width: 250px;">
+            <!-- Logo -->
+            <h3 class="text-center mb-4">Superar</h3>
+            <!-- Perfil -->
+            <div class="text-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+                </svg>
+
+                <p class="mt-2">
+                    <?php echo $_SESSION['nome']; ?>
+                </p>
+            </div>
+            <!-- Menu -->
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a href="proselect.php" class="nav-link text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73L12 2 4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73L12 22l8-4.27A2 2 0 0 0 21 16z" />
+                            <path d="M3.3 7l8.7 5 8.7-5" />
+                            <path d="M12 22V12" />
+                        </svg>
+                        Produtos
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="vendeselect.php" class="nav-link text-white">
+                        <i class="bi bi-person-badge"></i> Vendedores
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="tpdselect.php" class="nav-link text-white">
+                        <i class="bi bi-cash"></i> Tipos de Despesas
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="admselect.php" class="nav-link text-white">
+                        <i class="bi bi-people"></i> Admissão
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="vendaselect.php" class="nav-link text-white">
+                        <i class="bi bi-cart4"></i> Venda
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="ususelect.php" class="nav-link text-white active">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="7" r="4" />
+                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+
+                        Usuários
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="flex-grow-1 p-4">
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.2s" style="max-width: 500px;">
+                        <p class="section-title bg-white text-center text-primary px-3">Bem vindo!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- Contact End -->
+    </div>
+    </div>
+
+
     <!-- Navbar End -->
 
 
@@ -97,62 +170,13 @@ include('verificalogin.php');
 
 
 
-    <!-- Contact Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.2s" style="max-width: 500px;">
-                <p class="section-title bg-white text-center text-primary px-3">Bem vindo!</p>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- Contact End -->
 
-    <!-- Carousel Start -->
-    <div class="container-fluid px-0 mb-5">
-        <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="img/pexels-christina99999-27896613.jpg" alt="Imagem 1">
 
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <div class="col-lg-8 text-start">
-                                    <p class="fs-4 text-white"></p>
-                                    <h1 class="mb-5 animated slideInRight" style="color: green;">Gestão de Vendas</h1>
-                                    <h1 class="display-1 text-white mb-5 animated slideInRight">Simplificando Vendas, Acelerando Resultados</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="img/pexels-matthiaszomer-422218.jpg" alt="Imagem 2">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-end">
-                                <div class="col-lg-8 text-end">
-                                    <h1 class="display-1 text-white mb-5 animated slideInRight">Sinta-se à vontade para explorar nossa linha de produtos e descobrir como podemos ajudar você a alcançar uma vida mais saudável e equilibrada.</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Voltar</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Próximo</span>
-            </button>
-        </div>
-    </div>
-    <!-- Carousel End -->
-<!-- Informacoes -->
-<a href="#Canva#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><img color="white" width="25" height="25" src="https://img.icons8.com/ios-filled/50/question-mark.png" alt="question-mark"/></a>
+
+    <!-- Informacoes -->
+    <a href="#Canva#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><img color="white"
+            width="25" height="25" src="https://img.icons8.com/ios-filled/50/question-mark.png"
+            alt="question-mark" /></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -167,6 +191,8 @@ include('verificalogin.php');
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script type="module" src="https://esm.sh/ionicons@8.0.0/loader"></script>
+    <script nomodule src="https://esm.sh/ionicons@8.0.0/loader"></script>
 </body>
 
 </html>
