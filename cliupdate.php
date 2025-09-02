@@ -89,12 +89,12 @@ if (isset($_POST['submit'])) {
                 <div class="row" style="background-color: #556152;">
                     <div class="col-12"> <br><br>
                         <div class="form-floating" style="width: 400px;">
-                            <h2 style="color: white;">Dados da Despesa:</h2>
+                            <h2 style="color: white;">Nome Cliente:</h2>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                                    <h4 for="text" style="color:white;">Código da Despesa</h4>
+                                    <h4 for="text" style="color:white;">Email</h4>
                         </div>
                         <div class="col-9" style="width: 300px; margin-left: 490px;">           
                                 <?php
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-12"> <br><br>
                             <div class="form-floating" style="margin-left: 0px">
-                                <h5 style="color: white;">Observação</h5>
+                                <h5 style="color: white;"></h5>
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">

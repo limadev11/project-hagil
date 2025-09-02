@@ -4,18 +4,16 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os usuários
-$sql = 'SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
-  from lancdespesa l inner join tipodespesa t
-       on t.id = l.iddespesa ORDER BY t.nome ASC';
+$sql = 'SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
+  from cliente ORDER BY nome ASC';
 
 // Pesquisa por nome
 $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar usuários com base no nome fornecido
-    $sql = "SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
-  from lancdespesa l inner join tipodespesa t
-       on t.id = l.iddespesa WHERE t.nome LIKE '%$pesqnome%' ORDER BY t.nome ASC";
+    $sql = $sql = 'SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
+    from cliente ORDER BY nome ASC WHERE t.nome LIKE '%$pesqnome%' ORDER BY t.nome ASC';
 } 
 
 $result = mysqli_query($con, $sql);
@@ -81,7 +79,7 @@ $result = mysqli_query($con, $sql);
             <form method="post" action="">
                 <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom:5px; border-radius: 10px;">
                     <div class="col-auto">
-                        <h5 style="color: white;">Nome parcial:</h5>
+                        <h5 style="color: white;">Nome do cliente:</h5>
                     </div>
                     <div class="col-auto">
                         <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
@@ -101,11 +99,13 @@ $result = mysqli_query($con, $sql);
     <table class="table table-bordered" style="background-color: white; opacity: 94%; text-align: center;">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" style="background-color: #404A3D; color: white;">ID</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">Nome</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Valor</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Observação</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">DataDespesa</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Email</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Whatsapp</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Endereço</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Bairro</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Cidade</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">UF</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
             </tr>
         </thead>
@@ -114,10 +114,14 @@ $result = mysqli_query($con, $sql);
             if ($result && mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>
-                <td>" . $row['id'] . "</td>
-                <td>" . $row['despesa'] . "</td>
-                <td>" . $row['valor'] . "</td>
-                <td>" . $row['observacao'] . "</td>
+                <td>" . $row['Nome'] . "</td>
+                <td>" . $row['Email'] . "</td>
+                <td>" . $row['Whatsapp'] . "</td>
+                <td>" . $row['Endereço'] . "</td>
+                <td>" . $row['Bairro'] . "</td>
+                <td>" . $row['Cidade'] . "</td>
+                <td>" . $row['UF'] . "</td>
+                
                 <td>" .
                 $datadespesa = 
                 substr($row['datadespesa'], 8, 2) .

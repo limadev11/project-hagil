@@ -137,6 +137,10 @@ if (isset($_POST['submit'])) {
                                 <label for="number" style="color:white;">Cidade</label>
                                 <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
                             </div>
+                            <div class="col-md-6"style="margin-left: 170px;">
+                                <label for="number" style="color:white;">UF</label>
+                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
+                            </div>
 
                             
                         </div>
