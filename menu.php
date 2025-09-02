@@ -42,10 +42,26 @@ include('verificalogin.php');
     <link href="css/style.css" rel="stylesheet">
     <style>
         .flex-grow-1.p-4 {
-            background-image: url('img/background.png');
+            background-image: url('img/1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+        }
+
+
+        .section-title {
+            padding: 0.5rem 2rem;
+            letter-spacing: 2px;
+        }
+
+        .btn-sidebar {
+            color: #FFFF;
+        }
+
+        .btn-sidebar img {
+            margin-right: 0.5rem;
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -64,7 +80,8 @@ include('verificalogin.php');
     <!-- Navbar Start -->
     <nav class="navbar navbar-dark bg-dark d-md-none">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Superar</a>
+            <a class="navbar-brand" href="#"></a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
                 aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -105,62 +122,46 @@ include('verificalogin.php');
             <!-- Menu -->
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
-                    <a href="proselect.php" class="nav-link text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73L12 2 4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73L12 22l8-4.27A2 2 0 0 0 21 16z" />
-                            <path d="M3.3 7l8.7 5 8.7-5" />
-                            <path d="M12 22V12" />
-                        </svg>
+                    <a href="proselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/carrinho-de-compras.png" alt="">
                         Produtos
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="vendeselect.php" class="nav-link text-white">
-                        <i class="bi bi-person-badge"></i> Vendedores
+                    <a href="vendeselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/comercial.png" alt=""> Vendedores
                     </a>
-                    <li class="nav-item mb-2">
-                    <a href="cliselect.php" class="nav-link text-white active">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="7" r="4" />
-                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
+                <li class="nav-item mb-2">
+                    <a href="cliselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/do-utilizador.png" alt="">
                         Cliente
                     </a>
                 </li>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="tpdselect.php" class="nav-link text-white">
-                        <i class="bi bi-cash"></i> Tipos de Despesas
+                    <a href="tpdselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/saco-de-dolar.png" alt=""> Tipos de Despesas
+
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a href="admselect.php" class="nav-link text-white">
-                        <i class="bi bi-people"></i> Admissão
+                    <a href="admselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/sair-alt.png" alt=""> Admissão
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="vendaselect.php" class="nav-link text-white">
-                        <i class="bi bi-cart4"></i> Venda
+                    <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="ususelect.php" class="nav-link text-white active">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="7" r="4" />
-                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
+                    <a href="ususelect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/comercial.png" alt="">
                         Usuários
                     </a>
                 </li>
-                
+
             </ul>
         </div>
 
@@ -174,41 +175,41 @@ include('verificalogin.php');
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <!-- Navbar End -->
-
-
-    <!-- Page Header Start -->
-    <!-- Page Header End -->
 
 
 
 
+        <!-- Navbar End -->
 
 
-    <!-- Informacoes -->
-    <a href="#Canva#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><img color="white"
-            width="25" height="25" src="https://img.icons8.com/ios-filled/50/question-mark.png"
-            alt="question-mark" /></a>
+        <!-- Page Header Start -->
+        <!-- Page Header End -->
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    <script type="module" src="https://esm.sh/ionicons@8.0.0/loader"></script>
-    <script nomodule src="https://esm.sh/ionicons@8.0.0/loader"></script>
+
+
+
+
+        <!-- Informacoes -->
+        <a href="#Canva#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><img color="white"
+                width="25" height="25" src="https://img.icons8.com/ios-filled/50/question-mark.png"
+                alt="question-mark" /></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/parallax/parallax.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        <script type="module" src="https://esm.sh/ionicons@8.0.0/loader"></script>
+        <script nomodule src="https://esm.sh/ionicons@8.0.0/loader"></script>
 </body>
 
 </html>
