@@ -42,7 +42,7 @@ include('verificalogin.php');
     <link href="css/style.css" rel="stylesheet">
     <style>
         .flex-grow-1.p-4 {
-            background-image: url('img/background.jpg');
+            background-image: url('img/background.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
