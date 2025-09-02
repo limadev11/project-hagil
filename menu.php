@@ -121,6 +121,17 @@ include('verificalogin.php');
                     <a href="vendeselect.php" class="nav-link text-white">
                         <i class="bi bi-person-badge"></i> Vendedores
                     </a>
+                    <li class="nav-item mb-2">
+                    <a href="cliselect.php" class="nav-link text-white active">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="7" r="4" />
+                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+                        </svg>
+                        Cliente
+                    </a>
+                </li>
                 </li>
                 <li class="nav-item mb-2">
                     <a href="tpdselect.php" class="nav-link text-white">
@@ -149,17 +160,7 @@ include('verificalogin.php');
                         Usuários
                     </a>
                 </li>
-                <li class="nav-item mb-2">
-                    <a href="cliselect.php" class="nav-link text-white active">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="7" r="4" />
-                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                        </svg>
-                        Cliente
-                    </a>
-                </li>
+                
             </ul>
         </div>
 
