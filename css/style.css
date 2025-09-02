@@ -304,3 +304,11 @@ body {
     opacity: 1;
     padding-top: 0;
 }
+
+/* Wallpaper para o conteúdo principal */
+.flex-grow-1.p-4 {
+    background-image: url('/img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
