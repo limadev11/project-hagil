@@ -5,13 +5,14 @@ include('connect.php');
 if (isset($_POST['submit'])) {
     $idproduto = $_POST['idproduto'];
     $idvendedor = $_POST['idvendedor'];
+    $idcliente = $_POST['idcliente'];
     $quantidade = $_POST['quantidade'];
     $datavenda = $_POST['datavenda'];
     $idprecocusto = $_POST['idprecocusto'];
     $precovenda = $_POST['precovenda'];
 
-    $sql = 'INSERT INTO venda (idproduto, idvendedor, quantidade, precocusto, precovenda, datavenda) 
-        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $quantidade . '", "' . $idprecocusto .'", "' . $precovenda . '", "' . $datavenda .'")';
+    $sql = 'INSERT INTO venda (idproduto, idvendedor, idcliente, quantidade, precocusto, precovenda, datavenda) 
+        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $idcliente . '", "' . $quantidade . '", "' . $idprecocusto .'", "' . $precovenda . '", "' . $datavenda .'")';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -135,6 +136,19 @@ if (isset($_POST['submit'])) {
                         echo '</select>';
                     }
                     ?>
+                    <!-- Nome do Vendedor -->
+                    <label for="nome" style="color:white;">Nome do Cliente:</label>
+                    <?php
+                    $sqll = 'select * from cliente order by id';
+                    $result = mysqli_query($con, $sqll);
+                    if ($result) {
+                        echo '<select name="idcliente" class="form-control">';
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                        }
+                        echo '</select>';
+                    }
+                    ?>
                     <!-- Quantidade -->
                     <label for="quantidade" style="color:white;">Quantidade vendida:</label>
                     <input type="text" name="quantidade" class="form-control" required>
@@ -143,19 +157,10 @@ if (isset($_POST['submit'])) {
                     <label for="datavenda" style="color:white;">Data da Venda:</label>
                     <input type="date" name="datavenda" class="form-control" required>
 
-                    <!-- Preco Custo -->
-                    <label for="precocusto" style="color:white;">Nome do Vendedor:</label>
-                    <?php
-                    $sqlc = "select * from produto where id =" . $idproduto;
-                    $result = mysqli_query($con, $sqlc);
-                    if ($result) {
-                        echo '<select name="idprecocusto" class="form-control">';
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['id'] . '">' . $row['precocusto'] . '</option>';
-                        }
-                        echo '</select>';
-                    }
-                    ?>
+                    <!-- Preço CUsto -->
+                    <label for="precocusto" style="color:white;">Preço Custo:</label>
+                    <input type="number" name="precocusto" class="form-control" required>
+
                     <!-- Preço Venda -->
                     <label for="precovenda" style="color:white;">Preço Venda:</label>
                     <input type="number" name="precovenda" class="form-control" required>
