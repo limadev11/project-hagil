@@ -67,11 +67,146 @@ $result = mysqli_query($con, $sql);
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+     /* Container de sugestões */
+        #suggestions {
+            position: absolute;
+            /* Fica posicionado em relação ao input */
+            top: 100%;
+            /* Fica logo abaixo do input */
+            left: 0;
+            width: 100%;
+            /* Mesma largura do input */
+            background-color: #fff;
+            /* Fundo branco */
+            border: 1px solid #ccc;
+            /* Borda clara */
+            border-top: none;
+            /* Remove a borda superior para ficar integrado */
+            border-radius: 0 0 8px 8px;
+            /* Bordas arredondadas na parte inferior */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra suave */
+            max-height: 250px;
+            /* Altura máxima com scroll */
+            overflow-y: auto;
+            z-index: 1000;
+            /* Fica acima de outros elementos */
+            display: none;
+            /* Inicialmente escondido */
+        }
+
+        /* Cada sugestão */
+        #suggestions div {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Hover na sugestão */
+        #suggestions div:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Input com autocomplete */
+        #search {
+            border-radius: 8px;
+            /* Bordas arredondadas */
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Container pai para manter posição relativa */
+        .autocomplete-wrapper {
+            position: relative;
+            /* Necessário para o absolute do #suggestions */
+            width: 500px;
+            /* ou 100% se quiser responsivo */
+            margin: 0 auto;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            /* responsivo no celular */
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            color: #333;
+        }
+
+        thead {
+            background: #404A3D;
+            color: #fff;
+        }
+
+        thead th {
+            padding: 14px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tbody tr:hover {
+            background: #e9f5ec;
+            /* cor de destaque */
+        }
+
+        td {
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        /* Botões */
+        .btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+        </style>
 </head>
 
 <body>
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
+    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
         <h1 class="m-0">Superar</h1>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -109,53 +244,54 @@ $result = mysqli_query($con, $sql);
         </div>
 
         <!-- Tabela de Resultados -->
-        <table class="table table-bordered" style="background-color: white; opacity: 94%; text-align: center;">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Vendedor</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Vendedor</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Produto</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Produto</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Custo</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Venda</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Data da Venda</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result && mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>
-                <td>" . $row['id'] . "</td>
-                <td>" . $row['idv'] . "</td>
-                <td>" . $row['vendedor'] . "</td>
-                <td>" . $row['idp'] . "</td>
-                <td>" . $row['produto'] . "</td>
-                <td>" . $row['quantidade'] . "</td>
-                <td>" . $row['precocusto'] . "</td>
-                <td>" . $row['precovenda'] . "</td>
-                <td>" . $row['valortotal'] . "</td>
-                <td>" . $datavenda =    
-                substr($row['datavenda'], 8, 2) .
-                substr($row['datavenda'], 4, 4) .
-                substr($row['datavenda'], 0, 4) . "
-                <td>
-                    <a href='vendaupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
-                    <a href='vendadelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>
-                </td>
-              </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='5'>Nenhuma venda registrada.</td></tr>";
-                }    
-                ?>
-            </tbody>
-        </table>
-    </div>
+        <div class="table-container">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Código do Vendedor</th>
+                <th>Vendedor</th>
+                <th>Código do Produto</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Custo</th>
+                <th>Preço Venda</th>
+                <th>Valor Total</th>
+                <th>Data da Venda</th>
+                <th>Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($result && mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // Formatar data para DD/MM/YYYY
+                    $datavenda = date('d/m/Y', strtotime($row['datavenda']));
+                    echo "<tr>
+                            <td>" . $row['id'] . "</td>
+                            <td>" . $row['idv'] . "</td>
+                            <td>" . $row['vendedor'] . "</td>
+                            <td>" . $row['idp'] . "</td>
+                            <td>" . $row['produto'] . "</td>
+                            <td>" . $row['quantidade'] . "</td>
+                            <td>" . $row['precocusto'] . "</td>
+                            <td>" . $row['precovenda'] . "</td>
+                            <td>" . $row['valortotal'] . "</td>
+                            <td>" . $datavenda . "</td>
+                            <td>
+                                <a href='vendaupdate.php?updateid=" . $row['id'] . "' class='btn btn-sm btn-primary mx-1'>Alterar</a>
+                                <a href='vendadelete.php?deleteid=" . $row['id'] . "' class='btn btn-sm btn-danger mx-1'>Excluir</a>
+                            </td>
+                          </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='11'>Nenhuma venda registrada.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
     <!-- Page Header End -->
 
     <!-- JavaScript Libraries -->
