@@ -4,14 +4,17 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os venda
-$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
-        from venda v
-        inner join produto p
-        on p.id = v.idproduto
-        inner join vendedor ve
-        on ve.id = v.idvendedor';
+$sql = 'select v.id id, p.id idp, cli.id idc, cli.nome cliente, p.nome produto, ve.id idv, ve.nome vendedor,
+v.precocusto, v.preco, v.quantidade, v.datavenda, v.valortotal
+from venda v
+inner join produto p
+on p.id = v.idproduto
+inner join vendedor ve
+on ve.id = v.idvendedor
+inner join cliente cli
+on cli.id = v.idcliente
+        ;
+        ';
 
 
 // Pesquisa por venda
@@ -19,14 +22,16 @@ $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar venda com base no nome fornecido
-    $sql = "select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
-        from venda v
-        inner join produto p
-        on p.id = v.idproduto
-        inner join vendedor ve
-        on ve.id = v.idvendedor WHERE p.nome LIKE '%$pesqnome%' or ve.nome LIKE '%$pesqnome%';";
+    $sql = "select v.id id, p.id idp, cli.id idc, cli.nome cliente, p.nome produto, ve.id idv, ve.nome vendedor,
+    v.precocusto, v.preco, v.quantidade, v.datavenda, v.valortotal
+    from venda v
+    inner join produto p
+    on p.id = v.idproduto
+    inner join vendedor ve
+    on ve.id = v.idvendedor
+    inner join cliente cli
+    on cli.id = v.idcliente
+    WHERE p.nome LIKE '%$pesqnome%' or ve.nome LIKE '%$pesqnome%';";
 } 
 
 $result = mysqli_query($con, $sql);
@@ -112,17 +117,16 @@ $result = mysqli_query($con, $sql);
         <table class="table table-bordered" style="background-color: white; opacity: 94%; text-align: center;">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Vendedor</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Vendedor</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Código do Produto</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Produto</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Custo</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Preço Venda</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Data da Venda</th>
-                    <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:20px">ID</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:50px">Vendedor</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:40px">Produto</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:50px">Cliente</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:10px">Quantd.</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:25px">Preço Custo</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:25px">Preço Venda</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:10px">Total</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:10px">Data</th>
+                    <th scope="col" style="background-color: #404A3D; color: white; width:25px">Operações</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,13 +135,12 @@ $result = mysqli_query($con, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>
                 <td>" . $row['id'] . "</td>
-                <td>" . $row['idv'] . "</td>
                 <td>" . $row['vendedor'] . "</td>
-                <td>" . $row['idp'] . "</td>
+                <td>" . $row['cliente'] . "</td>                
                 <td>" . $row['produto'] . "</td>
                 <td>" . $row['quantidade'] . "</td>
                 <td>" . $row['precocusto'] . "</td>
-                <td>" . $row['precovenda'] . "</td>
+                <td>" . $row['preco'] . "</td>
                 <td>" . $row['valortotal'] . "</td>
                 <td>" . $datavenda =    
                 substr($row['datavenda'], 8, 2) .

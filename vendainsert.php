@@ -11,8 +11,8 @@ if (isset($_POST['submit'])) {
     $precocusto = $_POST['precocusto'];
     $preco = $_POST['preco'];
 
-    $sql = 'insert into venda(idproduto, idvendedor, idcliente, quantidade, datavenda, preco, precocusto) 
-            values (' . $idproduto . ',' . $idvendedor . ',' . $idcliente . ',' . $quantidade . ',' . $datavenda . ','. $preco . ',' . $precocusto . ')';
+    $sql = "INSERT INTO venda (idproduto, idvendedor, idcliente, quantidade, datavenda, preco, precocusto) 
+        VALUES ($idproduto, $idvendedor, $idcliente, $quantidade, '$datavenda', $preco, $precocusto)";
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
                         echo '</select>';
                     }
                     ?>
-                    <!-- Nome do Clirnyr -->
+                    <!-- Nome do Cliente -->
                     <label for="nome" style="color:white;">Nome do Cliente:</label>
                     <?php
                     $sqll = 'select * from cliente order by id';

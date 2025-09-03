@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
     $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . ', quantidade=' . $quantidade . ', datavenda="' . $datavenda . 
      '", precocusto=' . $precocusto . ', precovenda=' . $precovenda . 
         ' where id =' . $id;
-    echo $sql;
+
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -178,7 +178,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="number" class="form-control" name="precocusto" id="precocusto" value="<?php echo $precocusto; ?>" required style="width: 350px;">
+                        <input type="number" class="form-control" name="precocusto" id="precocusto" step="0.01" value="<?php echo $precocusto; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Comissão -->
                     <!-- Preco Venda -->
@@ -188,7 +188,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="number" class="form-control" name="precovenda" id="precovenda" value="<?php echo $precovenda; ?>" required style="width: 350px;">
+                        <input type="number" class="form-control" name="precovenda" id="precovenda" step="0.01" value="<?php echo $precovenda; ?>" required style="width: 350px;">
                     </div>
                     <!-- </div>ROw -->
                     
