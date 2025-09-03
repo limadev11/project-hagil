@@ -8,11 +8,11 @@ if (isset($_POST['submit'])) {
     $idcliente = $_POST['idcliente'];
     $quantidade = $_POST['quantidade'];
     $datavenda = $_POST['datavenda'];
-    $idprecocusto = $_POST['idprecocusto'];
-    $precovenda = $_POST['precovenda'];
+    $precocusto = $_POST['precocusto'];
+    $preco = $_POST['preco'];
 
-    $sql = 'INSERT INTO venda (idproduto, idvendedor, idcliente, quantidade, precocusto, precovenda, datavenda) 
-        VALUES ("' . $idproduto . '", "' . $idvendedor . '", "' . $idcliente . '", "' . $quantidade . '", "' . $idprecocusto .'", "' . $precovenda . '", "' . $datavenda .'")';
+    $sql = 'insert into venda(idproduto, idvendedor, idcliente, quantidade, datavenda, preco, precocusto) 
+            values (' . $idproduto . ',' . $idvendedor . ',' . $idcliente . ',' . $quantidade . ',' . $datavenda . ','. $preco . ',' . $precocusto . ')';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Produto</h1>
+        <h1 class="m-0">Venda</h1>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
                         echo '</select>';
                     }
                     ?>
-                    <!-- Nome do Vendedor -->
+                    <!-- Nome do Clirnyr -->
                     <label for="nome" style="color:white;">Nome do Cliente:</label>
                     <?php
                     $sqll = 'select * from cliente order by id';
@@ -159,11 +159,11 @@ if (isset($_POST['submit'])) {
 
                     <!-- Preço CUsto -->
                     <label for="precocusto" style="color:white;">Preço Custo:</label>
-                    <input type="number" name="precocusto" class="form-control" required>
+                    <input type="number" name="precocusto" class="form-control" step="0.01" required>
 
                     <!-- Preço Venda -->
-                    <label for="precovenda" style="color:white;">Preço Venda:</label>
-                    <input type="number" name="precovenda" class="form-control" required>
+                    <label for="preco" style="color:white;">Preço Venda:</label>
+                    <input type="number" name="preco" class="form-control" step="0.01" required>
                 </div>
 
                 <!-- Botões -->
