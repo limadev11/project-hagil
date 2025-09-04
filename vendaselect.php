@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
         on p.id = v.idproduto
         inner join vendedor ve
         on ve.id = v.idvendedor WHERE p.nome LIKE '%$pesqnome%' or ve.nome LIKE '%$pesqnome%';";
-} 
+}
 
 $result = mysqli_query($con, $sql);
 ?>
@@ -68,7 +68,7 @@ $result = mysqli_query($con, $sql);
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-     /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -201,7 +201,7 @@ $result = mysqli_query($con, $sql);
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -245,29 +245,29 @@ $result = mysqli_query($con, $sql);
 
         <!-- Tabela de Resultados -->
         <div class="table-container">
-    <table class="table table-hover text-center">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Código do Vendedor</th>
-                <th>Vendedor</th>
-                <th>Código do Produto</th>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço Custo</th>
-                <th>Preço Venda</th>
-                <th>Valor Total</th>
-                <th>Data da Venda</th>
-                <th>Operações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // Formatar data para DD/MM/YYYY
-                    $datavenda = date('d/m/Y', strtotime($row['datavenda']));
-                    echo "<tr>
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Código do Vendedor</th>
+                        <th>Vendedor</th>
+                        <th>Código do Produto</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preço Custo</th>
+                        <th>Preço Venda</th>
+                        <th>Valor Total</th>
+                        <th>Data da Venda</th>
+                        <th>Operações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            // Formatar data para DD/MM/YYYY
+                            $datavenda = date('d/m/Y', strtotime($row['datavenda']));
+                            echo "<tr>
                             <td>" . $row['id'] . "</td>
                             <td>" . $row['idv'] . "</td>
                             <td>" . $row['vendedor'] . "</td>
@@ -279,34 +279,38 @@ $result = mysqli_query($con, $sql);
                             <td>" . $row['valortotal'] . "</td>
                             <td>" . $datavenda . "</td>
                             <td>
-                                <a href='vendaupdate.php?updateid=" . $row['id'] . "' class='btn btn-sm btn-primary mx-1'>Alterar</a>
-                                <a href='vendadelete.php?deleteid=" . $row['id'] . "' class='btn btn-sm btn-danger mx-1'>Excluir</a>
+                               <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                        <i class='bi bi-pencil-square'></i> Alterar
+                      </a>
+                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                        <i class='bi bi-trash'></i> Excluir
+                      </a>
                             </td>
                           </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='11'>Nenhuma venda registrada.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
+                        }
+                    } else {
+                        echo "<tr><td colspan='11'>Nenhuma venda registrada.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Page Header End -->
+        <!-- Page Header End -->
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/parallax/parallax.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
 </body>
 
 </html>

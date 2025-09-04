@@ -218,8 +218,11 @@ $result = mysqli_query($con, $sql);
                         <div class="col-auto">
                             <h5 style="color: white;">Nome parcial:</h5>
                         </div>
-                        <div class="col-auto">
-                            <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
+                        <div class="autocomplete-wrapper">
+                            <div class="col-auto">
+                                <input type="text" id="search" id="pesqnome" name="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
+                            </div>
+                            <div id="suggestions"></div>
                         </div>
                         <div class="col-auto">
                             <a href="vendeselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
@@ -249,8 +252,12 @@ $result = mysqli_query($con, $sql);
                             <td>" . $row['id'] . "</td>
                             <td>" . $row['nome'] . "</td>
                             <td>
-                                <a href='vendeupdate.php?updateid=" . $row['id'] . "' class='btn btn-sm btn-primary mx-1'>Alterar</a>
-                                <a href='vendedelete.php?deleteid=" . $row['id'] . "' class='btn btn-sm btn-danger mx-1'>Excluir</a>
+                                <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                        <i class='bi bi-pencil-square'></i> Alterar
+                      </a>
+                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                        <i class='bi bi-trash'></i> Excluir
+                      </a>
                             </td>
                           </tr>";
                         }
@@ -277,6 +284,33 @@ $result = mysqli_query($con, $sql);
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#search').keyup(function() {
+                    let query = $(this).val();
+                    if (query.length > 0) {
+                        $.ajax({
+                            url: 'searchvendedor.php', // Arquivo PHP que você criou
+                            method: 'POST',
+                            data: {
+                                query: query
+                            },
+                            success: function(data) {
+                                $('#suggestions').fadeIn().html(data);
+                            }
+                        });
+                    } else {
+                        $('#suggestions').fadeOut();
+                    }
+                });
+
+                // Preencher input ao clicar na sugestão
+                $(document).on('click', '#suggestions div', function() {
+                    $('#search').val($(this).text());
+                    $('#suggestions').fadeOut();
+                });
+            });
+        </script>
 </body>
 
 </html>

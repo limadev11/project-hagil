@@ -5,7 +5,7 @@ include('connect.php');
 if (isset($_POST['submit'])) {
     $idproduto = $_POST['idproduto'];
     $dataentrada = $_POST['dataentrada'];
-    $preco = str_replace(',','.',$_POST['preco']);
+    $preco = str_replace(',', '.', $_POST['preco']);
     $quantidade = $_POST['quantidade'];
     $sql = 'insert into admissao (idproduto,dataentrada,preco,quantidade) value ("' . $idproduto . '", "' . $dataentrada . '","' . $preco . '", "' . $quantidade . '")';
     $result = mysqli_query($con, $sql);
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-     /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -214,70 +214,60 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
+
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h1 style="color: white;">Incluir Admissão</h1>
+        <div class="container admissao-container">
+            <div class="container text-center py-5 header">
+                <h1>Incluir Admissão</h1>
             </div>
             <br>
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados da Admissão:</h4>
+            <form action="" method="post" class="universal-form" style="margin-top: 20px;">
+                <h4>Dados da Admissão:</h4>
                 <br>
                 <!-- Tabelas -->
                 <div class="container">
-                    <div class="row">
-                        <!-- Nome -->
-                        <div class="col">
-                            <label for="idproduto" style="color:white;">Código do Produto:</label>
+                    <div class="row form-row">
+                        <div class="col form-group">
+                            <label for="idproduto">Código do Produto:</label>
                             <?php
-                                        $sqll = 'select * from produto order by id';
-                                        $result = mysqli_query($con, $sqll);
-                                        if ($result) {
-                                            echo '<select 
-                                                name="idproduto" class="form-control">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $row['id'] . '">' .
-                                                    $row['nome'] . '</option>';
-                                            }
-                                            echo '</select>';
-                                        }
-                                        ?>
+                            $sqll = 'SELECT * FROM produto ORDER BY id';
+                            $result = mysqli_query($con, $sqll);
+                            if ($result) {
+                                echo '<select name="idproduto" class="form-control" required>';
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                                }
+                                echo '</select>';
+                            }
+                            ?>
                         </div>
-                        <div class="col">
-                            <!-- Código do Produto -->
-                            <label for="preco" style="color:white; margin-right: 500px;">Data da Entrada:</label>
-                            <input type="date" name="dataentrada" class="form-control" style="padding: 9px; width: 250px;"
-                                required>
+                        <div class="col form-group">
+                            <label for="dataentrada">Data da Entrada:</label>
+                            <input type="date" name="dataentrada" class="form-control" required>
                         </div>
                     </div>
+
                     <br><br>
-                    <div class="row">
-                        <div class="col">
-                            <!-- Preço -->
-                            <label for="preco" style="color:white; margin-right: 410px;">Preço:</label>
-                            <input type="text" name="preco" class="form-control" style="padding: 9px; width: 250px;">
+
+                    <div class="row form-row">
+                        <div class="col form-group">
+                            <label for="preco">Preço:</label>
+                            <input type="text" name="preco" class="form-control">
                         </div>
-                        <div class="col">
-                            <!-- Quantidade -->
-                            <label for="caixa" style="color:white; margin-right: 500px;">Quantidade:</label>
-                            <input type="number" name="quantidade" class="form-control" style="padding: 9px; width: 250px;"
-                                required>
+                        <div class="col form-group">
+                            <label for="quantidade">Quantidade:</label>
+                            <input type="number" name="quantidade" class="form-control" required>
                         </div>
                     </div>
                 </div>
-
                 <!-- Fim Tabelas -->
+
                 <br>
-                <div class="container" style="margin-top: 40px;">
+                <div class="container form-actions">
                     <div class="row">
-                        <!-- Botões -->
                         <div class="col text-center">
-                            <a href="admselect.php">
-                                <button type="button" style="padding: 9px; width: 100px;"
-                                    class="btn btn-dark">Voltar</button>
-                            </a>
-                            <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                class="btn btn-secondary">Adicionar</button>
+                            <a href="admselect.php" class="btn btn-voltar">Voltar</a>
+                            <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
                         </div>
                     </div>
                 </div>
