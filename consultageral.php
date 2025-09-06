@@ -58,6 +58,7 @@ $result = mysqli_query($con, $sql);
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main/style.css">
 </head>
 
 <body>

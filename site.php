@@ -39,6 +39,7 @@ session_start();
     <link href="css/style.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="scss/main/style.css">
 </head>
 
 <body>
@@ -51,7 +52,7 @@ session_start();
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
+    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
         <a href="index.html" class="navbar-brand d-flex align-items-center">
             <h2 style="color:green;">Superar</h2>
         </a>

@@ -5,7 +5,7 @@ include('connect.php');
 if (isset($_POST['submit'])) {
     $idproduto = $_POST['idproduto'];
     $dataentrada = $_POST['dataentrada'];
-    $preco = str_replace(',','.',$_POST['preco']);
+    $preco = str_replace(',', '.', $_POST['preco']);
     $quantidade = $_POST['quantidade'];
     $sql = 'insert into admissao (idproduto,dataentrada,preco,quantidade) value ("' . $idproduto . '", "' . $dataentrada . '","' . $preco . '", "' . $quantidade . '")';
     $result = mysqli_query($con, $sql);
@@ -52,6 +52,141 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* Container de sugestões */
+        #suggestions {
+            position: absolute;
+            /* Fica posicionado em relação ao input */
+            top: 100%;
+            /* Fica logo abaixo do input */
+            left: 0;
+            width: 100%;
+            /* Mesma largura do input */
+            background-color: #fff;
+            /* Fundo branco */
+            border: 1px solid #ccc;
+            /* Borda clara */
+            border-top: none;
+            /* Remove a borda superior para ficar integrado */
+            border-radius: 0 0 8px 8px;
+            /* Bordas arredondadas na parte inferior */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra suave */
+            max-height: 250px;
+            /* Altura máxima com scroll */
+            overflow-y: auto;
+            z-index: 1000;
+            /* Fica acima de outros elementos */
+            display: none;
+            /* Inicialmente escondido */
+        }
+
+        /* Cada sugestão */
+        #suggestions div {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Hover na sugestão */
+        #suggestions div:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Input com autocomplete */
+        #search {
+            border-radius: 8px;
+            /* Bordas arredondadas */
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Container pai para manter posição relativa */
+        .autocomplete-wrapper {
+            position: relative;
+            /* Necessário para o absolute do #suggestions */
+            width: 500px;
+            /* ou 100% se quiser responsivo */
+            margin: 0 auto;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            /* responsivo no celular */
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            color: #333;
+        }
+
+        thead {
+            background: #404A3D;
+            color: #fff;
+        }
+
+        thead th {
+            padding: 14px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tbody tr:hover {
+            background: #e9f5ec;
+            /* cor de destaque */
+        }
+
+        td {
+            padding: 12px 14px;
+            text-align: center;
+        }
+
+        /* Botões */
+        .btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+    </style>
 </head>
 
 <body>
@@ -63,7 +198,8 @@ if (isset($_POST['submit'])) {
     <!-- Spinner End -->
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top px-4 px-lg-5 ">
+
         <h1 class="m-0">Admissão</h1>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -78,70 +214,60 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
+
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h1 style="color: white;">Incluir Admissão</h1>
+        <div class="container admissao-container">
+            <div class="container text-center py-5 header">
+                <h1>Incluir Admissão</h1>
             </div>
             <br>
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados da Admissão:</h4>
+            <form action="" method="post" class="universal-form" style="margin-top: 20px;">
+                <h4>Dados da Admissão:</h4>
                 <br>
                 <!-- Tabelas -->
                 <div class="container">
-                    <div class="row">
-                        <!-- Nome -->
-                        <div class="col">
-                            <label for="idproduto" style="color:white;">Código do Produto:</label>
+                    <div class="row form-row">
+                        <div class="col form-group">
+                            <label for="idproduto">Código do Produto:</label>
                             <?php
-                                        $sqll = 'select * from produto order by id';
-                                        $result = mysqli_query($con, $sqll);
-                                        if ($result) {
-                                            echo '<select 
-                                                name="idproduto" class="form-control">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $row['id'] . '">' .
-                                                    $row['nome'] . '</option>';
-                                            }
-                                            echo '</select>';
-                                        }
-                                        ?>
+                            $sqll = 'SELECT * FROM produto ORDER BY id';
+                            $result = mysqli_query($con, $sqll);
+                            if ($result) {
+                                echo '<select name="idproduto" class="form-control" required>';
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                                }
+                                echo '</select>';
+                            }
+                            ?>
                         </div>
-                        <div class="col">
-                            <!-- Código do Produto -->
-                            <label for="preco" style="color:white; margin-right: 500px;">Data da Entrada:</label>
-                            <input type="date" name="dataentrada" class="form-control" style="padding: 9px; width: 250px;"
-                                required>
+                        <div class="col form-group">
+                            <label for="dataentrada">Data da Entrada:</label>
+                            <input type="date" name="dataentrada" class="form-control" required>
                         </div>
                     </div>
+
                     <br><br>
-                    <div class="row">
-                        <div class="col">
-                            <!-- Preço -->
-                            <label for="preco" style="color:white; margin-right: 410px;">Preço:</label>
-                            <input type="text" name="preco" class="form-control" style="padding: 9px; width: 250px;">
+
+                    <div class="row form-row">
+                        <div class="col form-group">
+                            <label for="preco">Preço:</label>
+                            <input type="text" name="preco" class="form-control">
                         </div>
-                        <div class="col">
-                            <!-- Quantidade -->
-                            <label for="caixa" style="color:white; margin-right: 500px;">Quantidade:</label>
-                            <input type="number" name="quantidade" class="form-control" style="padding: 9px; width: 250px;"
-                                required>
+                        <div class="col form-group">
+                            <label for="quantidade">Quantidade:</label>
+                            <input type="number" name="quantidade" class="form-control" required>
                         </div>
                     </div>
                 </div>
-
                 <!-- Fim Tabelas -->
+
                 <br>
-                <div class="container" style="margin-top: 40px;">
+                <div class="container form-actions">
                     <div class="row">
-                        <!-- Botões -->
                         <div class="col text-center">
-                            <a href="admselect.php">
-                                <button type="button" style="padding: 9px; width: 100px;"
-                                    class="btn btn-dark">Voltar</button>
-                            </a>
-                            <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                class="btn btn-secondary">Adicionar</button>
+                            <a href="admselect.php" class="btn btn-voltar">Voltar</a>
+                            <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
                         </div>
                     </div>
                 </div>
