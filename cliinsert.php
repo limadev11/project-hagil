@@ -52,8 +52,8 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-<style>
-     /* Container de sugestões */
+    <style>
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -213,89 +213,86 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: white;">Incluir cliente</h2>
+    <div class="container-form-post">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
+            <div class="header-container">
+                <h2>Incluir Cliente</h2>
             </div>
-        </div>
 
-        <div class="container" style="margin-top: 30px; background-color: #404A3D;">
+            <div class="form-container">
+                <form action="" method="post">
+                    <h4>Dados do Cliente:</h4>
 
-            <br>
-
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados do cliente:</h4>
-
-                <div class="form-group">
-                    <div class="row" style="margin-top: 30px;">
-                        <!-- ID Despesas -->
+                    <div class="form-group row">
+                        <!-- Nome do cliente (select) -->
                         <div class="col-md-6">
-                            <label for="text" style="color:white;">Nome do cliente</label>
+                            <label for="iddespesa">Nome do Cliente</label>
                             <?php
                             $sqll = 'select * from tipodespesa order by id';
                             $result = mysqli_query($con, $sqll);
                             if ($result) {
-                                echo '<select 
-                                                name="iddespesa" class="form-control">';
+                                echo '<select name="iddespesa" class="form-control">';
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    echo '<option value="' . $row['id'] . '">' .
-                                        $row['nome'] . '</option>';
+                                    echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
                                 }
                                 echo '</select>';
                             }
                             ?>
                         </div>
-                        <!-- Nome -->
+
+                        <!-- Email -->
                         <div class="col-md-6">
-                            <label for="nome" style="color:white;">Email:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
-                        </div>
-                        <div class="row" style="margin-top: 20px;">
-                            <!-- Valor -->
-                            <div class="col-md-6">
-                                <label for="number" style="color:white;">Whatsapp</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="number" style="color:white;">Endereço</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <label for="number" style="color:white;">Bairro</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-
-                            <div class="col-md-6" style="margin-top: 30px;">
-                                <label for="number" style="color:white;">Cidade</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-                            <div class="col-md-6" style="margin-left: 170px;">
-                                <label for="number" style="color:white;">UF</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-
-
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control" required>
                         </div>
                     </div>
 
-                    <div class="container" style="margin-top: 40px;">
-                        <div class="row">
-                            <!-- Botões -->
-                            <div class="col text-center">
-                                <a href="lancselect.php">
-                                    <button type="button" style="padding: 9px; width: 100px;"
-                                        class="btn btn-dark">Voltar</button>
-                                </a>
-                                <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                    class="btn btn-secondary">Adicionar</button>
-                            </div>
+                    <div class="form-group row">
+                        <!-- Whatsapp -->
+                        <div class="col-md-6">
+                            <label for="whatsapp">Whatsapp</label>
+                            <input type="text" name="whatsapp" class="form-control" required>
+                        </div>
+
+                        <!-- Endereço -->
+                        <div class="col-md-6">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" name="endereco" class="form-control" required>
                         </div>
                     </div>
-            </form>
+
+                    <div class="form-group row">
+                        <!-- Bairro -->
+                        <div class="col-md-6">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" name="bairro" class="form-control" required>
+                        </div>
+
+                        <!-- Cidade -->
+                        <div class="col-md-6">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" name="cidade" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <!-- UF -->
+                        <div class="col-md-6">
+                            <label for="uf">UF</label>
+                            <input type="text" name="uf" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="form-actions text-center">
+                        <a href="admselect.php" class="btn btn-voltar">Voltar</a>
+                        <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
     <!-- Page Header End -->
 
     <!-- JavaScript Libraries -->

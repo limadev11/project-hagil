@@ -3,32 +3,36 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Query SQL padrão para listar todos os venda
-$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
+// Query SQL padrão para listar todos campos da tabela venda
+$sql = "select v.id, p.nome produto, ve.nome vendedor, cli.nome cliente,
+        v.precocusto, v.preco, v.quantidade, v.datavenda, v.valortotal
         from venda v
         inner join produto p
         on p.id = v.idproduto
         inner join vendedor ve
-        on ve.id = v.idvendedor';
+        on ve.id = v.idvendedor
+        inner join cliente cli
+        on cli.id = v.idcliente";
 
 
-// Pesquisa por venda
-$pesqnome = '';
+// Variáveis que serão usadas para as pesquisas
+$pesqvend = '';
+$pesqcliente = '';
+$pesqproduto = '';
+$pesqdata = '';
+// Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
 if (isset($_POST['submit'])) {
-    $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
-    // Consulta para buscar venda com base no nome fornecido
-    $sql = "select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
-        from venda v
-        inner join produto p
-        on p.id = v.idproduto
-        inner join vendedor ve
-        on ve.id = v.idvendedor WHERE p.nome LIKE '%$pesqnome%' or ve.nome LIKE '%$pesqnome%';";
+    $pesqvend = mysqli_real_escape_string($con, $_POST['pesqvend']);
+    $pesqcliente = mysqli_real_escape_string($con, $_POST['pesqcliente']);
+    $pesqproduto = mysqli_real_escape_string($con, $_POST['pesqproduto']);
+    $pesqdata = mysqli_real_escape_string($con, $_POST['pesqdata']);
+    // Aqui é para trocar as / na data para - e trocar as posições dos números, ficando 0000-00-00 (padrão MYSQL)
+    $pesqdata = implode("-", array_reverse(explode("/", $pesqdata)));
+    // Depois de todos os valores declarados, será feito outro SQL porém com o filtro de pesquisa.
+    $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
+    cli.nome like '%$pesqcliente%' and v.datavenda like '%$pesqdata%'";
 }
-
+// Aqui transfirá o resultado do $sql para a variável result
 $result = mysqli_query($con, $sql);
 ?>
 
@@ -42,275 +46,135 @@ $result = mysqli_query($con, $sql);
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-    <style>
-        /* Container de sugestões */
-        #suggestions {
-            position: absolute;
-            /* Fica posicionado em relação ao input */
-            top: 100%;
-            /* Fica logo abaixo do input */
-            left: 0;
-            width: 100%;
-            /* Mesma largura do input */
-            background-color: #fff;
-            /* Fundo branco */
-            border: 1px solid #ccc;
-            /* Borda clara */
-            border-top: none;
-            /* Remove a borda superior para ficar integrado */
-            border-radius: 0 0 8px 8px;
-            /* Bordas arredondadas na parte inferior */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-            max-height: 250px;
-            /* Altura máxima com scroll */
-            overflow-y: auto;
-            z-index: 1000;
-            /* Fica acima de outros elementos */
-            display: none;
-            /* Inicialmente escondido */
-        }
-
-        /* Cada sugestão */
-        #suggestions div {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        /* Hover na sugestão */
-        #suggestions div:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Input com autocomplete */
-        #search {
-            border-radius: 8px;
-            /* Bordas arredondadas */
-            padding: 10px 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        /* Container pai para manter posição relativa */
-        .autocomplete-wrapper {
-            position: relative;
-            /* Necessário para o absolute do #suggestions */
-            width: 500px;
-            /* ou 100% se quiser responsivo */
-            margin: 0 auto;
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            /* responsivo no celular */
-            margin-top: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            color: #333;
-        }
-
-        thead {
-            background: #404A3D;
-            color: #fff;
-        }
-
-        thead th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background: #e9f5ec;
-            /* cor de destaque */
-        }
-
-        td {
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        /* Botões */
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: #fff;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-    </style>
+    <?php include('cabecalhoCRUD.html') ?>
 </head>
 
 <body>
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link active">Sair</a>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
-
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container" style="background-color: transparent;">
-                <!-- Formulário de pesquisa -->
-                <form method="post" action="">
-                    <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom:5px; border-radius: 10px;">
-                        <div class="col-auto">
-                            <h5 style="color: white;">Nome parcial:</h5>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
-                        </div>
-                        <div class="col-auto">
-                            <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                            <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                            <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
+    <center>
+        <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
+            <h1 class="m-0">Superar</h1>
+            <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="menu.php" class="nav-item nav-link">Menu</a>
+                    <a href="logout.php" class="nav-item nav-link active">Sair</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Aqui é o formulário de pesquisa usando o form com método post -->
+        <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
+                    background-color: #556152; border-radius: 10px;">
+            <div style="flex: 1;">
+
+                <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-row">
+                            <h5 style="margin-top:5px">Vendedor parcial:</h5>
+                            <input type="text" name="pesqvend" placeholder="Nome..." style="height:30px; margin-top:5px"
+                                value="<?php echo $pesqvend; ?>">
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
 
-        <!-- Tabela de Resultados -->
-        <div class="table-container">
-            <table class="table table-hover text-center">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Código do Vendedor</th>
-                        <th>Vendedor</th>
-                        <th>Código do Produto</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Preço Custo</th>
-                        <th>Preço Venda</th>
-                        <th>Valor Total</th>
-                        <th>Data da Venda</th>
-                        <th>Operações</th>
-                    </tr>
-                </thead>
-                <tbody>
+                    <div class="col-md-6">
+                        <div class="form-row">
+                            <h5>Cliente parcial:</h5>
+                            <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px"
+                                value="<?php echo $pesqcliente; ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-row">
+                            <h5>Produto parcial:</h5>
+                            <input type="text" name="pesqproduto" placeholder="Nome..." style="height:30px"
+                                value="<?php echo $pesqproduto; ?>">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-row">
+                            <h5>Data parcial:</h5>
+                            <input class="data-input" type="date" name="pesqdata" style="height:30px"
+                                value="<?php echo $pesqdata; ?>">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
+            entrar na área de incluir nova venda -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
+                    name="submit">Pesquisar</button>
+                <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
+            </div>
+        </form>
+        </div>
+    </center>
+    <!-- Tabela de Resultados -->
+    <div class="table-container">
+        <table class="table table-hover text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <!-- Aqui é uma lista de todos os campos que irão aparecer na tabela -->
                     <?php
-                    if ($result && mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            // Formatar data para DD/MM/YYYY
-                            $datavenda = date('d/m/Y', strtotime($row['datavenda']));
-                            echo "<tr>
+                    $listcolumn = ['ID', 'Vendedor', 'Cliente', 'Produto', 'Quantd.', 'Preço Custo', 'Preço Venda', 'Total', 'Data', 'Operações'];
+                    /** Aqui é uma estrutura de repetição utilizando o vetor $listcolumn e a variável $lc, tem objetivo de
+                     * simplifica na hora de colocar cada coluna e seu nome, sendo $lc o índice do vetor $listcomun (agora não tem ctrl+C e V)
+                     */
+                    for ($lc = 0; $lc < count($listcolumn); $lc++) {
+                        echo "<th scope='col' style='background-color: #404A3D; color: white; width:20px'>" . $listcolumn[$lc] . "</th>";
+                    }
+                    ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result && mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        // Esta parte é para formatar a variável $datavenda do padrão mysql para o padrão brasileiro 00/00/2000
+                        $datavenda = date('d/m/Y', strtotime($row['datavenda']));
+                        // Aqui está atribuindo os valores puxadas no banco de dados para as colunas feitas anteriormente 
+                        // (a estrutura de repetição)
+                        echo "<tr>
                             <td>" . $row['id'] . "</td>
-                            <td>" . $row['idv'] . "</td>
                             <td>" . $row['vendedor'] . "</td>
-                            <td>" . $row['idp'] . "</td>
+                            <td>" . $row['cliente'] . "</td>                
                             <td>" . $row['produto'] . "</td>
                             <td>" . $row['quantidade'] . "</td>
                             <td>" . $row['precocusto'] . "</td>
-                            <td>" . $row['precovenda'] . "</td>
+                            <td>" . $row['preco'] . "</td>
                             <td>" . $row['valortotal'] . "</td>
-                            <td>" . $datavenda . "</td>
+                            <td>" . date('d/m/Y', strtotime($row['datavenda'])) . "</td>
                             <td>
-                               <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
-                        <i class='bi bi-pencil-square'></i> Alterar
-                      </a>
-                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
-                        <i class='bi bi-trash'></i> Excluir
-                      </a>
+                              <a href='vendaupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                                <i class='bi bi-pencil-square'></i> Alterar
+                              </a>
+                              <a href='vendadelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                                <i class='bi bi-trash'></i> Excluir
+                              </a>
                             </td>
                           </tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='11'>Nenhuma venda registrada.</td></tr>";
+                        //   Depois do date('d/m/Y')... estão os botões vendaupdate e vendadelete para trocar a área de ver as vendas
+                        //   para as áreas de alterar alguma venda ou excluir alguma venda.
                     }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Page Header End -->
-
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/counterup/counterup.min.js"></script>
-        <script src="lib/parallax/parallax.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+                } else {
+                    echo "<tr><td colspan='11'>Nenhuma venda registrada.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <?php include('templateJSfinal.html') ?>
 </body>
 
 </html>

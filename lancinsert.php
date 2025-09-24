@@ -4,7 +4,7 @@ include('verificalogin.php');
 include('connect.php');
 if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
-    $valor = str_replace(',','.',$_POST['valor']);
+    $valor = str_replace(',', '.', $_POST['valor']);
     $iddespesa = $_POST['iddespesa'];
     $datadespesa = $_POST['datadespesa'];
     $sql = 'insert into lancdespesa (nome,valor,iddespesa,datadespesa) value ("' . $nome . '", "' . $valor . '","' . $iddespesa . '", "' . $datadespesa . '")';
@@ -12,9 +12,8 @@ if (isset($_POST['submit'])) {
     if ($result) {
         header('location: lancselect.php');
     } else {
-        die(''. mysqli_error($con));
-
-}
+        die('' . mysqli_error($con));
+    }
 }
 
 ?>
@@ -54,7 +53,7 @@ if (isset($_POST['submit'])) {
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-     /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -187,7 +186,7 @@ if (isset($_POST['submit'])) {
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -214,74 +213,66 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: white;">Incluir Lançamento de Despesas</h2>
-            </div>
-        </div>
+    <div class="container-form-post">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
 
-        <div class="container" style="margin-top: 30px; background-color: #404A3D;">
-            
-        <br>
+            <!-- Cabeçalho -->
+            <h2>Incluir Lançamento de Despesas</h2>
 
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados da Despesas:</h4>
+            <!-- Formulário -->
+            <form action="" method="post">
+                <h4>Dados da Despesa:</h4>
 
                 <div class="form-group">
-                    <div class="row" style="margin-top: 30px;">
-                    <!-- ID Despesas -->
-                    <div class="col-md-6">
-                                <label for="text" style="color:white;">Código da Despesa</label>
-                                <?php
-                                        $sqll = 'select * from tipodespesa order by id';
-                                        $result = mysqli_query($con, $sqll);
-                                        if ($result) {
-                                            echo '<select 
-                                                name="iddespesa" class="form-control">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo '<option value="' . $row['id'] . '">' .
-                                                    $row['nome'] . '</option>';
-                                            }
-                                            echo '</select>';
-                                        }
-                                ?>
-                        </div>
-                        <!-- Nome -->
+                    <div class="row">
+                        <!-- Código da Despesa -->
                         <div class="col-md-6">
-                            <label for="nome" style="color:white;">Observação:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
+                            <label for="iddespesa">Código da Despesa</label>
+                            <?php
+                            $sqll = 'select * from tipodespesa order by id';
+                            $result = mysqli_query($con, $sqll);
+                            if ($result) {
+                                echo '<select name="iddespesa" class="form-control">';
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['id'] . '">' .
+                                        $row['nome'] . '</option>';
+                                }
+                                echo '</select>';
+                            }
+                            ?>
                         </div>
-                        <div class="row" style="margin-top: 20px;">
-                            <!-- Valor -->
-                            <div class="col-md-6">
-                                <label for="number" style="color:white;">Valor</label>
-                                <input type="text" name="valor" class="form-control" style="padding: 9px;" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="text" style="color:white;">Data da Despesa</label>
-                                <input type="date" name="datadespesa" class="form-control" style="padding: 9px;" required>
-                            </div>
+
+                        <!-- Observação -->
+                        <div class="col-md-6">
+                            <label for="nome">Observação:</label>
+                            <input type="text" name="nome" class="form-control" required>
                         </div>
                     </div>
 
-                    <div class="container" style="margin-top: 40px;">
-                        <div class="row">
-                            <!-- Botões -->
-                            <div class="col text-center">
-                                <a href="lancselect.php">
-                                    <button type="button" style="padding: 9px; width: 100px;"
-                                        class="btn btn-dark">Voltar</button>
-                                </a>
-                                <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                    class="btn btn-secondary">Adicionar</button>
-                            </div>
+                    <div class="row mt-3">
+                        <!-- Valor -->
+                        <div class="col-md-6">
+                            <label for="valor">Valor</label>
+                            <input type="text" name="valor" class="form-control" required>
+                        </div>
+
+                        <!-- Data da Despesa -->
+                        <div class="col-md-6">
+                            <label for="datadespesa">Data da Despesa</label>
+                            <input type="date" name="datadespesa" class="form-control" required>
                         </div>
                     </div>
+                </div>
+
+                <!-- Botões -->
+                <div class="text-center mt-4">
+                    <a href="lancselect.php" class="btn btn-dark">Voltar</a>
+                    <button type="submit" name="submit" class="btn btn-secondary">Adicionar</button>
+                </div>
             </form>
         </div>
     </div>
+
     <!-- Page Header End -->
 
     <!-- JavaScript Libraries -->

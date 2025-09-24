@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 03/09/2025 às 02:02
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Tempo de geração: 09-Set-2025 às 02:27
+-- Versão do servidor: 10.4.28-MariaDB
+-- versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,28 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `admissao`
---
-
-CREATE TABLE `admissao` (
-  `id` int(11) NOT NULL,
-  `idproduto` int(11) NOT NULL,
-  `dataentrada` date NOT NULL,
-  `preco` decimal(10,2) NOT NULL,
-  `quantidade` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `admissao`
---
-
-INSERT INTO `admissao` (`id`, `idproduto`, `dataentrada`, `preco`, `quantidade`) VALUES
-(4, 6, '2024-09-25', 11.90, 1);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `cliente`
+-- Estrutura da tabela `cliente`
 --
 
 CREATE TABLE `cliente` (
@@ -60,7 +39,7 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cliente`
+-- Extraindo dados da tabela `cliente`
 --
 
 INSERT INTO `cliente` (`id`, `nome`, `email`, `whatsapp`, `endereco`, `bairro`, `cidade`, `uf`) VALUES
@@ -69,7 +48,7 @@ INSERT INTO `cliente` (`id`, `nome`, `email`, `whatsapp`, `endereco`, `bairro`, 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `despesa`
+-- Estrutura da tabela `despesa`
 --
 
 CREATE TABLE `despesa` (
@@ -81,7 +60,7 @@ CREATE TABLE `despesa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `despesa`
+-- Extraindo dados da tabela `despesa`
 --
 
 INSERT INTO `despesa` (`id`, `idtipodespesa`, `data`, `valor`, `observacao`) VALUES
@@ -91,7 +70,28 @@ INSERT INTO `despesa` (`id`, `idtipodespesa`, `data`, `valor`, `observacao`) VAL
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `produto`
+-- Estrutura da tabela `entradaestoque`
+--
+
+CREATE TABLE `entradaestoque` (
+  `id` int(11) NOT NULL,
+  `idproduto` int(11) NOT NULL,
+  `dataentrada` date NOT NULL,
+  `preco` decimal(10,0) NOT NULL,
+  `quantidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `entradaestoque`
+--
+
+INSERT INTO `entradaestoque` (`id`, `idproduto`, `dataentrada`, `preco`, `quantidade`) VALUES
+(2, 24, '2025-06-25', 50, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produto`
 --
 
 CREATE TABLE `produto` (
@@ -105,7 +105,7 @@ CREATE TABLE `produto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `produto`
+-- Extraindo dados da tabela `produto`
 --
 
 INSERT INTO `produto` (`id`, `nome`, `preco`, `comissao`, `estoque`, `precocusto`, `precovenda`) VALUES
@@ -126,7 +126,7 @@ INSERT INTO `produto` (`id`, `nome`, `preco`, `comissao`, `estoque`, `precocusto
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tipodespesa`
+-- Estrutura da tabela `tipodespesa`
 --
 
 CREATE TABLE `tipodespesa` (
@@ -135,7 +135,7 @@ CREATE TABLE `tipodespesa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `tipodespesa`
+-- Extraindo dados da tabela `tipodespesa`
 --
 
 INSERT INTO `tipodespesa` (`id`, `nome`) VALUES
@@ -152,7 +152,7 @@ INSERT INTO `tipodespesa` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuario`
+-- Estrutura da tabela `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -164,7 +164,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `usuario`
+-- Extraindo dados da tabela `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `master`) VALUES
@@ -175,7 +175,7 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `master`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `venda`
+-- Estrutura da tabela `venda`
 --
 
 CREATE TABLE `venda` (
@@ -191,20 +191,25 @@ CREATE TABLE `venda` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `venda`
+-- Extraindo dados da tabela `venda`
 --
 
 INSERT INTO `venda` (`id`, `idproduto`, `idvendedor`, `idcliente`, `quantidade`, `datavenda`, `preco`, `precocusto`) VALUES
-(1, 6, 1, 1, 6, '2025-05-25', 15.00, 5.00),
 (2, 18, 4, 0, 7, '2025-09-01', 13.00, 0.00),
 (3, 18, 4, 0, 7, '2025-09-01', 13.75, 0.00),
 (4, 6, 1, 0, 5, '2025-09-18', 20.00, 10.00),
-(5, 27, 5, 1, 10, '2025-10-08', 6.00, 3.50);
+(5, 6, 1, 0, 5, '2025-08-20', 10.00, 5.00),
+(6, 6, 1, 0, 5, '2025-05-25', 10.00, 5.00),
+(7, 6, 1, 0, 5, '2025-08-20', 10.00, 5.00),
+(8, 6, 1, 0, 5, '2025-02-20', 20.00, 10.00),
+(9, 27, 3, 1, 5, '2025-08-25', 10.00, 5.00),
+(10, 22, 3, 1, 5, '2025-08-25', 20.00, 5.00),
+(11, 24, 4, 1, 5, '2025-06-20', 10.00, 5.00);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `vendedor`
+-- Estrutura da tabela `vendedor`
 --
 
 CREATE TABLE `vendedor` (
@@ -213,61 +218,60 @@ CREATE TABLE `vendedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `vendedor`
+-- Extraindo dados da tabela `vendedor`
 --
 
 INSERT INTO `vendedor` (`id`, `nome`) VALUES
 (1, 'Jovas'),
 (2, 'Lúcio'),
 (3, 'Matheus'),
-(4, 'Emerson'),
-(5, 'João Victor do Nascimento Martins');
+(4, 'Emerson');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `admissao`
---
-ALTER TABLE `admissao`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idproduto` (`idproduto`);
-
---
--- Índices de tabela `cliente`
+-- Índices para tabela `cliente`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `despesa`
+-- Índices para tabela `despesa`
 --
 ALTER TABLE `despesa`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idtipodespesa` (`idtipodespesa`);
 
 --
--- Índices de tabela `produto`
+-- Índices para tabela `entradaestoque`
+--
+ALTER TABLE `entradaestoque`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idproduto` (`idproduto`);
+
+--
+-- Índices para tabela `produto`
 --
 ALTER TABLE `produto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `tipodespesa`
+-- Índices para tabela `tipodespesa`
 --
 ALTER TABLE `tipodespesa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `usuario`
+-- Índices para tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Índices de tabela `venda`
+-- Índices para tabela `venda`
 --
 ALTER TABLE `venda`
   ADD PRIMARY KEY (`id`),
@@ -275,20 +279,14 @@ ALTER TABLE `venda`
   ADD KEY `idvendedor` (`idvendedor`);
 
 --
--- Índices de tabela `vendedor`
+-- Índices para tabela `vendedor`
 --
 ALTER TABLE `vendedor`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
-
---
--- AUTO_INCREMENT de tabela `admissao`
---
-ALTER TABLE `admissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `cliente`
@@ -300,6 +298,12 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `despesa`
 --
 ALTER TABLE `despesa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `entradaestoque`
+--
+ALTER TABLE `entradaestoque`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -324,36 +328,17 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de tabela `vendedor`
---
-ALTER TABLE `vendedor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `admissao`
+-- Limitadores para a tabela `entradaestoque`
 --
-ALTER TABLE `admissao`
-  ADD CONSTRAINT `admissao_ibfk_1` FOREIGN KEY (`idproduto`) REFERENCES `produto` (`id`);
-
---
--- Restrições para tabelas `despesa`
---
-ALTER TABLE `despesa`
-  ADD CONSTRAINT `despesa_ibfk_1` FOREIGN KEY (`idtipodespesa`) REFERENCES `tipodespesa` (`id`);
-
---
--- Restrições para tabelas `venda`
---
-ALTER TABLE `venda`
-  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`idproduto`) REFERENCES `produto` (`id`),
-  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`idvendedor`) REFERENCES `vendedor` (`id`);
+ALTER TABLE `entradaestoque`
+  ADD CONSTRAINT `entradaestoque_ibfk_1` FOREIGN KEY (`idproduto`) REFERENCES `produto` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

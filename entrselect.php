@@ -3,17 +3,21 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Query SQL padrão para listar todos os usuários
-$sql = 'SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
-  from cliente ORDER BY nome ASC';
+// Query SQL padrão para listar todas as admissao
+$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
+  from admissao a inner join produto p on p.id=a.idproduto  ';
 
-// Pesquisa por nome
+// Pesquisa por admissao
 $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
-    // Consulta para buscar usuários com base no nome fornecido
-    $sql = $sql = 'SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
-    from cliente ORDER BY nome ASC WHERE t.nome LIKE ' % $pesqnome % ' ORDER BY t.nome ASC';
+    // Consulta para buscar admissao com base no nome fornecido
+    $sql = "select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
+  from admissao a inner join produto p on p.id=a.idproduto ";
+} else {
+    // Consulta padrão para listar todas as admissao
+    $sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
+  from admissao a inner join produto p on p.id=a.idproduto ';
 }
 
 $result = mysqli_query($con, $sql);
@@ -48,18 +52,14 @@ $result = mysqli_query($con, $sql);
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
     <style>
-            /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -137,23 +137,7 @@ $result = mysqli_query($con, $sql);
             font-family: "Poppins", sans-serif;
             font-size: 15px;
             color: #333;
-
         }
-
-        tbody {
-            display: block;
-            height: auto;
-            overflow-y: auto;
-        }
-
-        table thead,
-        table tbody tr {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-            /* mantém alinhamento das colunas */
-        }
-
 
         thead {
             background: #404A3D;
@@ -179,9 +163,6 @@ $result = mysqli_query($con, $sql);
             padding: 12px 14px;
             text-align: center;
         }
-
-    
-
 
         /* Botões */
         .btn {
@@ -216,7 +197,8 @@ $result = mysqli_query($con, $sql);
 
 <body>
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top px-4 px-lg-5">
+
         <h1 class="m-0">Superar</h1>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -231,44 +213,44 @@ $result = mysqli_query($con, $sql);
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
+    <!-- Formulário de pesquisa -->
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: transparent;">
+        <!-- Cabeçalho do formulário -->
+        <div class="container" style="background-color: transparent;" width="200px;">
+
             <!-- Formulário de pesquisa -->
             <form method="post" action="">
-                <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom:5px; border-radius: 10px;">
+                <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom: 5px; border-radius: 5px;">
+                    <!-- Campo de texto e botões na mesma linha -->
                     <div class="col-auto">
-                        <h5 style="color: white;">Nome do cliente:</h5>
+                        <h5 style="color: white;">Nome parcial:</h5>
                     </div>
                     <div class="col-auto">
-                        <div class="autocomplete-wrapper">
-                            <div class="col-auto">
-                                <input type="text" id="search" id="pesqnome" name="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
-                            </div>
-                            <div id="suggestions"></div>
-                        </div>
+                        <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 400px;" value="<?php echo $pesqnome; ?>">
                     </div>
                     <div class="col-auto">
-                        <a href="lanselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                        <a href="entrselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                         <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                        <a href="cliinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
+                        <a href="entrinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
+
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+
+
+    <!-- Tabela de Resultados -->
     <div class="table-container">
         <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Whatsapp</th>
-                    <th scope="col">Endereço</th>
-                    <th scope="col">Bairro</th>
-                    <th scope="col">Cidade</th>
-                    <th scope="col">UF</th>
-                    <th scope="col">Data da Despesa</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">IDP</th>
+                    <th scope="col">Data da Entrada</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
                     <th scope="col">Operações</th>
                 </tr>
             </thead>
@@ -276,18 +258,15 @@ $result = mysqli_query($con, $sql);
                 <?php
                 if ($result && mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        // formatando a data (YYYY-MM-DD → DD/MM/YYYY)
-                        $datadespesa = !empty($row['datadespesa']) ? date("d/m/Y", strtotime($row['datadespesa'])) : "-";
+                        // formatando a data corretamente (YYYY-MM-DD → DD/MM/YYYY)
+                        $dataentrada = date("d/m/Y", strtotime($row['dataentrada']));
 
                         echo "<tr>
-                  <td>{$row['Nome']}</td>
-                  <td>{$row['Email']}</td>
-                  <td>{$row['Whatsapp']}</td>
-                  <td>{$row['Endereço']}</td>
-                  <td>{$row['Bairro']}</td>
-                  <td>{$row['Cidade']}</td>
-                  <td>{$row['UF']}</td>
-                  <td>{$datadespesa}</td>
+                  <td>{$row['id']}</td>
+                  <td>{$row['nome']}</td>
+                  <td>{$dataentrada}</td>
+                  <td>R$ " . number_format($row['preco'], 2, ',', '.') . "</td>
+                  <td>{$row['quantidade']}</td>
                   <td>
                       <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
                         <i class='bi bi-pencil-square'></i> Alterar
@@ -299,7 +278,7 @@ $result = mysqli_query($con, $sql);
                 </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='9' class='text-center'>Nenhuma despesa encontrada.</td></tr>";
+                    echo "<tr><td colspan='6' class='text-center'>Nenhum registro encontrado.</td></tr>";
                 }
                 ?>
             </tbody>

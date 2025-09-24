@@ -9,8 +9,7 @@
 body {
     margin: 0;
     font-family: Poppins, sans-serif;
-    background-color: #D3D3D3
-;
+    background-color: #D3D3D3;
 }
 
 .jumbotron {
@@ -316,3 +315,313 @@ body {
 }
 
 
+/* =============================
+   Container principal do Form
+   ============================= */
+.container-form-post {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #222;
+}
+
+/* =============================
+   Títulos
+   ============================= */
+.container-form-post h1,
+.container-form-post h2,
+.container-form-post h3,
+.container-form-post h4 {
+    font-weight: 700;
+    color: #2C3E50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.container-form-post h1 {
+    font-size: 2.2rem;
+}
+
+.container-form-post h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* =============================
+   Labels
+   ============================= */
+.container-form-post label {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #1A1A1A;
+}
+
+/* =============================
+   Inputs, Selects e Textareas
+   ============================= */
+.container-form-post input,
+.container-form-post select,
+.container-form-post textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 2px solid #BDC3C7;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px;
+}
+
+/* Acessibilidade no foco */
+.container-form-post input:focus,
+.container-form-post select:focus,
+.container-form-post textarea:focus {
+    border-color: green;
+    box-shadow: 0 0 6px rgb(0, 255, 0);
+    outline: none;
+}
+
+/* =============================
+   Botões
+   ============================= */
+.container-form-post .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 5px;
+    min-width: 130px;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+    text-align: center;
+    border: none;
+}
+
+/* Botão neutro */
+.container-form-post .btn-voltar {
+    background-color: #BDC3C7;
+    color: #222;
+}
+
+.container-form-post .btn-voltar:hover {
+    background-color: #95A5A6;
+    transform: translateY(-2px);
+}
+
+/* Botão ação principal */
+.container-form-post .btn-adicionar {
+    background-color: green;
+    color: #fff;
+}
+
+.container-form-post .btn-adicionar:hover {
+    background-color: rgb(0, 82, 0);
+    transform: translateY(-2px);
+}
+
+/* Ajuste para o bloco dos filtros */
+.container-form-post .form-row {
+    margin-bottom: 18px;
+}
+
+/* Inputs de filtro */
+.container-form-post .form-row input {
+    border: 2px solid #BDC3C7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder estilizado */
+.container-form-post .form-row input::placeholder {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Efeito de foco */
+.container-form-post .form-row input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 6px rgba(91, 140, 81, 0.6);
+    outline: none;
+}
+
+/* =============================
+   Acessibilidade extra
+   ============================= */
+
+/* Botões com foco visível */
+.container-form-post .btn:focus {
+    outline: 3px solid #FFB703;
+    /* cor de destaque */
+    outline-offset: 3px;
+}
+
+/* Links dentro do form */
+.container-form-post a {
+    font-weight: 600;
+    color: #2C7BE5;
+    text-decoration: none;
+}
+
+.container-form-post a:hover {
+    text-decoration: underline;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .container-form-post {
+        padding: 20px;
+    }
+
+    .container-form-post h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Container principal */
+/* Só aplica na tela de login */
+body.login-page {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/img/login.jpg');
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container de login */
+.screen-1 {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.8s ease;
+}
+
+
+/* Logo central */
+.screen-1 img {
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    border: 2px solid green;
+    padding: 5px;
+}
+
+/* Labels */
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Inputs */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid #6b6b6b;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: green;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 128, 0, 0.568);
+}
+
+/* Botão */
+button.login {
+    width: 100%;
+    padding: 0.9rem;
+    background: green;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button.login:hover {
+    background: green;
+    box-shadow: 0 5px 15px rgba(0, 128, 0, 0.479);
+}
+
+/* Alerta de erro */
+.alert {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    padding: 0.7rem;
+    font-size: 0.9rem;
+}
+
+/* Ícone de olho */
+ion-icon {
+    font-size: 1.3rem;
+    color: green;
+    transition: 0.2s;
+}
+
+ion-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table {
+    table-layout: auto;
+    /* Faz as colunas se adaptarem ao conteúdo */
+    width: 100%;
+    /* Preenche o espaço */
+}
+
+.table td,
+.table th {
+    white-space: normal;
+    /* Permite quebra de linha */
+    word-wrap: break-word;
+    /* Quebra palavras grandes */
+    vertical-align: middle;
+    /* Alinha o conteúdo no meio da célula */
+}
+
+tbody {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+}
+
+tbody {
+    display: table-row-group;
+    /* padrão */
+    height: auto;
+    /* cresce conforme o conteúdo */
+}

@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     // Corrigir a instrução SQL para incluir todas as colunas
     $sql = 'INSERT INTO produto (nome, preco, comissao, estoque, precocusto, precovenda) VALUES 
     ("' . $nome . '", "' . $preco . '", "' . $comissao . '", "' . $estoque . '", "' . $precocusto . '", "' . $precovenda . '")';
-    
+
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: proselect.php');
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-     /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -192,7 +192,7 @@ if (isset($_POST['submit'])) {
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -219,85 +219,52 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: white;">Incluir Produto</h2>
-            </div>
-        </div>
+    <div class="container-form-post">
+        <h2>Incluir Produto</h2>
 
-        <div class="container" style="margin-top: 30px; background-color: #404A3D;">
+        <form action="" method="post">
+            <h4>Dados do Produto:</h4>
 
-            <br>
-
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados do Produto:</h4>
-<br>
-                <!-- Tabelas -->
-                <div class="container">
-                    <div class="row">
-                        <!-- Nome -->
-                        <div class="col">
-                            <label for="nome" style="color:white; margin-right: 500px;">Nome:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px; width: 250px; color: black;"
-                                required>
-                        </div>
-                        <div class="col">
-                            <!-- Preço -->
-                            <label for="preco" style="color:white; margin-right: 500px;">Preço:</label>
-                            <input type="text" name="preco" class="form-control" style="padding: 9px; width: 250px; color: black"
-                                required>
-                        </div>
-                        
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                            <!-- Comissão -->
-                            <label for="comissao" style="color:white; margin-right: 410px;">Valor da Comissão:</label>
-                            <input type="text" name="comissao" class="form-control" style="padding: 9px; width: 250px; color: black"
-                                required>
-                        </div>
-                        <div class="col">
-                            <!-- Estoque -->
-                            <label for="estoque" style="color:white; margin-right: 500px; margin-top: 5px;">Estoque:</label>
-                            <input type="number" name="estoque" class="form-control" style="padding: 9px; width: 250px; color: black"
-                                required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <!-- Custo -->
-                            <label for="precocusto" style="color:white; margin-right: 410px;">Preço Custo:</label>
-                            <input type="text" name="precocusto" class="form-control" style="padding: 9px; width: 250px; color: black"
-                                required>
-                        </div>
-                        <div class="col">
-                            <!-- Venda -->
-                            <label for="precovenda" style="color:white; margin-right: 500px; margin-top: 15px;">Preço Venda:</label>
-                            <input type="text" name="precovenda" class="form-control" style="padding: 9px; width: 250px; color: black"
-                                required>
-                        </div>
-                    </div>
-                    <br>
-
-                <!-- Fim Tabelas -->
-
-                <div class="container" style="margin-top: 40px;">
-                    <div class="row">
-                        <!-- Botões -->
-                        <div class="col text-center">
-                            <a href="proselect.php">
-                                <button type="button" style="padding: 9px; width: 100px;"
-                                    class="btn btn-dark">Voltar</button>
-                            </a>
-                            <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                class="btn btn-secondary">Adicionar</button>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <label for="nome">Nome:</label>
+                    <input type="text" name="nome" class="form-control" required>
                 </div>
-            </form>
-        </div>
+                <div class="col">
+                    <label for="preco">Preço:</label>
+                    <input type="text" name="preco" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="comissao">Valor da Comissão:</label>
+                    <input type="text" name="comissao" class="form-control" required>
+                </div>
+                <div class="col">
+                    <label for="estoque">Estoque:</label>
+                    <input type="number" name="estoque" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="precocusto">Preço Custo:</label>
+                    <input type="text" name="precocusto" class="form-control" required>
+                </div>
+                <div class="col">
+                    <label for="precovenda">Preço Venda:</label>
+                    <input type="text" name="precovenda" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="admselect.php" class="btn btn-voltar">Voltar</a>
+                <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
+            </div>
+        </form>
+    </div>
+
     </div>
     <!-- Page Header End -->
 

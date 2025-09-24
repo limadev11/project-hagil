@@ -52,6 +52,7 @@ if (isset($_POST['submit'])) {
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    
  <style>
      /* Container de sugestões */
         #suggestions {

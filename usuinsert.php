@@ -12,9 +12,8 @@ if (isset($_POST['submit'])) {
     if ($result) {
         header('location: ususelect.php');
     } else {
-        die(''. mysqli_error($con));
-
-}
+        die('' . mysqli_error($con));
+    }
 }
 
 ?>
@@ -53,141 +52,7 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-     /* Container de sugestões */
-        #suggestions {
-            position: absolute;
-            /* Fica posicionado em relação ao input */
-            top: 100%;
-            /* Fica logo abaixo do input */
-            left: 0;
-            width: 100%;
-            /* Mesma largura do input */
-            background-color: #fff;
-            /* Fundo branco */
-            border: 1px solid #ccc;
-            /* Borda clara */
-            border-top: none;
-            /* Remove a borda superior para ficar integrado */
-            border-radius: 0 0 8px 8px;
-            /* Bordas arredondadas na parte inferior */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-            max-height: 250px;
-            /* Altura máxima com scroll */
-            overflow-y: auto;
-            z-index: 1000;
-            /* Fica acima de outros elementos */
-            display: none;
-            /* Inicialmente escondido */
-        }
 
-        /* Cada sugestão */
-        #suggestions div {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        /* Hover na sugestão */
-        #suggestions div:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Input com autocomplete */
-        #search {
-            border-radius: 8px;
-            /* Bordas arredondadas */
-            padding: 10px 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        /* Container pai para manter posição relativa */
-        .autocomplete-wrapper {
-            position: relative;
-            /* Necessário para o absolute do #suggestions */
-            width: 500px;
-            /* ou 100% se quiser responsivo */
-            margin: 0 auto;
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            /* responsivo no celular */
-            margin-top: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            color: #333;
-        }
-
-        thead {
-            background: #404A3D;
-            color: #fff;
-        }
-
-        thead th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background: #e9f5ec;
-            /* cor de destaque */
-        }
-
-        td {
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        /* Botões */
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: #fff;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-        </style>
 </head>
 
 <body>
@@ -214,67 +79,61 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: white;">Incluir Usuário</h2>
+    <div class="container-form-post">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="container text-center py-5">
+                    <h2>Incluir Usuário</h2>
+                </div>
             </div>
-        </div>
 
-        <div class="container" style="margin-top: 30px; background-color: #404A3D;">
-            
-        <br>
+            <div class="container mt-4">
+                <form action="" method="post">
+                    <h4>Dados do Usuário:</h4>
 
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados do Usuário:</h4>
-
-                <div class="form-group">
-                    <div class="row" style="margin-top: 30px;">
+                    <div class="form-group row mt-3">
                         <!-- Nome -->
                         <div class="col-md-6">
-                            <label for="nome" style="color:white;">Nome:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" class="form-control" required>
                         </div>
+
                         <!-- Administrador -->
                         <div class="col-md-6">
-                            <label for="master" style="color:white;">Administrador:</label>
-                            <select class="form-control" name="master" style="padding: 9px; width: 100px;" required>
+                            <label for="master">Administrador:</label>
+                            <select class="form-control" name="master" required>
                                 <option value="s">SIM</option>
                                 <option value="n">NÃO</option>
                             </select>
                         </div>
+                    </div>
 
+                    <div class="form-group row mt-3">
+                        <!-- E-mail -->
+                        <div class="col-md-6">
+                            <label for="email">Endereço de E-mail:</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
 
-                        <div class="row" style="margin-top: 20px;">
-                            <!-- E-mail -->
-                            <div class="col-md-6">
-                                <label for="email" style="color:white;">Endereço de E-mail:</label>
-                                <input type="email" name="email" class="form-control" style="padding: 9px;" required>
-                            </div>
-                            <!-- Senha -->
-                            <div class="col-md-6">
-                                <label for="senha" style="color:white;">Senha:</label>
-                                <input type="password" name="senha" class="form-control" style="padding: 9px;" required>
-                            </div>
+                        <!-- Senha -->
+                        <div class="col-md-6">
+                            <label for="senha">Senha:</label>
+                            <input type="password" name="senha" class="form-control" required>
                         </div>
                     </div>
 
-                    <div class="container" style="margin-top: 40px;">
-                        <div class="row">
-                            <!-- Botões -->
-                            <div class="col text-center">
-                                <a href="ususelect.php">
-                                    <button type="button" style="padding: 9px; width: 100px;"
-                                        class="btn btn-dark">Voltar</button>
-                                </a>
-                                <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                    class="btn btn-secondary">Adicionar</button>
-                            </div>
+                    <!-- Botões -->
+                    <div class="row mt-4">
+                        <div class="col text-center">
+                            <a href="ususelect.php" class="btn btn-voltar">Voltar</a>
+                            <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
                         </div>
                     </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
     <!-- Page Header End -->
 
     <!-- JavaScript Libraries -->

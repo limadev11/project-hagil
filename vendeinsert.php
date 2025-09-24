@@ -9,9 +9,8 @@ if (isset($_POST['submit'])) {
     if ($result) {
         header('location: vendeselect.php');
     } else {
-        die(''. mysqli_error($con));
-
-}
+        die('' . mysqli_error($con));
+    }
 }
 
 ?>
@@ -51,7 +50,7 @@ if (isset($_POST['submit'])) {
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-     /* Container de sugestões */
+        /* Container de sugestões */
         #suggestions {
             position: absolute;
             /* Fica posicionado em relação ao input */
@@ -184,7 +183,7 @@ if (isset($_POST['submit'])) {
         .btn-delete:hover {
             background: #dc2626;
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -211,41 +210,44 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="container" style="margin-top: 30px; background-color: #404A3D;">
-        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container" style="width: 2000px; height: 100px; border-radius: 5px;">
-                <div class="container text-center py-5" style="height: 100px; color: black;">
-                    <h2 style="color: white;">Adicionar Vendedor</h2>
+    <div class="container-form-post">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
+                <div class="container">
+                    <div class="container text-center py-5">
+                        <h2>Adicionar Vendedor</h2>
+                    </div>
                 </div>
-            </div>
-            <form action="" method="post" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados do Vendedor:</h4>
-                <div class="form-group">
-                    <div class="row" style="margin-top: 30px;">
-                        <!-- Nome -->
-                        <div class="col-md-6" style="margin-left: 330px;">
-                            <label for="nome" style="color:white;">Nome:</label>
-                            <input type="text" name="nome" class="form-control" style="padding: 9px;" required>
-                        </div>
-                        <!-- Fim Nome -->
-                        <div class="container" style="margin-top: 40px;">
-                            <div class="row">
-                                <!-- Botões -->
-                                <div class="col text-center">
-                                    <a href="vendeselect.php">
-                                        <button type="button" style="padding: 9px; width: 100px;"
-                                            class="btn btn-dark">Voltar</button>
-                                    </a>
-                                    <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                        class="btn btn-secondary">Adicionar</button>
+                <form action="" method="post">
+                    <h4>Dados do Vendedor:</h4>
+                    <div class="form-group">
+                        <div class="row">
+                            <!-- Nome -->
+                            <div class="form-group text-center">
+                                <label for="nome" class="d-block">Nome:</label>
+                                <input type="text" name="nome" class="form-control d-inline-block" style="width: 50%;" required>
+                            </div>
+
+                            <!-- Fim Nome -->
+                            <div class="container">
+                                <div class="row">
+                                    <!-- Botões -->
+                                    <div class="col text-center">
+                                        <a href="vendeselect.php">
+                                            <button type="button" class="btn btn-voltar">Voltar</button>
+                                        </a>
+                                        <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
+                                    </div>
+                                    <!-- Fim Botões -->
                                 </div>
-                                <!-- Fim Botões -->
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+    </div>
+
     </div>
     <!-- Page Header End -->
 

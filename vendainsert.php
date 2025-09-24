@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     $preco = $_POST['preco'];
 
     $sql = 'insert into venda(idproduto, idvendedor, idcliente, quantidade, datavenda, preco, precocusto) 
-            values (' . $idproduto . ',' . $idvendedor . ',' . $idcliente . ',' . $quantidade . ',' . $datavenda . ','. $preco . ',' . $precocusto . ')';
+            values (' . $idproduto . ',' . $idvendedor . ',' . $idcliente . ',' . $quantidade . ',' . $datavenda . ',' . $preco . ',' . $precocusto . ')';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: vendaselect.php');
@@ -57,160 +57,7 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-     /* Container de sugestões */
-        #suggestions {
-            position: absolute;
-            /* Fica posicionado em relação ao input */
-            top: 100%;
-            /* Fica logo abaixo do input */
-            left: 0;
-            width: 100%;
-            /* Mesma largura do input */
-            background-color: #fff;
-            /* Fundo branco */
-            border: 1px solid #ccc;
-            /* Borda clara */
-            border-top: none;
-            /* Remove a borda superior para ficar integrado */
-            border-radius: 0 0 8px 8px;
-            /* Bordas arredondadas na parte inferior */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-            max-height: 250px;
-            /* Altura máxima com scroll */
-            overflow-y: auto;
-            z-index: 1000;
-            /* Fica acima de outros elementos */
-            display: none;
-            /* Inicialmente escondido */
-        }
 
-        /* Cada sugestão */
-        #suggestions div {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        /* Hover na sugestão */
-        #suggestions div:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Input com autocomplete */
-        #search {
-            border-radius: 8px;
-            /* Bordas arredondadas */
-            padding: 10px 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        /* Container pai para manter posição relativa */
-        .autocomplete-wrapper {
-            position: relative;
-            /* Necessário para o absolute do #suggestions */
-            width: 500px;
-            /* ou 100% se quiser responsivo */
-            margin: 0 auto;
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            /* responsivo no celular */
-            margin-top: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            color: #333;
-        }
-
-        thead {
-            background: #404A3D;
-            color: #fff;
-        }
-
-        thead th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background: #e9f5ec;
-            /* cor de destaque */
-        }
-
-        td {
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        /* Botões */
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: #fff;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-        </style>
-
-    <style>
-        .center-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .form-control {
-            width: 350px;
-            margin-bottom: 15px;
-        }
-
-        .container {
-            max-width: 800px;
-            /* Limitar a largura máxima do container */
-        }
-    </style>
 </head>
 
 <body>
@@ -231,92 +78,98 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; border-radius: 5px;">
-            <div class="container text-center py-2" style="color: black;">
-                <h1 style="color: white;">Incluir Venda</h1>
-            </div>
-            <br>
-            <form action="" method="post" class="center-content" style="margin-top: 20px;">
-                <h4 style="color: white;">Dados da Venda:</h4>
-                <br>
+    <div class="container-form-post">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container p-3">
+                <div class="container text-center py-2">
+                    <h1>Incluir Venda</h1>
+                </div>
 
-                <!-- Centralizando conteúdo -->
-                <div class="center-content">
+                <form action="" method="post" class="mt-3">
+                    <h4>Dados da Venda:</h4>
 
-                    <!-- Nome do Produto -->
-                    <label for="nome" style="color:white;">Nome do Produto:</label>
-                    <?php
-                    $sqll = 'select * from produto order by id';
-                    $result = mysqli_query($con, $sqll);
-                    if ($result) {
-                        echo '<select name="idproduto" class="form-control">';
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                    <!-- Produto -->
+                    <div class="mb-3">
+                        <label for="idproduto" class="form-label">Nome do Produto:</label>
+                        <?php
+                        $sqll = 'SELECT * FROM produto ORDER BY id';
+                        $result = mysqli_query($con, $sqll);
+                        if ($result) {
+                            echo '<select name="idproduto" class="form-control">';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                            }
+                            echo '</select>';
                         }
-                        echo '</select>';
-                    }
-                    ?>
+                        ?>
+                    </div>
 
-                    <!-- Nome do Vendedor -->
-                    <label for="nome" style="color:white;">Nome do Vendedor:</label>
-                    <?php
-                    $sqll = 'select * from vendedor order by id';
-                    $result = mysqli_query($con, $sqll);
-                    if ($result) {
-                        echo '<select name="idvendedor" class="form-control">';
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                    <!-- Vendedor -->
+                    <div class="mb-3">
+                        <label for="idvendedor" class="form-label">Nome do Vendedor:</label>
+                        <?php
+                        $sqll = 'SELECT * FROM vendedor ORDER BY id';
+                        $result = mysqli_query($con, $sqll);
+                        if ($result) {
+                            echo '<select name="idvendedor" class="form-control">';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                            }
+                            echo '</select>';
                         }
-                        echo '</select>';
-                    }
-                    ?>
-                    <!-- Nome do Clirnyr -->
-                    <label for="nome" style="color:white;">Nome do Cliente:</label>
-                    <?php
-                    $sqll = 'select * from cliente order by id';
-                    $result = mysqli_query($con, $sqll);
-                    if ($result) {
-                        echo '<select name="idcliente" class="form-control">';
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                        ?>
+                    </div>
+
+                    <!-- Cliente -->
+                    <div class="mb-3">
+                        <label for="idcliente" class="form-label">Nome do Cliente:</label>
+                        <?php
+                        $sqll = 'SELECT * FROM cliente ORDER BY id';
+                        $result = mysqli_query($con, $sqll);
+                        if ($result) {
+                            echo '<select name="idcliente" class="form-control">';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
+                            }
+                            echo '</select>';
                         }
-                        echo '</select>';
-                    }
-                    ?>
+                        ?>
+                    </div>
+
                     <!-- Quantidade -->
-                    <label for="quantidade" style="color:white;">Quantidade vendida:</label>
-                    <input type="text" name="quantidade" class="form-control" required>
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade vendida:</label>
+                        <input type="text" name="quantidade" class="form-control" required>
+                    </div>
 
-                    <!-- Data da Venda -->
-                    <label for="datavenda" style="color:white;">Data da Venda:</label>
-                    <input type="date" name="datavenda" class="form-control" required>
+                    <!-- Data -->
+                    <div class="mb-3">
+                        <label for="datavenda" class="form-label">Data da Venda:</label>
+                        <input type="date" name="datavenda" class="form-control" required>
+                    </div>
 
-                    <!-- Preço CUsto -->
-                    <label for="precocusto" style="color:white;">Preço Custo:</label>
-                    <input type="number" name="precocusto" class="form-control" step="0.01" required>
+                    <!-- Preço Custo -->
+                    <div class="mb-3">
+                        <label for="precocusto" class="form-label">Preço Custo:</label>
+                        <input type="number" name="precocusto" class="form-control" step="0.01" required>
+                    </div>
 
                     <!-- Preço Venda -->
-                    <label for="preco" style="color:white;">Preço Venda:</label>
-                    <input type="number" name="preco" class="form-control" step="0.01" required>
-                </div>
-
-                <!-- Botões -->
-                <div class="container" style="margin-top: 40px;">
-                    <div class="row">
-                        <div class="col text-center">
-                            <a href="vendaselect.php">
-                                <button type="button" style="padding: 9px; width: 100px;"
-                                    class="btn btn-dark">Voltar</button>
-                            </a>
-                            <button type="submit" name="submit" style="padding: 9px; width: 100px;"
-                                class="btn btn-secondary">Adicionar</button>
-                        </div>
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço Venda:</label>
+                        <input type="number" name="preco" class="form-control" step="0.01" required>
                     </div>
-                </div>
-            </form>
+
+                    <!-- Botões -->
+                    <div class="text-center mt-4">
+                        <a href="vendaselect.php" class="btn btn-voltar">Voltar</a>
+                        <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
     <!-- Page Header End -->
 
     <!-- JavaScript Libraries -->

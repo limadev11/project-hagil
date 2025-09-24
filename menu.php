@@ -91,7 +91,7 @@ include('verificalogin.php');
                     <a href="proselect.php" class="nav-item nav-link">Produtos</a>
                     <a href="vendeselect.php" class="nav-item nav-link">Vendedores</a>
                     <a href="tpdselect.php" class="nav-item nav-link">Tipos de Despesas</a>
-                    <a href="lancselect.php" class="nav-item nav-link">Lançamento de Despesas</a>
+                    <a href="proselect.php" class="nav-item nav-link">Produtos</a>
                     <a href="admselect.php" class="nav-item nav-link">Admissão</a>
                     <a href="cliselect.php" class="nav-item nav-link">Cliente</a>
                     <a href="vendaselect.php" class="nav-item nav-link">Venda</a>
@@ -122,6 +122,11 @@ include('verificalogin.php');
             <!-- Menu -->
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
+                    <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
                     <a href="proselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/carrinho-de-compras.png" alt="">
                         Produtos
@@ -141,18 +146,19 @@ include('verificalogin.php');
                 <li class="nav-item mb-2">
                     <a href="tpdselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/saco-de-dolar.png" alt=""> Tipos de Despesas
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="lancselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/saco-de-dolar.png" alt=""> Lanç. de despesas
 
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a href="admselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/sair-alt.png" alt=""> Admissão
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
+                    <a href="entrselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/sair-alt.png" alt=""> Estoque
                     </a>
                 </li>
                 <li class="nav-item mb-2">
@@ -162,6 +168,14 @@ include('verificalogin.php');
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="logout.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/sair.png" alt="">
+                        Sair
+                    </a>
+                </li>
+
+
             </ul>
         </div>
 
@@ -170,7 +184,7 @@ include('verificalogin.php');
             <div class="container-xxl py-5">
                 <div class="container">
                     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.2s" style="max-width: 500px;">
-                        <p class="section-title bg-transparent text-center text-primary px-3">Bem vindo!</p>
+                        <p class="section-title bg-transparent text-center text-primary px-3">Bem-vindo!</p>
                     </div>
                 </div>
             </div>

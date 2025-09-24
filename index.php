@@ -23,134 +23,6 @@ session_start();
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="scss/main/style.css">
 
-    <style>
-        * {
-            font-family: "Poppins";
-        }
-
-        body {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            overflow-y: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #dde5f4;
-            height: 100vh;
-        }
-
-        .screen-1 {
-            background: #f1f7fe;
-            padding: 2em;
-            display: flex;
-            flex-direction: column;
-            border-radius: 30px;
-            box-shadow: 0 0 2em #e6e9f9;
-            gap: 2em;
-        }
-
-        .screen-1 .logo {
-            margin-top: -3em;
-        }
-
-        .screen-1 .email,
-        .screen-1 .password {
-            background: white;
-            box-shadow: 0 0 2em #e6e9f9;
-            padding: 1em;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5em;
-            border-radius: 20px;
-            color: #4d4d4d;
-        }
-
-        .screen-1 .email input,
-        .screen-1 .password input {
-            outline: none;
-            border: none;
-        }
-
-        .screen-1 .email input::placeholder,
-        .screen-1 .password input::placeholder {
-            color: black;
-            font-size: 0.9em;
-        }
-
-        .screen-1 .login {
-            padding: 1em;
-            background: green;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-        }
-
-        .screen-1 .footer {
-            display: flex;
-            font-size: 0.7em;
-            color: #5e5e5e;
-            gap: 14em;
-            padding-bottom: 10em;
-        }
-
-        .screen-1 .footer span {
-            cursor: pointer;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        /* Define o fundo da página */
-        body {
-            margin: 0;
-            height: 100vh;
-            background-color: #f0f0f0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Container da nuvem */
-        .container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 300px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Estilo da nuvem */
-        .cloud {
-            background-color: #e0e0e0;
-            border-radius: 50%;
-            width: 250px;
-            height: 150px;
-            position: relative;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Animação da nuvem */
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -162,34 +34,36 @@ session_start();
     </div>
     <!-- Spinner End -->
 
-    <div class="screen-1">
-        <center>
-            <img src="img/logomarca.jpeg" alt="" style="height:50px; width:50px;">
-        </center>
+    <body class="login-page">
+        <div class="screen-1">
+            <div class="screen-1">
+                <center>
+                    <img src="img/logomarca.jpeg" alt="Logo" style="height:50px; width:50px;">
+                </center>
 
-        <!-- Formulário de login -->
-        <form action="login.php" method="post">
-            <div class="email">
-                <?php if (isset($_SESSION['nao_autenticado'])) : ?>
-                    <div class="alert alert-danger">
-                        <p>ERRO: Usuário ou senha inválidos.</p>
+                <!-- Formulário de login -->
+                <form action="login.php" method="post">
+                    <div class="email">
+                        <?php if (isset($_SESSION['nao_autenticado'])) : ?>
+                            <div class="alert alert-danger">
+                                <p>ERRO: Usuário ou senha inválidos.</p>
+                            </div>
+                        <?php endif; ?>
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="Digite seu email" required />
                     </div>
-                <?php endif; ?>
-                <label>Email</label>
-                <input type="email" name="email" placeholder="Digite seu email" required />
-            </div>
 
-            <div class="password">
-                <label>Senha</label>
-                <div style="display: flex; align-items: center;">
-                    <input type="password" name="senha" placeholder="Digite sua senha" id="passwordInput" required />
-                    <ion-icon name="eye-outline" style="cursor: pointer; margin-left: 8px;" onclick="togglePasswordVisibility()"></ion-icon>
-                </div>
+                    <div class="password">
+                        <label>Senha</label>
+                        <div style="display: flex; align-items: center;">
+                            <input type="password" name="senha" placeholder="Digite sua senha" id="passwordInput" required />
+                            <ion-icon name="eye-outline" onclick="togglePasswordVisibility()"></ion-icon>
+                        </div>
+                    </div>
             </div>
-
-            <button class="login" type="submit">Login</button>
-        </form>
-    </div>
+    </body>
+    <button type="submit" class="login">Entrar</button>
+    </form>
 
     <script>
         function togglePasswordVisibility() {
