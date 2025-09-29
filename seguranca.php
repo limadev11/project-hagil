@@ -98,8 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
         </form>
     </div>
-    
-    <!-- Parte Java Script * Não tocar nele * -->
+
     <script>
         document.getElementById('form-seguranca').onsubmit = function(e) {
             var senhaAtual = document.getElementById('senha_atual').value.trim();

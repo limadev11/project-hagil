@@ -123,12 +123,7 @@ include('verificalogin.php');
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/calendario-linhas-caneta.png" alt=""> Vendas
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="lancselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/saco-de-dolar.png" alt=""> Lançamento de despesas
+                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
                     </a>
                 </li>
                 <li class="nav-item mb-2">
@@ -155,6 +150,13 @@ include('verificalogin.php');
                 </li>
 
                 <li class="nav-item mb-2">
+                    <a href="lancselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/saco-de-dolar.png" alt=""> Lançamento de despesas
+
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
                     <a href="entrselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/sair-alt.png" alt=""> Entrada de Estoque
                     </a>
@@ -165,7 +167,12 @@ include('verificalogin.php');
                         Usuários
                     </a>
                 </li>
-
+                <li class="nav-item mb-2">
+                    <a href="consultageral.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/comercial.png" alt="">
+                        Consulta Geral
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="logout.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/sair.png" alt="">

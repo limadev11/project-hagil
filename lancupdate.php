@@ -3,19 +3,19 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 $id = $_GET['updateid'];
-$sql = 'select * from despesa where id =' . $id;
+$sql = 'select * from lancdespesa where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
-$nome = $row['idtipodespesa'];
+$nome = $row['nome'];
 $valor =  str_replace(',', '.', $row['valor']);
-$observacao = $row['observacao'];
-$data = $row['data'];
+$iddespesa = $row['iddespesa'];
+$datadespesa = $row['datadespesa'];
 if (isset($_POST['submit'])) {
-    $nome = $_POST['idtipodespesa'];
+    $nome = $_POST['nome'];
     $valor = $_POST['valor'];
-    $observacao = $_POST['observacao'];
-    $data = $_POST['data'];
-    $sql = 'update despesa set idtipodespesa="' . $nome . '", valor="' . $valor . '", observacao="' . $observacao . '", data="' .  $data . '" where id=' . $id;
+    $iddespesa = $_POST['iddespesa'];
+    $datadespesa = $_POST['datadespesa'];
+    $sql = 'update lancdespesa set nome="' . $nome . '", valor="' . $valor . '", iddespesa="' . $iddespesa . '", datadespesa="' .  $datadespesa . '" where id=' . $id;
     $result = mysqli_query($con, $sql);
     if ($result) {
     header('location: lancselect.php');
@@ -51,141 +51,7 @@ if (isset($_POST['submit'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-     /* Container de sugestões */
-        #suggestions {
-            position: absolute;
-            /* Fica posicionado em relação ao input */
-            top: 100%;
-            /* Fica logo abaixo do input */
-            left: 0;
-            width: 100%;
-            /* Mesma largura do input */
-            background-color: #fff;
-            /* Fundo branco */
-            border: 1px solid #ccc;
-            /* Borda clara */
-            border-top: none;
-            /* Remove a borda superior para ficar integrado */
-            border-radius: 0 0 8px 8px;
-            /* Bordas arredondadas na parte inferior */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-            max-height: 250px;
-            /* Altura máxima com scroll */
-            overflow-y: auto;
-            z-index: 1000;
-            /* Fica acima de outros elementos */
-            display: none;
-            /* Inicialmente escondido */
-        }
 
-        /* Cada sugestão */
-        #suggestions div {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        /* Hover na sugestão */
-        #suggestions div:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Input com autocomplete */
-        #search {
-            border-radius: 8px;
-            /* Bordas arredondadas */
-            padding: 10px 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        /* Container pai para manter posição relativa */
-        .autocomplete-wrapper {
-            position: relative;
-            /* Necessário para o absolute do #suggestions */
-            width: 500px;
-            /* ou 100% se quiser responsivo */
-            margin: 0 auto;
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            /* responsivo no celular */
-            margin-top: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            color: #333;
-        }
-
-        thead {
-            background: #404A3D;
-            color: #fff;
-        }
-
-        thead th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background: #e9f5ec;
-            /* cor de destaque */
-        }
-
-        td {
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        /* Botões */
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: #fff;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-        </style>
 </head>
 
 <body>
@@ -237,7 +103,7 @@ if (isset($_POST['submit'])) {
                                             $result = mysqli_query($con, $sqll);
                                             if ($result) {
                                                 echo '<select 
-                                                    name="idtipodespesa" class="form-control">';
+                                                    name="iddespesa" class="form-control">';
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     echo '<option value="' . $row['id'] . '">' .
                                                         $row['nome'] . '</option>';
@@ -254,7 +120,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">
-                            <input type="text" class="form-control" name="observacao" id="observacao" value="<?php echo $observacao; ?>" required style="width: 350px;">
+                            <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">
@@ -273,7 +139,7 @@ if (isset($_POST['submit'])) {
                             <h5 style="color: white;">Data de Despesa</h5>
                         </div>
                         <div style="width: 350px; margin-left: 450px;">
-                            <input type="date" class="form-control" name="data" id="senha" value="<?php echo $data?>">
+                            <input type="date" class="form-control" name="datadespesa" id="senha" value="<?php echo $datadespesa?>">
                         </div>
                     </div>
                     <div class="row">
@@ -281,7 +147,9 @@ if (isset($_POST['submit'])) {
                         <br>
                         <?php
                             echo
-                                '<a href="lancselect.php" class="btn btn-dark">Voltar</a>';
+                                "<a href='lancselect.php?selectid={$row['id']}' style='color:white;'>
+                                <button type='button' style='padding: 9px; width: 100px;'
+                                class='btn btn-dark'>Voltar</button></a>";
                             ?>
                             <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
                         </div>

@@ -3,7 +3,7 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 $id = $_GET['updateid'];
-$sql = 'select * from entradaestoque where id =' . $id;
+$sql = 'select * from admissao where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $idproduto = $row['idproduto'];
@@ -15,13 +15,13 @@ if (isset($_POST['submit'])) {
     $dataentrada = $_POST['dataentrada'];
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
-    $sql = 'update entradaestoque set idproduto="' . $idproduto .
+    $sql = 'update admissao set idproduto="' . $idproduto .
             '", dataentrada="' . $dataentrada . '", preco="' . $preco .
             '", quantidade="' .  $quantidade . '" where id=' . $id;
             echo  $sql;
      $result = mysqli_query($con, $sql);
     if ($result) {
-       header('location: entrselect.php');
+       header('location: admselect.php');
     } else {
         die(mysqli_error($con));
     }
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>Atualizar Entrada</title>
+    <title>Atualizar Admissão</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -54,141 +54,6 @@ if (isset($_POST['submit'])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-<style>
-     /* Container de sugestões */
-        #suggestions {
-            position: absolute;
-            /* Fica posicionado em relação ao input */
-            top: 100%;
-            /* Fica logo abaixo do input */
-            left: 0;
-            width: 100%;
-            /* Mesma largura do input */
-            background-color: #fff;
-            /* Fundo branco */
-            border: 1px solid #ccc;
-            /* Borda clara */
-            border-top: none;
-            /* Remove a borda superior para ficar integrado */
-            border-radius: 0 0 8px 8px;
-            /* Bordas arredondadas na parte inferior */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Sombra suave */
-            max-height: 250px;
-            /* Altura máxima com scroll */
-            overflow-y: auto;
-            z-index: 1000;
-            /* Fica acima de outros elementos */
-            display: none;
-            /* Inicialmente escondido */
-        }
-
-        /* Cada sugestão */
-        #suggestions div {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        /* Hover na sugestão */
-        #suggestions div:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Input com autocomplete */
-        #search {
-            border-radius: 8px;
-            /* Bordas arredondadas */
-            padding: 10px 15px;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        /* Container pai para manter posição relativa */
-        .autocomplete-wrapper {
-            position: relative;
-            /* Necessário para o absolute do #suggestions */
-            width: 500px;
-            /* ou 100% se quiser responsivo */
-            margin: 0 auto;
-        }
-
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            /* responsivo no celular */
-            margin-top: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            color: #333;
-        }
-
-        thead {
-            background: #404A3D;
-            color: #fff;
-        }
-
-        thead th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background: #e9f5ec;
-            /* cor de destaque */
-        }
-
-        td {
-            padding: 12px 14px;
-            text-align: center;
-        }
-
-        /* Botões */
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: #fff;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-        </style>
 </head>
 
 <body>
@@ -219,7 +84,7 @@ if (isset($_POST['submit'])) {
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
     <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
         <div class="text-center py-5" style="height: 100px; color: black;">
-            <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Entrada:</h2>
+            <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Admissão:</h2>
             <br>
         </div>
     </div>
@@ -230,7 +95,7 @@ if (isset($_POST['submit'])) {
             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
             <div class="row" style="background-color: #556152;">
                 <div class="col-12 mb-4 text-center">
-                    <h4 style="color: white;">Dados da Entrada:</h4>
+                    <h4 style="color: white;">Dados da Admissão:</h4>
                 </div>
 
                 <!-- Quantidade -->
@@ -271,7 +136,7 @@ if (isset($_POST['submit'])) {
             <div class="row" style="background-color: #556152;">
                 <div class="col text-center">
                     <?php
-                    echo "<a href='entrselect.php'>
+                    echo "<a href='admselect.php'>
                         <button type='button' style='padding: 9px; width: 100px;' class='btn btn-dark'>Não, Voltar</button></a>";
                     ?>
                     <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>

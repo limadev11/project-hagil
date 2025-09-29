@@ -65,58 +65,55 @@ $result = mysqli_query($con, $sql);
             </div>
             <div class="col">
                 <!-- Aqui é o formulário de pesquisa usando o form com método post -->
-        <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
+                <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
                     background-color: #556152; border-radius: 10px;">
-            <div style="flex: 1;">
+                    <div style="flex: 1;">
 
-                <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
-                <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-row">
-                            <h5 style="margin-top:5px">Vendedor:</h5>
-                            <input type="text" name="pesqvend" placeholder="Nome..." style="height:30px; margin-top:5px"
-                                maxlength="37" value="<?php echo $pesqvend; ?>">
+                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5 style="margin-top:5px">Vendedor:</h5>
+                                    <input type="text" id="pesqvend" name="pesqvend" placeholder="Nome..." style="height:30px; margin-top:5px" maxlength="37" value="<?php echo $pesqvend; ?>">
+                                    <div id="result-vendedor" class="autocomplete-result"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Cliente:</h5>
+                                    <input type="text" id="pesqcliente" name="pesqcliente" placeholder="Nome..." style="height:30px;" maxlength="37" value="<?php echo $pesqcliente; ?>">
+                                    <div id="result-cliente" class="autocomplete-result"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Produto:</h5>
+                                    <input type="text" id="pesqproduto" name="pesqproduto" placeholder="Nome..." style="height:30px" maxlength="37" value="<?php echo $pesqproduto; ?>">
+                                    <div id="result-produto" class="autocomplete-result"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Data:</h5>
+                                    <input class="data-input" type="date" id="pesqdata" name="pesqdata" style="height:30px; width:125px" maxlength="8" value="<?php echo $pesqdata; ?>">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-row">
-                            <h5>Cliente:</h5>
-                            <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;"
-                                maxlength="37" value="<?php echo $pesqcliente; ?>">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <div class="form-row">
-                            <h5>Produto:</h5>
-                            <input type="text" name="pesqproduto" placeholder="Nome..." style="height:30px"
-                                maxlength="37" value="<?php echo $pesqproduto; ?>">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-row">
-                            <h5>Data:</h5>
-                            <input class="data-input" type="date" name="pesqdata" style="height:30px; width:125px" maxlength="8"
-                                value="<?php echo $pesqdata; ?>">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
+                    <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
             entrar na área de incluir nova venda -->
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
-            </div>
-        </form>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
+                        <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                        <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
+                    </div>
+                </form>
             </div>
             <div class="col">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -183,6 +180,44 @@ $result = mysqli_query($con, $sql);
         </table>
     </div>
     <?php include('templateJSfinal.html') ?>
+    <script>
+        function setupSearch(inputId, resultId, column) {
+            const input = document.getElementById(inputId);
+            const resultContainer = document.getElementById(resultId);
+
+            input.addEventListener('input', function() {
+                const query = input.value.trim();
+                if (query.length === 0) {
+                    resultContainer.innerHTML = '';
+                    return;
+                }
+
+                fetch('searchvenda.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `query=${encodeURIComponent(query)}&column=${encodeURIComponent(column)}`
+                    })
+                    .then(res => res.text())
+                    .then(data => {
+                        resultContainer.innerHTML = data;
+
+                        document.querySelectorAll(`#${resultId} .resultado`).forEach(item => {
+                            item.addEventListener('click', () => {
+                                input.value = item.textContent;
+                                resultContainer.innerHTML = '';
+                            });
+                        });
+                    });
+            });
+        }
+
+        setupSearch('pesqvend', 'result-vendedor', 'vendedor');
+        setupSearch('pesqcliente', 'result-cliente', 'cliente');
+        setupSearch('pesqproduto', 'result-produto', 'produto');
+    </script>
+
 </body>
 
 </html>

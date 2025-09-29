@@ -7,10 +7,10 @@ if (isset($_POST['submit'])) {
     $dataentrada = $_POST['dataentrada'];
     $preco = str_replace(',', '.', $_POST['preco']);
     $quantidade = $_POST['quantidade'];
-    $sql = 'insert into entradaestoque (idproduto,dataentrada,preco,quantidade) value ("' . $idproduto . '", "' . $dataentrada . '","' . $preco . '", "' . $quantidade . '")';
+    $sql = 'insert into admissao (idproduto,dataentrada,preco,quantidade) value ("' . $idproduto . '", "' . $dataentrada . '","' . $preco . '", "' . $quantidade . '")';
     $result = mysqli_query($con, $sql);
     if ($result) {
-        header('location: entrselect.php');
+        header('location: admselect.php');
     } else {
         die('' . mysqli_error($con));
     }
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top px-4 px-lg-5 ">
 
-        <h1 class="m-0">Entrada</h1>
+        <h1 class="m-0">Admissão</h1>
         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -84,11 +84,11 @@ if (isset($_POST['submit'])) {
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
         <div class="container admissao-container">
             <div class="container text-center py-5 header">
-                <h1>Incluir Entrada</h1>
+                <h1>Incluir Admissão</h1>
             </div>
             <br>
             <form action="" method="post" class="universal-form" style="margin-top: 20px;">
-                <h4>Dados da Entrada:</h4>
+                <h4>Dados da Admissão:</h4>
                 <br>
                 <!-- Tabelas -->
                 <div class="container">
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
                 <div class="container form-actions">
                     <div class="row">
                         <div class="col text-center">
-                            <a href="entrselect.php" class="btn btn-voltar">Voltar</a>
+                            <a href="admselect.php" class="btn btn-voltar">Voltar</a>
                             <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
                         </div>
                     </div>
