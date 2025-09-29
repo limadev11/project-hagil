@@ -3,22 +3,28 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 $id = $_GET['updateid'];
-$sql = 'select * from lancdespesa where id =' . $id;
+$sql = 'select * from cliente where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $nome = $row['nome'];
-$valor =  str_replace(',', '.', $row['valor']);
-$iddespesa = $row['iddespesa'];
-$datadespesa = $row['datadespesa'];
+$email = $row['email'];
+$whatsapp = $row['whatsapp'];
+$endereco = $row['endereco'];
+$bairro = $row['bairro'];
+$cidade = $row['cidade'];
+$uf = $row['uf'];
 if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
-    $valor = $_POST['valor'];
-    $iddespesa = $_POST['iddespesa'];
-    $datadespesa = $_POST['datadespesa'];
-    $sql = 'update lancdespesa set nome="' . $nome . '", valor="' . $valor . '", iddespesa="' . $iddespesa . '", datadespesa="' .  $datadespesa . '" where id=' . $id;
+    $email = $_POST['email'];
+    $whatsapp = $_POST['whatsapp'];
+    $endereco = $_POST['endereco'];
+    $bairro = $_POST['bairro'];
+    $cidade = $_POST['cidade'];
+    $uf = $_POST['uf'];
+    $sql = 'update cliente set nome="' . $nome . '", email="' . $email . '", whatsapp="' . $whatsapp . '", endereco="' .  $endereco . '", bairro="' .  $bairro . '", cidade="' .  $cidade . '", uf="' .  $uf . '" where id=' . $id;
     $result = mysqli_query($con, $sql);
     if ($result) {
-    header('location: lancselect.php');
+    header('location: cliselect.php');
     } else {
         die(mysqli_error($con));
     }
@@ -215,29 +221,25 @@ if (isset($_POST['submit'])) {
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
         <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
             <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Usuário:</h2>
+                <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Cliente:</h2>
             </div>
         </div>
         <div class="container" style="background-color: #556152;">
             <form method="post" >
+                <br>
                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                 <div class="row" style="background-color: #556152;">
-                    <div class="col-12"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h2 style="color: white;">Nome Cliente:</h2>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
-                                    <h4 for="text" style="color:white;">Email</h4>
+                                    <h4 for="text" style="color:white;">Nome do Cliente</h4>
                         </div>
                         <div class="col-9" style="width: 300px; margin-left: 490px;">           
                                 <?php
-                                            $sqll = 'select * from tipodespesa order by id';
+                                            $sqll = 'select * from cliente order by id';
                                             $result = mysqli_query($con, $sqll);
                                             if ($result) {
                                                 echo '<select 
-                                                    name="iddespesa" class="form-control">';
+                                                    name="cliente" class="form-control">';
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     echo '<option value="' . $row['id'] . '">' .
                                                         $row['nome'] . '</option>';
@@ -249,41 +251,71 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="row">
                         <div class="col-12"> <br><br>
-                            <div class="form-floating" style="margin-left: 0px">
-                                <h5 style="color: white;"></h5>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">E-mail</h5>
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">
-                            <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
+                            <input type="enail" class="form-control" name="email" id="email" value="<?php echo $email; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12"> <br><br>
                             <div class="form-floating" style="margin-left: 0px;">
-                                <h5 style="color: white;">Valor</h5>
+                                <h5 style="color: white;">Whatsapp</h5>
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">
-                            <input type="text" class="form-control" name="valor" id="valor" value="<?php echo $valor; ?>" required style="width: 350px;">
+                            <input type="text" class="form-control" name="whatsapp" id="whatsapp" value="<?php echo $whatsapp; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-12"> <br><br>
-                        <div class="form-floating" style="margin-left: 0px;">
-                            <h5 style="color: white;">Data de Despesa</h5>
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">Endereco</h5>
+                            </div>
                         </div>
-                        <div style="width: 350px; margin-left: 450px;">
-                            <input type="date" class="form-control" name="datadespesa" id="senha" value="<?php echo $datadespesa?>">
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="endereco" id="endereco" value="<?php echo $endereco; ?>" required style="width: 350px;">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">Bairro</h5>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="bairro" id="bairro" value="<?php echo $bairro; ?>" required style="width: 350px;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">Cidade</h5>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="cidade" id="cidade" value="<?php echo $cidade; ?>" required style="width: 350px;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">UF</h5>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="uf" id="uf" value="<?php echo $uf; ?>" required style="width: 350px;">
+                        </div>
+                    </div>
+                    
                     <div class="row">
                         <div class="col">
                         <br>
                         <?php
                             echo
-                                "<a href='lancselect.php?selectid={$row['id']}' style='color:white;'>
-                                <button type='button' style='padding: 9px; width: 100px;'
-                                class='btn btn-dark'>Voltar</button></a>";
+                                '<a href="cliselect.php" class="btn btn-dark">Voltar</a>';
                             ?>
                             <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
                         </div>

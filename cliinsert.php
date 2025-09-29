@@ -4,13 +4,17 @@ include('verificalogin.php');
 include('connect.php');
 if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
-    $valor = str_replace(',', '.', $_POST['valor']);
-    $iddespesa = $_POST['iddespesa'];
-    $datadespesa = $_POST['datadespesa'];
-    $sql = 'insert into lancdespesa (nome,valor,iddespesa,datadespesa) value ("' . $nome . '", "' . $valor . '","' . $iddespesa . '", "' . $datadespesa . '")';
+    $email = $_POST['email'];
+    $whatsapp = $_POST['whatsapp'];
+    $endereco = $_POST['endereco'];
+    $bairro = $_POST['bairro'];
+    $cidade = $_POST['cidade'];
+    $uf = $_POST['uf'];
+    $sql = 'insert into cliente (nome, email,whatsapp,endereco,bairro,cidade,uf)
+    values ("' . $nome . '", "' . $email . '","' . $whatsapp . '", "' . $endereco . '", "' . $bairro . '", "' . $cidade . '", "' . $uf . '")';
     $result = mysqli_query($con, $sql);
     if ($result) {
-        header('location: lancselect.php');
+        header('location: cliselect.php');
     } else {
         die('' . mysqli_error($con));
     }
@@ -224,20 +228,10 @@ if (isset($_POST['submit'])) {
                     <h4>Dados do Cliente:</h4>
 
                     <div class="form-group row">
-                        <!-- Nome do cliente (select) -->
+                        <!-- Nome -->
                         <div class="col-md-6">
-                            <label for="iddespesa">Nome do Cliente</label>
-                            <?php
-                            $sqll = 'select * from tipodespesa order by id';
-                            $result = mysqli_query($con, $sqll);
-                            if ($result) {
-                                echo '<select name="iddespesa" class="form-control">';
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['nome'] . '</option>';
-                                }
-                                echo '</select>';
-                            }
-                            ?>
+                            <label for="nome">Nome do Cliente:</label>
+                            <input type="text" name="nome" class="form-control" required>
                         </div>
 
                         <!-- Email -->
@@ -285,7 +279,7 @@ if (isset($_POST['submit'])) {
 
                     <!-- Botões -->
                     <div class="form-actions text-center">
-                        <a href="admselect.php" class="btn btn-voltar">Voltar</a>
+                        <a href="cliselect.php" class="btn btn-voltar">Voltar</a>
                         <button type="submit" name="submit" class="btn btn-adicionar">Adicionar</button>
                     </div>
                 </form>

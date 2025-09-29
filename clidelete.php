@@ -7,15 +7,18 @@ include('connect.php');
 $id = isset($_GET['deleteid']) ? intval($_GET['deleteid']) : 0;
 
 if ($id > 0) {
-    $sql = "SELECT * FROM lancdespesa WHERE id = $id";
+    $sql = "SELECT * FROM cliente WHERE id = $id";
     $result = mysqli_query($con, $sql);
 
     if ($result) {
         $row = mysqli_fetch_array($result);
         $nome = $row['nome'];
-        $valor = $row['valor'];
-        $iddespesa = $row['iddespesa'];
-        $datadespesa = $row['datadespesa'];
+        $email = $row['email'];
+        $whatsapp = $row['whatsapp'];
+        $endereco = $row['endereco'];
+        $bairro = $row['bairro'];
+        $cidade = $row['cidade'];
+        $uf = $row['uf'];
     } else {
         die('Erro ao buscar despesa: ' . mysqli_error($con));
     }
@@ -25,11 +28,11 @@ if ($id > 0) {
 
 if (isset($_POST['submit'])) {
     // Deletar o usuário
-    $sql = "DELETE FROM lancdespesa WHERE id = $id";
+    $sql = "DELETE FROM cliente WHERE id = $id";
     $result = mysqli_query($con, $sql);
     
     if ($result) {
-        header('Location: lancselect.php');
+        header('Location: cliselect.php');
         exit();
     } else {
         die('Erro ao excluir despesa: ' . mysqli_error($con));
@@ -52,7 +55,6 @@ if (isset($_POST['submit'])) {
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    
  <style>
      /* Container de sugestões */
         #suggestions {
@@ -218,22 +220,37 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="col-md-4">
-                        <h5>Valor</h5>
-                        <input type="numner" class="form-control" name="email" value="<?php echo $valor; ?>" placeholder="E-mail do Usuário" readonly>
+                        <h5>Email</h5>
+                        <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" placeholder="E-mail do Usuário" readonly>
                     </div>
 
                     <div class="col-md-4">
-                        <h5>ID-Despesas</h5>
-                        <input type="text" class="form-control" name="email" value="<?php echo $iddespesa; ?>" placeholder="E-mail do Usuário" readonly>
+                        <h5>Whatsapp</h5>
+                        <input type="text" class="form-control" name="whatsapp" value="<?php echo $whatsapp; ?>" placeholder="33000000000" readonly>
                     </div>
 
                     <div class="col-md-4">
-                        <h5>Data-Despesas</h5>
-                        <input type="text" class="form-control" name="email" value="<?php echo $datadespesa; ?>" placeholder="E-mail do Usuário" readonly>
+                        <h5>Endereço</h5>
+                        <input type="text" class="form-control" name="endereco" value="<?php echo $endereco; ?>" placeholder="Rua XYZ" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5>Bairro</h5>
+                        <input type="text" class="form-control" name="bairro" value="<?php echo $bairro; ?>" placeholder="Bairro XYZ" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5>Cidade</h5>
+                        <input type="text" class="form-control" name="cidade" value="<?php echo $cidade; ?>" placeholder="Nome da Cidade" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h5>UF</h5>
+                        <input type="text" class="form-control" name="uf" value="<?php echo $uf; ?>" placeholder="UF" readonly>
                     </div>
 
                     <div class="col-md-4 text-center">
-                        <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='lancselect.php'" style="margin-top: 15px;">Voltar</button>
+                        <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='cliselect.php'" style="margin-top: 15px;">Voltar</button>
                         <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3">Deletar</button>
                     </div>
                 </div>

@@ -36,6 +36,13 @@ if (isset($_POST['submit'])) {
 $result = mysqli_query($con, $sql);
 ?>
 
+<!-- Link para puxar os href dos ícones de "Alterar" e "Excluir" -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Bootstrap para customizar o site -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Estilo do template CSS -->
+<link href="css/style.css" rel="stylesheet">
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -53,18 +60,11 @@ $result = mysqli_query($con, $sql);
     <!-- Page Header Start -->
     <center>
         <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-            <h1 class="m-0">Superar</h1>
-            <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="menu.php" class="nav-item nav-link">Menu</a>
-                    <a href="logout.php" class="nav-item nav-link active">Sair</a>
-                </div>
+            <div class="col">
+                <h1>Superar</h1>
             </div>
-        </nav>
-        <!-- Aqui é o formulário de pesquisa usando o form com método post -->
+            <div class="col">
+                <!-- Aqui é o formulário de pesquisa usando o form com método post -->
         <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
                     background-color: #556152; border-radius: 10px;">
             <div style="flex: 1;">
@@ -74,17 +74,17 @@ $result = mysqli_query($con, $sql);
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-row">
-                            <h5 style="margin-top:5px">Vendedor parcial:</h5>
+                            <h5 style="margin-top:5px">Vendedor:</h5>
                             <input type="text" name="pesqvend" placeholder="Nome..." style="height:30px; margin-top:5px"
-                                value="<?php echo $pesqvend; ?>">
+                                maxlength="37" value="<?php echo $pesqvend; ?>">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-row">
-                            <h5>Cliente parcial:</h5>
-                            <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px"
-                                value="<?php echo $pesqcliente; ?>">
+                            <h5>Cliente:</h5>
+                            <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;"
+                                maxlength="37" value="<?php echo $pesqcliente; ?>">
                         </div>
                     </div>
                 </div>
@@ -92,16 +92,16 @@ $result = mysqli_query($con, $sql);
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <div class="form-row">
-                            <h5>Produto parcial:</h5>
+                            <h5>Produto:</h5>
                             <input type="text" name="pesqproduto" placeholder="Nome..." style="height:30px"
-                                value="<?php echo $pesqproduto; ?>">
+                                maxlength="37" value="<?php echo $pesqproduto; ?>">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-row">
-                            <h5>Data parcial:</h5>
-                            <input class="data-input" type="date" name="pesqdata" style="height:30px"
+                            <h5>Data:</h5>
+                            <input class="data-input" type="date" name="pesqdata" style="height:30px; width:125px" maxlength="8"
                                 value="<?php echo $pesqdata; ?>">
                         </div>
                     </div>
@@ -112,13 +112,21 @@ $result = mysqli_query($con, $sql);
             <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
             entrar na área de incluir nova venda -->
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
-                    name="submit">Pesquisar</button>
+                <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
                 <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                 <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
             </div>
         </form>
-        </div>
+            </div>
+            <div class="col">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto p-4 p-lg-0">
+                        <a href="menu.php" class="nav-item nav-link">Menu</a>
+                        <a href="logout.php" class="nav-item nav-link active">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </center>
     <!-- Tabela de Resultados -->
     <div class="table-container">

@@ -3,22 +3,21 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Query SQL padrão para listar todas as admissao
-$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto  ';
+// Query SQL padrão para listar todas as entrada
+$sql = 'select e.id, p.nome nome, e.dataentrada as data, e.preco preco, e.quantidade quantidade from entradaestoque e
+inner join produto p 
+on p.id = e.idproduto;';
 
-// Pesquisa por admissao
+// Pesquisa por entrada
 $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
-    // Consulta para buscar admissao com base no nome fornecido
-    $sql = "select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ";
-} else {
-    // Consulta padrão para listar todas as admissao
-    $sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ';
-}
+    // Consulta para buscar entrada com base no nome fornecido
+    $sql = "select e.id, p.nome nome, e.dataentrada as data, e.preco preco, e.quantidade quantidade from entradaestoque e
+    inner join produto p 
+    on p.id = e.idproduto
+    where p.nome like '%$pesqnome%'";
+} 
 
 $result = mysqli_query($con, $sql);
 ?>
@@ -259,7 +258,7 @@ $result = mysqli_query($con, $sql);
                 if ($result && mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         // formatando a data corretamente (YYYY-MM-DD → DD/MM/YYYY)
-                        $dataentrada = date("d/m/Y", strtotime($row['dataentrada']));
+                        $dataentrada = date("d/m/Y", strtotime($row['data']));
 
                         echo "<tr>
                   <td>{$row['id']}</td>
@@ -268,10 +267,10 @@ $result = mysqli_query($con, $sql);
                   <td>R$ " . number_format($row['preco'], 2, ',', '.') . "</td>
                   <td>{$row['quantidade']}</td>
                   <td>
-                      <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                      <a href='entrupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
                         <i class='bi bi-pencil-square'></i> Alterar
                       </a>
-                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                      <a href='entrdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
                         <i class='bi bi-trash'></i> Excluir
                       </a>
                   </td>

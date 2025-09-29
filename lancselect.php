@@ -4,18 +4,18 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os usuários
-$sql = 'SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
-  from lancdespesa l inner join tipodespesa t
-       on t.id = l.iddespesa ORDER BY t.nome ASC';
+$sql = 'select d.id, td.nome, d.data data, d.valor, d.observacao from despesa d
+        inner join tipodespesa td
+        on td.id = d.idtipodespesa ORDER BY td.nome ASC';
 
 // Pesquisa por nome
 $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar usuários com base no nome fornecido
-    $sql = "SELECT l.id, l.valor, l.datadespesa, l.nome observacao, t.id iddesp, t.nome despesa 
-  from lancdespesa l inner join tipodespesa t
-       on t.id = l.iddespesa WHERE t.nome LIKE '%$pesqnome%' ORDER BY t.nome ASC";
+    $sql = "select d.id, td.nome, d.data data, d.valor, d.observacao from despesa d
+    inner join tipodespesa td
+    on td.id = d.idtipodespesa WHERE td.nome LIKE '%$pesqnome%' ORDER BY td.nome ASC";
 }
 
 $result = mysqli_query($con, $sql);
@@ -223,7 +223,7 @@ $result = mysqli_query($con, $sql);
 
                     </div>
                     <div class="col-auto">
-                        <a href="lanselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                        <a href="lancselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                         <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
                         <a href="lancinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
                     </div>
@@ -249,22 +249,22 @@ $result = mysqli_query($con, $sql);
                 if ($result && mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         // formatando data
-                        $datadespesa = !empty($row['datadespesa']) ? date("d/m/Y", strtotime($row['datadespesa'])) : "-";
+                        $datadespesa = !empty($row['data']) ? date("d/m/Y", strtotime($row['data'])) : "-";
 
                         // formatando valor em reais
                         $valor = "R$ " . number_format($row['valor'], 2, ',', '.');
 
                         echo "<tr>
                   <td>{$row['id']}</td>
-                  <td>{$row['despesa']}</td>
+                  <td>{$row['nome']}</td>
                   <td>{$valor}</td>
                   <td>{$row['observacao']}</td>
                   <td>{$datadespesa}</td>
                   <td>
-                      <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                      <a href='lancupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
                         <i class='bi bi-pencil-square'></i> Alterar
                       </a>
-                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                      <a href='lancdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
                         <i class='bi bi-trash'></i> Excluir
                       </a>
                   </td>

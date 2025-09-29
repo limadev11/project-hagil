@@ -1,3 +1,33 @@
+/* FONTE */
+
+.space-mono-regular {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .space-mono-bold {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .space-mono-regular-italic {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .space-mono-bold-italic {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-style: italic;
+  }
+.h1,h2,h3,h4,h5,h6,p{
+    font-family: monospace;
+}
+/* FIM FONTE */
+
 /********** Template CSS **********/
 :root {
     --primary: #5B8C51;
@@ -8,7 +38,7 @@
 
 body {
     margin: 0;
-    font-family: Poppins, sans-serif;
+    font-family: monospace;
     background-color: #D3D3D3;
 }
 
@@ -152,7 +182,7 @@ body {
 .navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";
-    font-family: "Font Awesome 5 Free";
+    font-family: monospace;
     font-weight: 900;
     vertical-align: middle;
     margin-left: 8px;
@@ -325,7 +355,7 @@ body {
     max-width: 900px;
     margin: 40px auto;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    font-family: 'Poppins', Arial, sans-serif;
+    font-family: monospace;
     color: #222;
 }
 
@@ -495,7 +525,7 @@ body.login-page {
     justify-content: center;
     align-items: center;
     background-image: url('/img/login.jpg');
-    font-family: 'Poppins', sans-serif;
+    font-family: monospace;
 }
 
 /* Container de login */

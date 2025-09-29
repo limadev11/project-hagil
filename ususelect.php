@@ -253,10 +253,10 @@ $result = mysqli_query($con, $sql);
                             <td>" . $row['email'] . "</td>
                             <td>" . ($row['master'] == 'S' ? 'Sim' : 'Não') . "</td>
                             <td>
-                                <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                                <a href='usuupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
                         <i class='bi bi-pencil-square'></i> Alterar
                       </a>
-                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                      <a href='usudelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
                         <i class='bi bi-trash'></i> Excluir
                       </a>
                             </td>

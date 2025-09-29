@@ -3,22 +3,24 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Obter o ID da admissão a ser excluído
+// Obter o ID da entrada a ser excluído
 $id = $_GET['deleteid'];
-$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-from admissao a inner join produto p on p.id=a.idproduto  where a.id = ' .$id;
+$sql = 'select e.id, p.nome nome, e.dataentrada as data, e.preco preco, e.quantidade quantidade from entradaestoque e
+        inner join produto p 
+        on p.id = e.idproduto 
+        where e.id = ' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 
-$idproduto = $row['idp'];
-$dataentrada = $row['dataentrada'];
+$idproduto = $row['nome'];
+$dataentrada = $row['data'];
 $preco =  str_replace(',', '.', $row['preco']);
 $quantidade = $row['quantidade'];
 if (isset($_POST['submit'])) {
-    $sql = 'delete from admissao where id =' . $id;
+    $sql = 'delete from entradaestoque where id =' . $id;
     $result = mysqli_query($con, $sql);
     if ($result) {
-        header('location: admselect.php');
+        header('location: entrselect.php');
     } else {
         die(mysqli_error($con));
     }
@@ -56,11 +58,11 @@ if (isset($_POST['submit'])) {
         </div>
     </nav>
 
-    <!-- Página de Deletar Admissões-->
+    <!-- Página de Deletar Entradas-->
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
     <div class="container" style="border-radius: 5px;">
             <div class="container text-center py-5" style="height: 100px; color: black;">
-            <h2 class="text-center">Deletar Admissão</h2>
+            <h2 class="text-center">Deletar Entrada</h2>
 
             <div class="container bg-dark p-4 text-white">
                 <form action="" method="post">
@@ -68,13 +70,13 @@ if (isset($_POST['submit'])) {
 
                     <div class="row">
                         <div class="col-md-4">
-                            <h5>Nome da Admissão:</h5>
-                            <input type="text" class="form-control" name="idproduto" value="<?php echo $idproduto; ?>" placeholder="Nome da Admissão" readonly>
+                            <h5>Nome da Entrada:</h5>
+                            <input type="text" class="form-control" name="idproduto" value="<?php echo $idproduto; ?>" placeholder="Nome da Entrada" readonly>
                         </div>
 
                         <div class="col-md-4">
                             <h5>Data da Entrada:</h5>
-                            <input type="email" class="form-control" name="dataentrada" value="<?php echo  $dataentrada; ?>" placeholder="" readonly>
+                            <input type="email" class="form-control" name="data" value="<?php echo  $dataentrada; ?>" placeholder="" readonly>
                         </div>
 
                         <div class="col-md-4">
@@ -88,7 +90,7 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='admselect.php'" style="margin-top: 15px;">Não, Voltar</button>
+                            <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='entrselect.php'" style="margin-top: 15px;">Não, Voltar</button>
                             <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3" style="margin-left: 20px;">Deletar</button>
                         </div>
                     </div>

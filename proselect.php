@@ -136,23 +136,7 @@ $result = mysqli_query($con, $sql);
             font-family: "Poppins", sans-serif;
             font-size: 15px;
             color: #333;
-
         }
-
-        tbody {
-            display: block;
-            height: auto;
-            overflow-y: auto;
-        }
-
-        table thead,
-        table tbody tr {
-            display: table;
-            width: 100%;
-            table-layout: fixed;
-            /* mantém alinhamento das colunas */
-        }
-
 
         thead {
             background: #404A3D;
@@ -178,9 +162,6 @@ $result = mysqli_query($con, $sql);
             padding: 12px 14px;
             text-align: center;
         }
-
-    
-
 
         /* Botões */
         .btn {
@@ -240,7 +221,7 @@ $result = mysqli_query($con, $sql);
                     </div>
                     <div class="autocomplete-wrapper">
                         <div class="col-auto">
-                            <input type="text" id="search" id="pesqnome" name="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
+                            <input type="text" id="search" id="pesqnome" name="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value='<?php echo $pesqnome; ?>'>
                         </div>
                         <div id="suggestions"></div>
                     </div>

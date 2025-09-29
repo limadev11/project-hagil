@@ -7,15 +7,17 @@ include('connect.php');
 $id = isset($_GET['deleteid']) ? intval($_GET['deleteid']) : 0;
 
 if ($id > 0) {
-    $sql = "SELECT * FROM lancdespesa WHERE id = $id";
+    $sql = "select d.id, td.nome nome, d.data data, d.valor, d.observacao from despesa d
+    inner join tipodespesa td
+    on td.id = d.idtipodespesa WHERE d.id = " . $id;
     $result = mysqli_query($con, $sql);
 
     if ($result) {
         $row = mysqli_fetch_array($result);
-        $nome = $row['nome'];
+        $observacao = $row['observacao'];
         $valor = $row['valor'];
-        $iddespesa = $row['iddespesa'];
-        $datadespesa = $row['datadespesa'];
+        $nome = $row['nome'];
+        $datadespesa = $row['data'];
     } else {
         die('Erro ao buscar despesa: ' . mysqli_error($con));
     }
@@ -25,7 +27,7 @@ if ($id > 0) {
 
 if (isset($_POST['submit'])) {
     // Deletar o usuário
-    $sql = "DELETE FROM lancdespesa WHERE id = $id";
+    $sql = "DELETE FROM despesa WHERE id = $id";
     $result = mysqli_query($con, $sql);
 
     if ($result) {
@@ -212,23 +214,23 @@ if (isset($_POST['submit'])) {
 
                 <div class="row">
                     <div class="col-md-4">
-                        <h5>Nome</h5>
-                        <input type="text" class="form-control" name="nome" value="<?php echo $nome; ?>" placeholder="Nome do Usuário" readonly>
+                        <h5>Despesa</h5>
+                        <input type="text" class="form-control" name="nome" value="<?php echo $nome; ?>" placeholder="Despesa" readonly>
                     </div>
 
                     <div class="col-md-4">
                         <h5>Valor</h5>
-                        <input type="numner" class="form-control" name="email" value="<?php echo $valor; ?>" placeholder="E-mail do Usuário" readonly>
+                        <input type="numner" class="form-control" name="valor" value="<?php echo $valor; ?>" placeholder="R$0,00" readonly>
                     </div>
 
                     <div class="col-md-4">
-                        <h5>ID-Despesas</h5>
-                        <input type="text" class="form-control" name="email" value="<?php echo $iddespesa; ?>" placeholder="E-mail do Usuário" readonly>
+                        <h5>Observação</h5>
+                        <input type="text" class="form-control" name="observacao" value="<?php echo $observacao; ?>" placeholder="..." readonly>
                     </div>
 
                     <div class="col-md-4">
-                        <h5>Data-Despesas</h5>
-                        <input type="text" class="form-control" name="email" value="<?php echo $datadespesa; ?>" placeholder="E-mail do Usuário" readonly>
+                        <h5>Data Despesa</h5>
+                        <input type="text" class="form-control" name="email" value="<?php echo $datadespesa; ?>" placeholder="00/00/0000" readonly>
                     </div>
 
                     <div class="col-md-4 text-center">

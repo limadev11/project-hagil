@@ -3,19 +3,19 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 $id = $_GET['updateid'];
-$sql = 'select * from lancdespesa where id =' . $id;
+$sql = 'select * from despesa where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
-$nome = $row['nome'];
+$nome = $row['idtipodespesa'];
 $valor =  str_replace(',', '.', $row['valor']);
-$iddespesa = $row['iddespesa'];
-$datadespesa = $row['datadespesa'];
+$observacao = $row['observacao'];
+$data = $row['data'];
 if (isset($_POST['submit'])) {
-    $nome = $_POST['nome'];
+    $nome = $_POST['idtipodespesa'];
     $valor = $_POST['valor'];
-    $iddespesa = $_POST['iddespesa'];
-    $datadespesa = $_POST['datadespesa'];
-    $sql = 'update lancdespesa set nome="' . $nome . '", valor="' . $valor . '", iddespesa="' . $iddespesa . '", datadespesa="' .  $datadespesa . '" where id=' . $id;
+    $observacao = $_POST['observacao'];
+    $data = $_POST['data'];
+    $sql = 'update despesa set idtipodespesa="' . $nome . '", valor="' . $valor . '", observacao="' . $observacao . '", data="' .  $data . '" where id=' . $id;
     $result = mysqli_query($con, $sql);
     if ($result) {
     header('location: lancselect.php');
@@ -237,7 +237,7 @@ if (isset($_POST['submit'])) {
                                             $result = mysqli_query($con, $sqll);
                                             if ($result) {
                                                 echo '<select 
-                                                    name="iddespesa" class="form-control">';
+                                                    name="idtipodespesa" class="form-control">';
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     echo '<option value="' . $row['id'] . '">' .
                                                         $row['nome'] . '</option>';
@@ -254,7 +254,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">
-                            <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
+                            <input type="text" class="form-control" name="observacao" id="observacao" value="<?php echo $observacao; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">
@@ -273,7 +273,7 @@ if (isset($_POST['submit'])) {
                             <h5 style="color: white;">Data de Despesa</h5>
                         </div>
                         <div style="width: 350px; margin-left: 450px;">
-                            <input type="date" class="form-control" name="datadespesa" id="senha" value="<?php echo $datadespesa?>">
+                            <input type="date" class="form-control" name="data" id="senha" value="<?php echo $data?>">
                         </div>
                     </div>
                     <div class="row">
@@ -281,9 +281,7 @@ if (isset($_POST['submit'])) {
                         <br>
                         <?php
                             echo
-                                "<a href='lancselect.php?selectid={$row['id']}' style='color:white;'>
-                                <button type='button' style='padding: 9px; width: 100px;'
-                                class='btn btn-dark'>Voltar</button></a>";
+                                '<a href="lancselect.php" class="btn btn-dark">Voltar</a>';
                             ?>
                             <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
                         </div>
