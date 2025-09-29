@@ -123,7 +123,12 @@ include('verificalogin.php');
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
+                        <img src="img/calendario-linhas-caneta.png" alt=""> Vendas
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a href="lancselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/saco-de-dolar.png" alt=""> Lançamento de despesas
                     </a>
                 </li>
                 <li class="nav-item mb-2">
@@ -150,15 +155,8 @@ include('verificalogin.php');
                 </li>
 
                 <li class="nav-item mb-2">
-                    <a href="lancselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/saco-de-dolar.png" alt=""> Lanç. de despesas
-
-                    </a>
-                </li>
-
-                <li class="nav-item mb-2">
                     <a href="entrselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/sair-alt.png" alt=""> Estoque
+                        <img src="img/sair-alt.png" alt=""> Entrada de Estoque
                     </a>
                 </li>
                 <li class="nav-item mb-2">
@@ -174,6 +172,18 @@ include('verificalogin.php');
                         Sair
                     </a>
                 </li>
+                <li class="nav-item mb-2">
+                    <a class="btn-sidebar mb-3 d-flex align-items-center" data-bs-toggle="collapse" href="#configSubmenu"
+                        role="button" aria-expanded="false" aria-controls="configSubmenu">
+                        <img src="img/configuracoes.png" alt="">
+                        Configurações
+                    </a>
+                    <div class="collapse ps-4" id="configSubmenu">
+                        <a href="aparencia.php" class="btn-sidebar d-flex align-items-center mb-2">🎨 Aparência</a>
+                        <a href="seguranca.php" class="btn-sidebar d-flex align-items-center mb-2">🔒 Segurança</a>
+                    </div>
+                </li>
+
 
 
             </ul>
