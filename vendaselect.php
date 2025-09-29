@@ -19,18 +19,21 @@ $sql = "select v.id, p.nome produto, ve.nome vendedor, cli.nome cliente,
 $pesqvend = '';
 $pesqcliente = '';
 $pesqproduto = '';
-$pesqdata = '';
+$pesqdata1 = '';
+$pesqdata2 = '';
 // Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
 if (isset($_POST['submit'])) {
     $pesqvend = mysqli_real_escape_string($con, $_POST['pesqvend']);
     $pesqcliente = mysqli_real_escape_string($con, $_POST['pesqcliente']);
     $pesqproduto = mysqli_real_escape_string($con, $_POST['pesqproduto']);
-    $pesqdata = mysqli_real_escape_string($con, $_POST['pesqdata']);
+    $pesqdata1 = mysqli_real_escape_string($con, $_POST['pesqdata1']);
+    $pesqdata2 = mysqli_real_escape_string($con, $_POST['pesqdata2']);
     // Aqui é para trocar as / na data para - e trocar as posições dos números, ficando 0000-00-00 (padrão MYSQL)
-    $pesqdata = implode("-", array_reverse(explode("/", $pesqdata)));
+    $pesqdata1 = implode("-", array_reverse(explode("/", $pesqdata1)));
+    $pesqdata2 = implode("-", array_reverse(explode("/", $pesqdata2)));
     // Depois de todos os valores declarados, será feito outro SQL porém com o filtro de pesquisa.
     $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
-    cli.nome like '%$pesqcliente%' and v.datavenda like '%$pesqdata%'";
+    cli.nome like '%$pesqcliente%' and v.datavenda between '$pesqdata1' and '$pesqdata2'";
 }
 // Aqui transfirá o resultado do $sql para a variável result
 $result = mysqli_query($con, $sql);
@@ -53,7 +56,6 @@ $result = mysqli_query($con, $sql);
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <?php include('cabecalhoCRUD.html') ?>
 </head>
 
 <body>
@@ -68,22 +70,23 @@ $result = mysqli_query($con, $sql);
                 <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
                     background-color: #556152; border-radius: 10px;">
                     <div style="flex: 1;">
-
+                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
                         <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <h5 style="margin-top:5px">Vendedor:</h5>
-                                    <input type="text" id="pesqvend" name="pesqvend" placeholder="Nome..." style="height:30px; margin-top:5px" maxlength="37" value="<?php echo $pesqvend; ?>">
-                                    <div id="result-vendedor" class="autocomplete-result"></div>
+                                    <input type="text" name="pesqvend" placeholder="Nome..."
+                                        style="height:30px; margin-top:5px" maxlength="37"
+                                        value="<?php echo $pesqvend; ?>">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <h5>Cliente:</h5>
-                                    <input type="text" id="pesqcliente" name="pesqcliente" placeholder="Nome..." style="height:30px;" maxlength="37" value="<?php echo $pesqcliente; ?>">
-                                    <div id="result-cliente" class="autocomplete-result"></div>
+                                    <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;"
+                                        maxlength="37" value="<?php echo $pesqcliente; ?>">
                                 </div>
                             </div>
                         </div>
@@ -92,24 +95,33 @@ $result = mysqli_query($con, $sql);
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <h5>Produto:</h5>
-                                    <input type="text" id="pesqproduto" name="pesqproduto" placeholder="Nome..." style="height:30px" maxlength="37" value="<?php echo $pesqproduto; ?>">
-                                    <div id="result-produto" class="autocomplete-result"></div>
+                                    <input type="text" name="pesqproduto" placeholder="Nome..." style="height:30px"
+                                        maxlength="37" value="<?php echo $pesqproduto; ?>">
                                 </div>
                             </div>
 
+                            <!-- Filtro de datas, temos a data1, data2, que vai poder filtrar o período de datas que o cliente desejar -->
                             <div class="col-md-6">
-                                <div class="form-row">
+                                <div class="form-row" style="margin-right:35px">
                                     <h5>Data:</h5>
-                                    <input class="data-input" type="date" id="pesqdata" name="pesqdata" style="height:30px; width:125px" maxlength="8" value="<?php echo $pesqdata; ?>">
+                                    <!-- Data 1 -->
+                                    <input class="data-input" type="date" name="pesqdata1" style="height:30px"
+                                        maxlength="8" value="<?php echo $pesqdata1; ?>">
+                                        <h5 class="between-inputs">ao</h5>
+                                    <!-- Data 2 -->
+                                    <input class="data-input" type="date" name="pesqdata2" style="height:30px;"
+                                    maxlength="8" value="<?php echo $pesqdata2; ?>">
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
             entrar na área de incluir nova venda -->
                     <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
+                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
+                            name="submit">Pesquisar</button>
                         <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                         <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
                     </div>
@@ -124,6 +136,7 @@ $result = mysqli_query($con, $sql);
                 </div>
             </div>
         </nav>
+        </div>
     </center>
     <!-- Tabela de Resultados -->
     <div class="table-container">
@@ -179,45 +192,21 @@ $result = mysqli_query($con, $sql);
             </tbody>
         </table>
     </div>
-    <?php include('templateJSfinal.html') ?>
-    <script>
-        function setupSearch(inputId, resultId, column) {
-            const input = document.getElementById(inputId);
-            const resultContainer = document.getElementById(resultId);
+    <!-- Page Header End -->
 
-            input.addEventListener('input', function() {
-                const query = input.value.trim();
-                if (query.length === 0) {
-                    resultContainer.innerHTML = '';
-                    return;
-                }
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/parallax/parallax.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-                fetch('searchvenda.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: `query=${encodeURIComponent(query)}&column=${encodeURIComponent(column)}`
-                    })
-                    .then(res => res.text())
-                    .then(data => {
-                        resultContainer.innerHTML = data;
-
-                        document.querySelectorAll(`#${resultId} .resultado`).forEach(item => {
-                            item.addEventListener('click', () => {
-                                input.value = item.textContent;
-                                resultContainer.innerHTML = '';
-                            });
-                        });
-                    });
-            });
-        }
-
-        setupSearch('pesqvend', 'result-vendedor', 'vendedor');
-        setupSearch('pesqcliente', 'result-cliente', 'cliente');
-        setupSearch('pesqproduto', 'result-produto', 'produto');
-    </script>
-
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
 
 </html>

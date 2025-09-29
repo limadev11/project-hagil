@@ -824,3 +824,51 @@ td {
 .btn-delete:hover {
     background: #dc2626;
 }
+/* Local para arrumar a área de pesquisa, alinhando os títulos, alinhando os imputs e definindo o tamanho dos mesmos */
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    gap: 5px;
+}
+
+.form-row h5 {
+    color: white;
+    width: 200px;
+    text-align: right;
+    margin: 0;
+    padding-right: 5px;
+}
+
+.form-row input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 650px;
+    
+}
+
+.form-row input.data-input {
+    width: 130px;
+    font-family: monospace;
+    margin-right: 0px;
+}
+
+.col input[type="date"] {
+    font-family: monospace;
+}
+.data-input {
+    width: 50px;
+    font-family: monospace;
+}
+
+.col input[type="text"] {
+    max-width: 740px;
+}
+/* Sim meio específico, mas é para o h5 "ao" na parte Data */
+.form-row h5.between-inputs {
+    width: auto;
+    margin: 0 8px;
+    padding-right: 0;
+    text-align: center;
+}
