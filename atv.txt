@@ -1,0 +1,11 @@
+A área de Produtos, são a quantidade daqueles produtos que contenho no sistema
+A área de Entrada de Estoque, são a quantidade de produtos que chegou no sistema
+Então tem que somar o número de produtos que entrou no sistema com o número de produtos que já estou no sistema?
+Estoque Total = Estoque Antigo + Novo Estoque
+
+Quando à registro de venda feita, como ficaria a saída do produto? Um CRUD registrando (Assim teria que fazer um novo cálculo de estoque sendo a soma do antigo estoque com o novo estoque menos a saída desses produtos)?
+
+O Jair e Martins fazer cada um 2 pesquisas de CRUD esta semana;
+O Lucas quero ensinar ele a pegar todas as falhas que achou e jogar no TRELLO, ver se estas falhas foram feitas para colocar no Done;
+O João vai treinar como ele vai apresentar e quinta e sexta ele vai terminar a parte de sugestões de pesquisa no sistema;
+O Martins além dos CRUDs, vai terminar a parte de venda e fazer o consulageral.php logo

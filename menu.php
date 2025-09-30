@@ -122,6 +122,12 @@ include('verificalogin.php');
             <!-- Menu -->
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
+                    <a href="consultageral.php" class="btn-sidebar mb-3 d-flex align-items-center">
+                        <img src="img/comercial.png" alt="">
+                        Consulta Geral
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
                     <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/calendario-linhas-caneta.png" alt=""> Venda
                     </a>
@@ -165,12 +171,6 @@ include('verificalogin.php');
                     <a href="ususelect.php" class="btn-sidebar mb-3 d-flex align-items-center">
                         <img src="img/comercial.png" alt="">
                         Usuários
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a href="consultageral.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/comercial.png" alt="">
-                        Consulta Geral
                     </a>
                 </li>
                 <li class="nav-item">
