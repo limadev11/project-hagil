@@ -31,10 +31,25 @@ if (isset($_POST['submit'])) {
     // Aqui é para trocar as / na data para - e trocar as posições dos números, ficando 0000-00-00 (padrão MYSQL)
     $pesqdata1 = implode("-", array_reverse(explode("/", $pesqdata1)));
     $pesqdata2 = implode("-", array_reverse(explode("/", $pesqdata2)));
-    // Depois de todos os valores declarados, será feito outro SQL porém com o filtro de pesquisa.
-    $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
-    cli.nome like '%$pesqcliente%' and v.datavenda between '$pesqdata1' and '$pesqdata2'";
+    if (empty($pesqdata1) && empty($pesqdata2)) {
+        $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
+        cli.nome like '%$pesqcliente%'";
+    } else if (empty($pesqdata1) || empty($pesqdata2)) {
+        if (empty($pesqdata1)){
+        $pesqdata1 = $pesqdata2;
+        }
+        if (empty($pesqdata2)){
+            $pesqdata2 = $pesqdata1;
+        }
+        // Depois de todos os valores declarados, será feito outro SQL porém com o filtro de pesquisa.
+        $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
+        cli.nome like '%$pesqcliente%' and v.datavenda like '%$pesqdata1%' or v.datavenda like '%$pesqdata2%'";
+    } else {
+        $sql = $sql . " where ve.nome like '%$pesqvend%' and p.nome like '%$pesqproduto%' and 
+        cli.nome like '%$pesqcliente%' and v.datavenda between '$pesqdata1' and '$pesqdata2'";
+    }
 }
+
 // Aqui transfirá o resultado do $sql para a variável result
 $result = mysqli_query($con, $sql);
 ?>
