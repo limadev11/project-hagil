@@ -3,11 +3,11 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 if (isset($_POST['submit'])) {
-    $nome = $_POST['nome'];
     $valor = str_replace(',', '.', $_POST['valor']);
     $iddespesa = $_POST['iddespesa'];
     $datadespesa = $_POST['datadespesa'];
-    $sql = 'insert into lancdespesa (nome,valor,iddespesa,datadespesa) value ("' . $nome . '", "' . $valor . '","' . $iddespesa . '", "' . $datadespesa . '")';
+    $observacao = $_POST['observacao'];
+    $sql = 'insert into despesa (idtipodespesa,data,valor,observacao) values ("' . $iddespesa . '", "' . $datadespesa . '","' . $valor . '", "' . $observacao . '")';
     $result = mysqli_query($con, $sql);
     if ($result) {
         header('location: lancselect.php');
@@ -110,8 +110,8 @@ if (isset($_POST['submit'])) {
 
                         <!-- Observação -->
                         <div class="col-md-6">
-                            <label for="nome">Observação:</label>
-                            <input type="text" name="nome" class="form-control" required>
+                            <label for="observacao">Observação:</label>
+                            <input type="text" name="observacao" class="form-control" required>
                         </div>
                     </div>
 
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
                         <!-- Valor -->
                         <div class="col-md-6">
                             <label for="valor">Valor</label>
-                            <input type="text" name="valor" class="form-control" required>
+                            <input type="number" name="valor" class="form-control" required>
                         </div>
 
                         <!-- Data da Despesa -->

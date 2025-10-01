@@ -3,24 +3,36 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Obter o ID da admissão a ser excluído
-$id = $_GET['deleteid'];
-$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-from admissao a inner join produto p on p.id=a.idproduto  where a.id = ' .$id;
-$result = mysqli_query($con, $sql);
-$row = mysqli_fetch_assoc($result);
+$id = isset($_GET['deleteid']) ? intval($_GET['deleteid']) : 0;
 
-$idproduto = $row['idp'];
-$dataentrada = $row['dataentrada'];
-$preco =  str_replace(',', '.', $row['preco']);
-$quantidade = $row['quantidade'];
-if (isset($_POST['submit'])) {
-    $sql = 'delete from admissao where id =' . $id;
+if ($id > 0) {
+    $sql = "select e.id, p.nome nome, e.dataentrada as data, e.preco preco, e.quantidade quantidade from entradaestoque e
+    inner join produto p on p.id = e.idproduto WHERE e.id = $id";
     $result = mysqli_query($con, $sql);
+    
     if ($result) {
-        header('location: admselect.php');
+        $row = mysqli_fetch_array($result);
+        $idproduto = $row['nome'];
+        $dataentrada = $row['data'];
+        $preco = $row['preco'];
+        $quantidade = $row['quantidade'];
     } else {
-        die(mysqli_error($con));
+        die('Erro ao buscar entrada: ' . mysqli_error($con));
+    }
+} else {
+    die('ID inválido.');
+}
+
+if (isset($_POST['submit'])) {
+    // Deletar o usuário
+    $sql = "DELETE FROM entradaestoque WHERE id = $id";
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        header('Location: entrselect.php');
+        exit();
+    } else {
+        die('Erro ao excluir entrada: ' . mysqli_error($con));
     }
 }
 ?>
@@ -88,7 +100,7 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <div class="col-md-4 text-center">
-                            <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='admselect.php'" style="margin-top: 15px;">Não, Voltar</button>
+                            <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='entrselect.php'" style="margin-top: 15px;">Não, Voltar</button>
                             <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3" style="margin-left: 20px;">Deletar</button>
                         </div>
                     </div>
