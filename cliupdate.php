@@ -94,25 +94,14 @@ if (isset($_POST['submit'])) {
             <form method="post" >
                 <br>
                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                <div class="row" style="background-color: #556152;">
-                    <div class="row">
-                        <div class="col-12">
-                                    <h4 for="text" style="color:white;">Nome do Cliente</h4>
+                <div class="row">
+                        <div class="col-12"> <br><br>
+                            <div class="form-floating" style="margin-left: 0px;">
+                                <h5 style="color: white;">Nome</h5>
+                            </div>
                         </div>
-                        <div class="col-9" style="width: 300px; margin-left: 490px;">           
-                                <?php
-                                            $sqll = 'select * from cliente order by id';
-                                            $result = mysqli_query($con, $sqll);
-                                            if ($result) {
-                                                echo '<select 
-                                                    name="cliente" class="form-control">';
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                    echo '<option value="' . $row['id'] . '">' .
-                                                        $row['nome'] . '</option>';
-                                                }
-                                                echo '</select>';
-                                            }
-                                    ?> 
+                        <div class="col" style="margin-left: 450px;">
+                            <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">
@@ -122,7 +111,7 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="col" style="margin-left: 450px;">
-                            <input type="enail" class="form-control" name="email" id="email" value="<?php echo $email; ?>" required style="width: 350px;">
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo $email; ?>" required style="width: 350px;">
                         </div>
                     </div>
                     <div class="row">

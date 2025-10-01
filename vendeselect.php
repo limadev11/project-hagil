@@ -11,10 +11,10 @@ $pesqnome = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar vendedor com base no nome fornecido
-    $sql = "SELECT * FROM vendedor WHERE nome LIKE '%$pesqnome%' ORDER BY nome ASC";
+    $sql = "SELECT * FROM vendedor WHERE nome LIKE '%$pesqnome%' ORDER BY id ASC";
 } else {
     // Consulta padrão para listar todos os vendedor
-    $sql = 'SELECT * FROM vendedor ORDER BY nome ASC';
+    $sql = 'SELECT * FROM vendedor ORDER BY id ASC';
 }
 
 $result = mysqli_query($con, $sql);
@@ -117,10 +117,10 @@ $result = mysqli_query($con, $sql);
                             <td>" . $row['id'] . "</td>
                             <td>" . $row['nome'] . "</td>
                             <td>
-                                <a href='admupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
+                                <a href='vendeupdate.php?updateid={$row['id']}' class='btn btn-sm btn-primary'>
                         <i class='bi bi-pencil-square'></i> Alterar
                       </a>
-                      <a href='admdelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
+                      <a href='vendedelete.php?deleteid={$row['id']}' class='btn btn-sm btn-danger'>
                         <i class='bi bi-trash'></i> Excluir
                       </a>
                             </td>

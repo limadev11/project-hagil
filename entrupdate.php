@@ -3,7 +3,7 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 $id = $_GET['updateid'];
-$sql = 'select * from admissao where id =' . $id;
+$sql = 'select * from entradaestoque where id =' . $id;
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
 $idproduto = $row['idproduto'];
@@ -15,13 +15,13 @@ if (isset($_POST['submit'])) {
     $dataentrada = $_POST['dataentrada'];
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
-    $sql = 'update admissao set idproduto="' . $idproduto .
+    $sql = 'update entradaestoque set idproduto="' . $idproduto .
             '", dataentrada="' . $dataentrada . '", preco="' . $preco .
             '", quantidade="' .  $quantidade . '" where id=' . $id;
             echo  $sql;
      $result = mysqli_query($con, $sql);
     if ($result) {
-       header('location: admselect.php');
+       header('location: entrselect.php');
     } else {
         die(mysqli_error($con));
     }
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>Atualizar Admissão</title>
+    <title>Atualizar Entrada</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
     <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
         <div class="text-center py-5" style="height: 100px; color: black;">
-            <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Admissão:</h2>
+            <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Entrada:</h2>
             <br>
         </div>
     </div>
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
             <div class="row" style="background-color: #556152;">
                 <div class="col-12 mb-4 text-center">
-                    <h4 style="color: white;">Dados da Admissão:</h4>
+                    <h4 style="color: white;">Dados da Entrada de Estoque:</h4>
                 </div>
 
                 <!-- Quantidade -->
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
             <div class="row" style="background-color: #556152;">
                 <div class="col text-center">
                     <?php
-                    echo "<a href='admselect.php'>
+                    echo "<a href='entrselect.php'>
                         <button type='button' style='padding: 9px; width: 100px;' class='btn btn-dark'>Não, Voltar</button></a>";
                     ?>
                     <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
