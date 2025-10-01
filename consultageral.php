@@ -4,23 +4,21 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todas as admissao
-$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto  ';
+$sql = '';
 
 // Pesquisa por admissao
-$pesqnome = '';
+$pesqvend = '';
+$pesqcliente = '';
+$pesqproduto = '';
+$pesqdata1 = '';
+$pesqdata2 = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     // Consulta para buscar admissao com base no nome fornecido
-    $sql = "select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ";
-} else {
-    // Consulta padrão para listar todas as admissao
-    $sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ';
-}
+    $sql = "";
+} 
 
-$result = mysqli_query($con, $sql);
+// $result = mysqli_query($con, $sql);
 ?>
 
 
@@ -62,85 +60,107 @@ $result = mysqli_query($con, $sql);
 </head>
 
 <body>
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link active">Sair</a>
+    <center>
+        <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
+            <div class="col">
+                <h1>Superar</h1>
             </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+            <div class="col">
+                <!-- Aqui é o formulário de pesquisa usando o form com método post -->
+                <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
+                    background-color: #556152; border-radius: 10px;">
+                    <div style="flex: 1;">
+                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5 style="margin-top:5px">Vendedor:</h5>
+                                    <input type="text" name="pesqvend" placeholder="Nome..."
+                                        style="height:30px; margin-top:5px" maxlength="37"
+                                        value="<?php echo $pesqvend; ?>">
+                                </div>
+                            </div>
 
-    <!-- Page Header Start -->
-    <!-- Formulário de pesquisa -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <!-- Cabeçalho do formulário -->
-        <div class="container" style="background-color: transparent;" width="200px;">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Cliente:</h5>
+                                    <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;"
+                                        maxlength="37" value="<?php echo $pesqcliente; ?>">
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Formulário de pesquisa -->
-            <form method="post" action="">
-                <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom: 5px; border-radius: 5px;">
-                    <!-- Campo de texto e botões na mesma linha -->
-                    <div class="col-auto">
-                        <h5 style="color: white;">Nome parcial:</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Produto:</h5>
+                                    <input type="text" name="pesqproduto" placeholder="Nome..." style="height:30px"
+                                        maxlength="37" value="<?php echo $pesqproduto; ?>">
+                                </div>
+                            </div>
+
+                            <!-- Filtro de datas, temos a data1, data2, que vai poder filtrar o período de datas que o cliente desejar -->
+                            <div class="col-md-6">
+                                <div class="form-row" style="margin-right:35px">
+                                    <h5>Data:</h5>
+                                    <!-- Data 1 -->
+                                    <input class="data-input" type="date" name="pesqdata1" style="height:30px"
+                                        maxlength="8" value="<?php echo $pesqdata1; ?>">
+                                        <h5 class="between-inputs">ao</h5>
+                                    <!-- Data 2 -->
+                                    <input class="data-input" type="date" name="pesqdata2" style="height:30px;"
+                                    maxlength="8" value="<?php echo $pesqdata2; ?>">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="col-auto">
-                        <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 400px;" value="<?php echo $pesqnome; ?>">
-                    </div>
-                    <div class="col-auto">
-                        <a href="admselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                        <a href="adminsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
 
+                    <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
+            entrar na área de incluir nova venda -->
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
+                            name="submit">Pesquisar</button>
+                        <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                        <a href="vendainsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto p-4 p-lg-0">
+                        <a href="menu.php" class="nav-item nav-link">Menu</a>
+                        <a href="logout.php" class="nav-item nav-link active">Sair</a>
                     </div>
                 </div>
-            </form>
+            </div>
+        </nav>
         </div>
-    </div>
-
-
+    </center>
 
     <!-- Tabela de Resultados -->
     <table class="table table-bordered" style="background-color: white; opacity: 94%; text-align: center;">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" style="background-color: #404A3D; color: white;">ID</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">IDP</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Data da Entrada</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Preço</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
+                <th scope="col" style="background-color: #404A3D; color: white;"></th>
             </tr>
         </thead>
         <tbody>
             <?php
-            if ($result && mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>
-                <td>" . $row['id'] . "</td>
-                <td>" . $row['nome'] . "</td>
-                <td>" . $dataentrada =    
-                substr($row['dataentrada'], 8, 2) .
-                substr($row['dataentrada'], 4, 4) .
-                substr($row['dataentrada'], 0, 4) . "
-                </td>
-                <td>" . $row['preco'] . "</td>
-                <td>" . $row['quantidade'] . "</td>
-                <td>
-                    <a href='admupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
-                    <a href='admdelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>
-                </td>
-              </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='5'>Nenhum ad encontrado.</td></tr>";
-            }
+            // if ($result && mysqli_num_rows($result) > 0) {
+            //     while ($row = mysqli_fetch_assoc($result)) {
+            //         echo "<tr>
+            //   </tr>";
+            //     }
+            // } else {
+            //     echo "<tr><td colspan='5'>Nenhum ad encontrado.</td></tr>";
+            // }
             ?>
 
         </tbody>
