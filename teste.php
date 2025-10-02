@@ -1,12 +1,38 @@
 <?php
 
-$lista = ['Nome', 'Email', 'Whatsapp', 'Endereço', 'Bairro', 'Cidade', 'UF', 'Operações'];
-for ($lc=0; $lc < count($lista); $lc++) { 
-    echo"<th scope='col'>" . $lista[$lc] . "</th>";
-}
+/**
+ * Aqui teríamos algum código para
+ * recuperar de uma fonte de dados
+ * as informações do formulário.
+ *
+ * Utilizaremos o código abaixo, apenas como fins ilustrativo,
+ * imaginando que ele vem de alguma fonte.
+ */
+$bike = (bool) rand(0, 1) ? "checked" : null;
+$car  = (bool) rand(0, 1) ? "checked" : null;
 
-$listcolumn = ['ID', 'Vendedor', 'Cliente', 'Produto', 'Quantd.', 'Preço Custo', 'Preço Venda', 'Total', 'Data', 'Operações'];
-for ($lc = 0; $lc < count($listcolumn); $lc++) {
-    echo "<th scope='col' style='background-color: #404A3D; color: white; width:20px'>" . $listcolumn[$lc] . "</th>";
+if isset(($_POST['submit'])) {
+
+    echo ""
 }
 ?>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Form de exemplo com checkboxes</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form method="post">
+            <p>
+                <input type="checkbox" name="bike" value="on" <?php echo $bike; ?> >I have a bike
+            </p>
+            <p>
+                <input type="checkbox" name="car" value="on" <?php echo $car; ?> >I have a car
+            </p>
+            <p>
+                <input type="submit" value="Submit me!" />
+            </p>
+        </form>
+    </body>
+</html>

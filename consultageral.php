@@ -4,23 +4,47 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todas as admissao
-$sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto  ';
+$sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal, v.datavenda as data
+        from venda v inner join cliente c on c.id = v.idcliente
+        union all
+        select "Despesa" tipo, d.id, t.nome, d.valor, d.data as data
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
+        order by 3';
+        
+$sqltv = "select sum(v.valortotal) total
+        from venda v inner join cliente c on c.id = v.idcliente";
 
-// Pesquisa por admissao
-$pesqnome = '';
+$sqltd = "select sum(d.valor) total
+from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
+
+$vvendas = '';
+$vdespesas = '';
+
+// Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
 if (isset($_POST['submit'])) {
-    $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
-    // Consulta para buscar admissao com base no nome fornecido
-    $sql = "select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ";
-} else {
-    // Consulta padrão para listar todas as admissao
-    $sql = 'select a.id, p.id idp, p.nome, a.dataentrada, a.preco, a.quantidade
-  from admissao a inner join produto p on p.id=a.idproduto ';
+    // Fazer o filtro de pesquisa somente a Tipo = Venda ou Tipo = Despesa
+    if (!empty($vvendas)) {
+        $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal, v.datavenda as data
+        from venda v inner join cliente c on c.id = v.idcliente";
+    }
+    if (!empty($vdespesas)) {
+        $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor, d.data as data
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
+    }
 }
 
 $result = mysqli_query($con, $sql);
+$resultTV = mysqli_query($con, $sqltv);
+$resultTD = mysqli_query($con, $sqltd);
+
+// A variável $rowTV agora vai receber todos os resultados da variavel $resultTV
+if ($resultTV && mysqli_num_rows($resultTV) > 0) {
+    $rowTV = mysqli_fetch_assoc($resultTV);
+}
+// A variável $rowTD agora vai receber todos os resultados da variavel $resultTD
+if ($resultTD && mysqli_num_rows($resultTD) > 0) {
+    $rowTD = mysqli_fetch_assoc($resultTD);
+}
 ?>
 
 
@@ -62,60 +86,79 @@ $result = mysqli_query($con, $sql);
 </head>
 
 <body>
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link active">Sair</a>
+    <center>
+        <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
+            <div class="col">
+                <h1>Superar</h1>
             </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
+            <div class="col">
+                <!-- Aqui é o formulário de pesquisa usando o form com método post -->
+                <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
+                    background-color: #556152; border-radius: 10px;">
+                    <div style="flex: 1;">
+                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Tipo:</h5>
+                                    <input type="checkbox" id="vendas" name="vendas" value="venda">
+                                    <label for="vendas">Vendas</label><br>
 
-    <!-- Page Header Start -->
-    <!-- Formulário de pesquisa -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <!-- Cabeçalho do formulário -->
-        <div class="container" style="background-color: transparent;" width="200px;">
+                                    <input type="checkbox" id="despesas" name="despesas" value="despesa">
+                                    <label for="despesas">Despesas</label><br>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Formulário de pesquisa -->
-            <form method="post" action="">
-                <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom: 5px; border-radius: 5px;">
-                    <!-- Campo de texto e botões na mesma linha -->
-                    <div class="col-auto">
-                        <h5 style="color: white;">Nome parcial:</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Vendas Totais:</h5>
+                                    <input type="text" style="height:30px"
+                                        maxlength="37" value="<?php echo $rowTV['total']; ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Despesas Totais:</h5>
+                                    <input type="text" style="height:30px"
+                                        maxlength="37" value="<?php echo $rowTD['total']; ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="col-auto">
-                        <input type="text" name="pesqnome" id="pesqnome" class="form-control" placeholder="Nome..." style="width: 400px;" value="<?php echo $pesqnome; ?>">
-                    </div>
-                    <div class="col-auto">
-                        <a href="admselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                        <a href="adminsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
 
+                    <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
+            entrar na área de incluir nova venda -->
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
+                            name="submit">Pesquisar</button>
+                        <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto p-4 p-lg-0">
+                        <a href="menu.php" class="nav-item nav-link">Menu</a>
+                        <a href="logout.php" class="nav-item nav-link active">Sair</a>
                     </div>
                 </div>
-            </form>
+            </div>
+        </nav>
         </div>
-    </div>
-
-
+    </center>
 
     <!-- Tabela de Resultados -->
     <table class="table table-bordered" style="background-color: white; opacity: 94%; text-align: center;">
         <thead class="thead-dark">
             <tr>
+                <th scope="col" style="background-color: #404A3D; color: white;">Tipo</th>
                 <th scope="col" style="background-color: #404A3D; color: white;">ID</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">IDP</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Data da Entrada</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Preço</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Quantidade</th>
-                <th scope="col" style="background-color: #404A3D; color: white;">Operações</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Nome do Cliente</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Valor Total</th>
+                <th scope="col" style="background-color: #404A3D; color: white;">Data</th>
             </tr>
         </thead>
         <tbody>
@@ -123,19 +166,11 @@ $result = mysqli_query($con, $sql);
             if ($result && mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>
-                <td>" . $row['id'] . "</td>
-                <td>" . $row['nome'] . "</td>
-                <td>" . $dataentrada =    
-                substr($row['dataentrada'], 8, 2) .
-                substr($row['dataentrada'], 4, 4) .
-                substr($row['dataentrada'], 0, 4) . "
-                </td>
-                <td>" . $row['preco'] . "</td>
-                <td>" . $row['quantidade'] . "</td>
-                <td>
-                    <a href='admupdate.php?updateid=" . $row['id'] . "' class='btn btn-dark'>Alterar</a>
-                    <a href='admdelete.php?deleteid=" . $row['id'] . "' class='btn btn-dark'>Excluir</a>
-                </td>
+                    <td>" . $row['tipo'] . "</td>
+                    <td>" . $row['id'] . "</td>
+                    <td>" . $row['nome'] . "</td>
+                    <td>" . $row['valortotal'] . "</td>
+                    <td>" . date('d/m/Y', strtotime($row['data'])) . "</td>
               </tr>";
                 }
             } else {
