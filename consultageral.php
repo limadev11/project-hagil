@@ -128,15 +128,12 @@ if ($resultTD && mysqli_num_rows($resultTD) > 0) {
                         </div>
 
                     </div>
-
-                    <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
-            entrar na área de incluir nova venda -->
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                </form>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
                         <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
                             name="submit">Pesquisar</button>
-                        <a href="vendaselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                        <a href="consultageral.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                     </div>
-                </form>
             </div>
             <div class="col">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
