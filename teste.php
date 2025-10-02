@@ -1,20 +1,24 @@
 <?php
+$bike = isset($_POST['bike']);
+$car = isset($_POST['car']);
+// check BIKE
 
-/**
- * Aqui teríamos algum código para
- * recuperar de uma fonte de dados
- * as informações do formulário.
- *
- * Utilizaremos o código abaixo, apenas como fins ilustrativo,
- * imaginando que ele vem de alguma fonte.
- */
-$bike = (bool) rand(0, 1) ? "checked" : null;
-$car  = (bool) rand(0, 1) ? "checked" : null;
-
-if isset(($_POST['submit'])) {
-
-    echo ""
+if (!empty($bike) && !empty($car)) {
+    echo "CARA TA TURBINADO";
 }
+
+else if (!empty($bike)) {
+    echo "MONARK";
+} 
+
+// check Car
+else if (isset($_POST['car'])) {
+    echo "HONDA CIVIC";
+}
+else if (empty($bike) && empty($car)) {
+    echo "CAMINHAR É BOM";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,12 +27,12 @@ if isset(($_POST['submit'])) {
         <meta charset="utf-8">
     </head>
     <body>
-        <form method="post">
+        <form action="" method="post">
             <p>
-                <input type="checkbox" name="bike" value="on" <?php echo $bike; ?> >I have a bike
+                <input type="checkbox" name="bike" value="on">I have a bike
             </p>
             <p>
-                <input type="checkbox" name="car" value="on" <?php echo $car; ?> >I have a car
+                <input type="checkbox" name="car" value="on">I have a car
             </p>
             <p>
                 <input type="submit" value="Submit me!" />

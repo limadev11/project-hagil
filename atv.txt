@@ -9,3 +9,9 @@ O Jair e Martins fazer cada um 2 pesquisas de CRUD esta semana;
 O Lucas quero ensinar ele a pegar todas as falhas que achou e jogar no TRELLO, ver se estas falhas foram feitas para colocar no Done;
 O João vai treinar como ele vai apresentar e quinta e sexta ele vai terminar a parte de sugestões de pesquisa no sistema;
 O Martins além dos CRUDs, vai terminar a parte de venda e fazer o consulageral.php logo
+
+Pesquisar por:
+data (em período);
+nome do cliente;
+tipo (vendas ou despesas); - feito
+valor total (um campo acerca e outro exato);

@@ -4,10 +4,10 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todas as admissao
-$sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal, v.datavenda as data
+$sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
         from venda v inner join cliente c on c.id = v.idcliente
         union all
-        select "Despesa" tipo, d.id, t.nome, d.valor, d.data as data
+        select "Despesa" tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
         order by 3';
         
@@ -17,22 +17,23 @@ $sqltv = "select sum(v.valortotal) total
 $sqltd = "select sum(d.valor) total
 from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
 
-$vvendas = '';
-$vdespesas = '';
 
 // Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
 if (isset($_POST['submit'])) {
+
     // Fazer o filtro de pesquisa somente a Tipo = Venda ou Tipo = Despesa
-    if (!empty($vvendas)) {
-        $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal, v.datavenda as data
+    $pesqtv = isset($_POST['vendas']);
+    $pesqtd = isset($_POST['despesas']);
+
+    if (!empty($pesqtv) && empty($pesqtd)){
+        $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
         from venda v inner join cliente c on c.id = v.idcliente";
     }
-    if (!empty($vdespesas)) {
-        $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor, d.data as data
+    else if (!empty($pesqtd) && empty($pesqtv)){
+        $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
     }
 }
-
 $result = mysqli_query($con, $sql);
 $resultTV = mysqli_query($con, $sqltv);
 $resultTD = mysqli_query($con, $sqltd);
@@ -99,12 +100,12 @@ if ($resultTD && mysqli_num_rows($resultTD) > 0) {
                         <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-row">
+                                <div class="" style="width:500px">
                                     <h5>Tipo:</h5>
-                                    <input type="checkbox" id="vendas" name="vendas" value="venda">
+                                    <input type="checkbox" name="vendas" value="on">
                                     <label for="vendas">Vendas</label><br>
 
-                                    <input type="checkbox" id="despesas" name="despesas" value="despesa">
+                                    <input type="checkbox" name="despesas" value="on">
                                     <label for="despesas">Despesas</label><br>
                                 </div>
                             </div>
@@ -128,12 +129,12 @@ if ($resultTD && mysqli_num_rows($resultTD) > 0) {
                         </div>
 
                     </div>
-                </form>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
                         <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
                             name="submit">Pesquisar</button>
                         <a href="consultageral.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                     </div>
+                </form>
             </div>
             <div class="col">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
