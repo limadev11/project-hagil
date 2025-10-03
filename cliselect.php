@@ -4,20 +4,47 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os usuários
-$sql = 'SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
-  from cliente ORDER BY nome ASC';
+$sql = "SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf FROM cliente WHERE 1=1";
 
 // Área que vai efetuar a pesquisa pelo nome do cliente
 $pesqnome = '';
+$pesqemail = '';
+$pesqzap = '';
+$pesqend = '';
+$pesqbairro = '';
+$pesqcidade = '';
+$pesquf = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
-    // Consulta para buscar usuários com base no nome fornecido
-    $sql = "SELECT id, nome, email, whatsapp, endereco, bairro, cidade, uf
-            FROM cliente 
-            WHERE nome LIKE '%" . $pesqnome . "%' 
-            ORDER BY nome ASC";
+    $pesqemail = mysqli_real_escape_string($con, $_POST['pesqemail']);
+    $pesqzap = mysqli_real_escape_string($con, $_POST['pesqzap']);
+    $pesqend = mysqli_real_escape_string($con, $_POST['pesqend']);
+    $pesqbairro = mysqli_real_escape_string($con, $_POST['pesqbairro']);
+    $pesqcidade = mysqli_real_escape_string($con, $_POST['pesqcidade']);
+    $pesquf = mysqli_real_escape_string($con, $_POST['pesquf']);
+    // Consulta para buscar produto com base no nome fornecido
+    if (!empty($pesqnome)) {
+        $sql .= " AND nome LIKE '%$pesqnome%'";
+    }
+    if (!empty($pesqemail)) {
+        $sql .= " AND email like '%$pesqemail%'";
+    }
+    if (!empty($pesqzap)) {
+        $sql .= " AND whatsapp like '%$pesqzap%'";
+    }
+    if (!empty($pesqend)) {
+        $sql .= " AND endereco like  '%$pesqend%'";
+    }
+    if (!empty($pesqbairro)) {
+        $sql .= " AND bairro like '%$pesqbairro%'";
+    }
+    if (!empty($pesqcidade)) {
+        $sql .= " AND cidade like '%$pesqcidade%'";
+    }
+    if (!empty($pesquf)) {
+        $sql .= " AND uf like '%$pesquf%'";
+    }
 }
-
 
 $result = mysqli_query($con, $sql);
 ?>
@@ -65,47 +92,116 @@ $result = mysqli_query($con, $sql);
 </head>
 
 <body>
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link active">Sair</a>
-            </div>
-        </div>
-    </nav>
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: transparent;">
-            <!-- Formulário de pesquisa -->
-            <form method="post" action="">
-                <div class="row align-items-center" style="background-color: #556152; padding-top:5px; padding-bottom:5px; border-radius: 10px;">
-                    <div class="col-auto">
-                        <h5 style="color: white;">Nome do cliente:</h5>
-                    </div>
-                    <div class="col-auto">
-                        <div class="autocomplete-wrapper">
-                            <div class="col-auto">
-                                <input type="text" id="search" id="pesqnome" name="pesqnome" class="form-control" placeholder="Nome..." style="width: 500px;" value="<?php echo $pesqnome; ?>">
+    <center>
+        <div class="row">
+            <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
+                <div class="col">
+                    <h1 class="m-0">Superar</h1>
+                </div>
+                <div class="col">
+                    <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
+                    background-color: #556152; border-radius: 10px;">
+                        <div style="flex: 1;">
+                            <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                            <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5 style="margin-top:5px">Nome:</h5>
+                                        <input type="text" name="pesqnome" placeholder="Nome..."
+                                            style="height:30px; margin-top:5px" maxlength="37"
+                                            value="<?php echo $pesqnome; ?>">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>Email:</h5>
+                                        <input type="text" name="pesqemail" placeholder="Nome..." style="height:30px;"
+                                            maxlength="37" value="<?php echo $pesqemail; ?>">
+                                    </div>
+                                </div>
                             </div>
-                            <div id="suggestions"></div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>Whatsapp:</h5>
+                                        <input type="text" name="pesqzap" placeholder="Nome..." style="height:30px"
+                                            maxlength="37" value="<?php echo $pesqzap; ?>">
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-row">
+                                            <h5>Endereço:</h5>
+                                            <input type="text" name="pesqend" placeholder="Nome..." style="height:30px"
+                                                maxlength="37" value="<?php echo $pesqend; ?>">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>Bairro:</h5>
+                                        <input type="text" name="pesqbairro" placeholder="Nome..." style="height:30px"
+                                            maxlength="37" value="<?php echo $pesqbairro; ?>">
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>Cidade:</h5>
+                                        <input type="text" name="pesqcidade" placeholder="Nome..." style="height:30px"
+                                            maxlength="37" value="<?php echo $pesqcidade; ?>">
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>UF:</h5>
+                                        <input type="text" name="pesquf" placeholder="Nome..." style="height:30px"
+                                            maxlength="37" value="<?php echo $pesquf; ?>">
+                                    </div>
+                                    
+
+
+                                    
+                        
+
+
+                        </div>
+
+                        <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
+            entrar na área de incluir nova venda -->
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
+                                name="submit">Pesquisar</button>
+                            <a href="cliselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
+                            <a href="cliinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="col">
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto p-4 p-lg-0">
+                            <a href="menu.php" class="nav-item nav-link">Menu</a>
+                            <a href="logout.php" class="nav-item nav-link active">Sair</a>
                         </div>
                     </div>
-                    <div class="col-auto">
-                        <a href="cliselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                        <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit" name="submit">Pesquisar</button>
-                        <a href="cliinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Inclusão</a>
-                    </div>
                 </div>
-            </form>
+            </nav>
         </div>
-    </div>
+    </center>
 
     <div class="table-container">
         <table class="table table-striped table-hover align-middle">
