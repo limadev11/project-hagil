@@ -100,7 +100,7 @@ if ($resultTD && mysqli_num_rows($resultTD) > 0) {
                         <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="" style="width:500px">
+                                <div class="col" style="width:500px">
                                     <h5>Tipo:</h5>
                                     <input type="checkbox" name="vendas" value="on">
                                     <label for="vendas">Vendas</label><br>
