@@ -4,21 +4,36 @@ include('verificalogin.php');
 include('connect.php');
 
 // Query SQL padrão para listar todos os produto
-$sql = 'SELECT * FROM `produto` ORDER BY nome ASC';
+$sql = 'SELECT * FROM `produto` where 1=1';
 
 // Pesquisa por produto
 $pesqnome = '';
 $pesqpv = '';
 $pesqpc = '';
 $pesqcm = '';
+$pesqcx = '';
 if (isset($_POST['submit'])) {
     $pesqnome = mysqli_real_escape_string($con, $_POST['pesqnome']);
     $pesqpv = mysqli_real_escape_string($con, $_POST['pesqpv']);
     $pesqpc = mysqli_real_escape_string($con, $_POST['pesqpc']);
     $pesqcm = mysqli_real_escape_string($con, $_POST['pesqcm']);
+    $pesqcx = mysqli_real_escape_string($con, $_POST['pesqcx']);
     // Consulta para buscar produto com base no nome fornecido
-    $sql = $sql . " where nome like '%$pesqnome%' and preco like '%$pesqpv%' and 
-    cli.nome like '%$pesqpc%'";
+    if (!empty($pesqnome)) {
+        $sql .= " AND nome LIKE '%$pesqnome%'";
+    }
+    if (!empty($pesqpv)) {
+        $sql .= " AND precovenda = '$pesqpv'";
+    }
+    if (!empty($pesqpc)) {
+        $sql .= " AND precocusto = '$pesqpc'";
+    }
+    if (!empty($pesqcm)) {
+        $sql .= " AND comissao = '$pesqcm'";
+    }
+    if (!empty($pesqcx)) {
+        $sql .= " AND estoque = '$pesqcx'";
+    }
 }
 
 $result = mysqli_query($con, $sql);
@@ -81,7 +96,7 @@ $result = mysqli_query($con, $sql);
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <h5 style="margin-top:5px">Nome:</h5>
-                                        <input type="text" name="pesqvend" placeholder="Nome..."
+                                        <input type="text" name="pesqnome" placeholder="Nome..."
                                             style="height:30px; margin-top:5px" maxlength="37"
                                             value="<?php echo $pesqnome; ?>">
                                     </div>
@@ -106,16 +121,26 @@ $result = mysqli_query($con, $sql);
                                 </div>
 
                                 <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <h5>Valor Comissão:</h5>
-                                        <input type="text" name="pesqcm" placeholder="Nome..." style="height:30px"
-                                            maxlength="37" value="<?php echo $pesqcm; ?>">
+                                    <div class="col-md-6">
+                                        <div class="form-row">
+                                            <h5>Valor Comissão:</h5>
+                                            <input type="text" name="pesqcm" placeholder="Nome..." style="height:30px"
+                                                maxlength="37" value="<?php echo $pesqcm; ?>">
+                                        </div>
+
                                     </div>
                                 </div>
-                                    </div>
-                                
+
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <h5>Estoque:</h5>
+                                        <input type="text" name="pesqcx" placeholder="Nome..." style="height:30px"
+                                            maxlength="37" value="<?php echo $pesqcx; ?>">
+                                    </div>
+                        
+
 
                         </div>
 
