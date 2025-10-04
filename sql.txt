@@ -1,0 +1,18 @@
+select "Venda" tipo, v.id, c.nome, v.valortotal, v.datavenda
+   from venda v inner join cliente c on c.id = v.idcliente
+union all
+select "Despesa" tipo, d.id, t.nome, d.valor, d.data
+   from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
+order by 3
+
+
+select sum(v.valortotal) total
+   from venda v inner join cliente c on c.id = v.idcliente
+   where v.datavenda between "2025-05-01" and "2025-08-05"
+
+
+select sum(d.valor) total
+   from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
+   where d.data between "2025-05-01" and "2025-08-05"
+
+
