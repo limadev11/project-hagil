@@ -3,19 +3,22 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Query SQL padrão para listar todas as admissao
+// Query SQL padrão para listar toda a consulta geral para as tabelas
 $sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
         from venda v inner join cliente c on c.id = v.idcliente
         union all
         select "Despesa" tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
         order by 3';
-        
+
+// Este SQL Padrão serve para contar todas as vendas registradas
 $sqltv = "select sum(v.valortotal) total
         from venda v inner join cliente c on c.id = v.idcliente";
 
+// Este SQL Padrão serve para contar todas as despesas registradas
 $sqltd = "select sum(d.valor) total
 from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
+
 
 
 // Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
@@ -25,14 +28,56 @@ if (isset($_POST['submit'])) {
     $pesqtv = isset($_POST['vendas']);
     $pesqtd = isset($_POST['despesas']);
 
+    $pesqdata1 = mysqli_real_escape_string($con, $_POST['pesqdata1']);
+    $pesqdata2 = mysqli_real_escape_string($con, $_POST['pesqdata2']);
+    // Aqui é para trocar as / na data para - e trocar as posições dos números, ficando 0000-00-00 (padrão MYSQL)
+    $pesqdata1 = implode("-", array_reverse(explode("/", $pesqdata1)));
+    $pesqdata2 = implode("-", array_reverse(explode("/", $pesqdata2)));
+
+    // Área de exibir só a Venda
     if (!empty($pesqtv) && empty($pesqtd)){
         $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
         from venda v inner join cliente c on c.id = v.idcliente";
+
+        // Parte de filtrar por data:
+        if(!empty($pesqdata1) && empty($pesqdata2)){
+            $sql = $sql . " where v.datavenda between '$pesqdata1' and '3000-01-01'";
+        }
+        if(!empty($pesqdata2) && empty($pesqdata1)){
+            $sql = $sql . " where v.datavenda between '0000-01-01' and '$pesqdata2'";
+        }
+        else {
+            $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
+        }
+        echo $sql;
     }
+    // Área de exibir só a Despesa
     else if (!empty($pesqtd) && empty($pesqtv)){
         $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
+        // Parte de filtrar por data:
+        if(!empty($pesqdata1) && empty($pesqdata2)){
+            $sql = $sql . " where d.datavenda between '$pesqdata1' and '3000-01-01'";
+        }
+        if(!empty($pesqdata2) && empty($pesqdata1)){
+            $sql = $sql . " where d.datavenda between '0000-01-01' and '$pesqdata2'";
+        }
+        else {
+            $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
+        }
+        echo $sql;
     }
+    // Parte de filtrar por data:
+    if(!empty($pesqdata1) && empty($pesqdata2)){
+        $sql = $sql . " where v.datavenda between '$pesqdata1' and '3000-01-01'";
+    }
+    if(!empty($pesqdata2) && empty($pesqdata1)){
+        $sql = $sql . " where v.datavenda between '0000-01-01' and '$pesqdata2'";
+    }
+    else {
+        $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
+    }
+    echo $sql;
 }
 $result = mysqli_query($con, $sql);
 $resultTV = mysqli_query($con, $sqltv);
@@ -94,47 +139,60 @@ if ($resultTD && mysqli_num_rows($resultTD) > 0) {
             </div>
             <div class="col">
                 <!-- Aqui é o formulário de pesquisa usando o form com método post -->
-                <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
-                    background-color: #556152; border-radius: 10px;">
-                    <div style="flex: 1;">
-                        <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col" style="width:500px">
-                                    <h5>Tipo:</h5>
-                                    <input type="checkbox" name="vendas" value="on">
-                                    <label for="vendas">Vendas</label><br>
+                <form method="post" action="" style="width: 1050px; padding: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; 
+           background-color: #556152; border-radius: 10px;">
 
-                                    <input type="checkbox" name="despesas" value="on">
-                                    <label for="despesas">Despesas</label><br>
-                                </div>
+                    <!-- Coluna principal -->
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+
+                        <!-- Linha Tipo e Data -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 30px;">
+
+                            <!-- Tipo -->
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <h5 style="color:white;">Tipo:</h5>
+                                <h5 style="color:white;">
+                                    <input type="checkbox" name="vendas" value="on" style="margin-top:0px"> Vendas
+                                </h5>
+                                <h5 style="color:white;">
+                                    <input type="checkbox" name="despesas" value="on" style="margin-top:0px"> Despesas
+                                </h5>
+                            </div>
+
+                            <!-- Data -->
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <h5 style="color:white; margin:0;">Data:</h5>
+                                <input class="data-input" type="date" name="pesqdata1" style="height:30px; width:120px"
+                                    value="<?php echo $pesqdata1; ?>">
+                                <h5 style="color:white; margin:0;">ao</h5>
+                                <input class="data-input" type="date" name="pesqdata2" style="height:30px; width:120px"
+                                    value="<?php echo $pesqdata2; ?>">
                             </div>
                         </div>
 
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <div class="form-row">
-                                    <h5>Vendas Totais:</h5>
-                                    <input type="text" style="height:30px"
-                                        maxlength="37" value="<?php echo $rowTV['total']; ?>" readonly>
-                                </div>
+                        <!-- Linha Totais -->
+                        <div style="display: flex; justify-content: space-between; gap: 30px;">
+
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <h5 style="color:white; margin:0;">Vendas Totais:</h5>
+                                <input type="text" style="height:30px" value="<?php echo $rowTV['total']; ?>" readonly>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-row">
-                                    <h5>Despesas Totais:</h5>
-                                    <input type="text" style="height:30px"
-                                        maxlength="37" value="<?php echo $rowTD['total']; ?>" readonly>
-                                </div>
+
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <h5 style="color:white; margin:0;">Despesas Totais:</h5>
+                                <input type="text" style="height:30px" value="<?php echo $rowTD['total']; ?>" readonly>
                             </div>
                         </div>
-
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
+
+                    <!-- Coluna Botões -->
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
                         <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
                             name="submit">Pesquisar</button>
                         <a href="consultageral.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
                     </div>
                 </form>
+
             </div>
             <div class="col">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
