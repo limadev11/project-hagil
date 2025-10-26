@@ -91,7 +91,7 @@ $result = mysqli_query($con, $sql);
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <h5 style="margin-top:5px">Vendedor:</h5>
-                                    <input type="text" name="pesqvend" placeholder="Nome..."
+                                    <input type="text" name="pesqvend" placeholder="Nome..." id="testvend"
                                         style="height:30px; margin-top:5px" maxlength="37"
                                         value="<?php echo $pesqvend; ?>">
                                 </div>
@@ -100,7 +100,7 @@ $result = mysqli_query($con, $sql);
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <h5>Cliente:</h5>
-                                    <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;"
+                                    <input type="text" name="pesqcliente" placeholder="Nome..." style="height:30px;" id="testcli"
                                         maxlength="37" value="<?php echo $pesqcliente; ?>">
                                 </div>
                             </div>

@@ -38,46 +38,25 @@ if (isset($_POST['submit'])) {
     if (!empty($pesqtv) && empty($pesqtd)){
         $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
         from venda v inner join cliente c on c.id = v.idcliente";
-
-        // Parte de filtrar por data:
-        if(!empty($pesqdata1) && empty($pesqdata2)){
-            $sql = $sql . " where v.datavenda between '$pesqdata1' and '3000-01-01'";
-        }
-        if(!empty($pesqdata2) && empty($pesqdata1)){
-            $sql = $sql . " where v.datavenda between '0000-01-01' and '$pesqdata2'";
-        }
-        else {
-            $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
-        }
-        echo $sql;
     }
     // Área de exibir só a Despesa
     else if (!empty($pesqtd) && empty($pesqtv)){
         $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
-        // Parte de filtrar por data:
-        if(!empty($pesqdata1) && empty($pesqdata2)){
-            $sql = $sql . " where d.datavenda between '$pesqdata1' and '3000-01-01'";
-        }
-        if(!empty($pesqdata2) && empty($pesqdata1)){
-            $sql = $sql . " where d.datavenda between '0000-01-01' and '$pesqdata2'";
-        }
-        else {
-            $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
-        }
-        echo $sql;
     }
     // Parte de filtrar por data:
     if(!empty($pesqdata1) && empty($pesqdata2)){
-        $sql = $sql . " where v.datavenda between '$pesqdata1' and '3000-01-01'";
+        $sql = $sql . " where data between '$pesqdata1' and '3000-01-01'";
+        echo $sql;
     }
     if(!empty($pesqdata2) && empty($pesqdata1)){
-        $sql = $sql . " where v.datavenda between '0000-01-01' and '$pesqdata2'";
+        $sql = $sql . " where data between '0000-01-01' and '$pesqdata2'";
+        echo $sql;
     }
-    else {
-        $sql = $sql . " where v.datavenda between '$pesqdata1' and '$pesqdata2'";
+    if(!empty($pesqdata1) && !empty($pesqdata2)) {
+        $sql = $sql . " where data between '$pesqdata1' and '$pesqdata2'";
+        echo $sql;
     }
-    echo $sql;
 }
 $result = mysqli_query($con, $sql);
 $resultTV = mysqli_query($con, $sqltv);

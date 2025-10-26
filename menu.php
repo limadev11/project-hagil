@@ -129,7 +129,7 @@ include('verificalogin.php');
                 </li>
                 <li class="nav-item mb-2">
                     <a href="vendaselect.php" class="btn-sidebar mb-3 d-flex align-items-center">
-                        <img src="img/calendario-linhas-caneta.png" alt=""> Venda
+                        <img src="img/calendario-linhas-caneta.png" alt=""> Vendas
                     </a>
                 </li>
                 <li class="nav-item mb-2">
