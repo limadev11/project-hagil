@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         die('' . mysqli_error($con));
     }
 }
-
+// Opa!
 ?>
 
 <!DOCTYPE html>
