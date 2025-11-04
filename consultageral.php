@@ -9,7 +9,7 @@ $sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal as valortotal, v.dataven
         union all
         select "Despesa" tipo, d.id, t.nome, d.valor as valortotal, d.data as data
         from despesa d inner join tipodespesa t on t.id = d.idtipodespesa
-        order by 3';
+        ';
 
 // Este SQL Padrão serve para contar todas as vendas registradas
 $sqltv = "select sum(v.valortotal) total
@@ -19,7 +19,7 @@ $sqltv = "select sum(v.valortotal) total
 $sqltd = "select sum(d.valor) total
 from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
 
-
+$orderby = 'order by 3';
 
 // Algoritmo que identifica a ação do botão submit, declara as variáveis anteriores ao valor que usuário.
 if (isset($_POST['submit'])) {
@@ -37,20 +37,35 @@ if (isset($_POST['submit'])) {
     // Área de exibir só a Venda
     if (!empty($pesqtv) && empty($pesqtd)){
         $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data
-        from venda v inner join cliente c on c.id = v.idcliente";
+        from venda v inner join cliente c on c.id = v.idcliente $orderby";
     }
     // Área de exibir só a Despesa
     else if (!empty($pesqtd) && empty($pesqtv)){
         $sql = "select 'Despesa' tipo, d.id, t.nome, d.valor as valortotal, d.data as data
-        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa";
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa $orderby";
     }
     // Parte de filtrar por data:
+    // Aqui, o primeiro imput tem valor e o segundo imput é vazio
     if(!empty($pesqdata1) && empty($pesqdata2)){
-        $sql = $sql . " where data between '$pesqdata1' and '3000-01-01'";
+        $sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data 
+        from venda v 
+        inner join cliente c on c.id = v.idcliente 
+        where v.datavenda between '2025-05-05' and '2025-05-05'
+        union all 
+        select "Despesa" tipo, d.id, t.nome, d.valor as valortotal, d.data as data 
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa 
+        where d.data between '$pesqdata1' and '3000-01-01'';
         echo $sql;
     }
     if(!empty($pesqdata2) && empty($pesqdata1)){
-        $sql = $sql . " where data between '0000-01-01' and '$pesqdata2'";
+        $sql = 'select "Venda" tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data 
+        from venda v 
+        inner join cliente c on c.id = v.idcliente 
+        where v.datavenda between '2025-05-05' and '2025-05-05'
+        union all 
+        select "Despesa" tipo, d.id, t.nome, d.valor as valortotal, d.data as data 
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa 
+        where data between '0000-01-01' and '$pesqdata2'';
         echo $sql;
     }
     if(!empty($pesqdata1) && !empty($pesqdata2)) {
