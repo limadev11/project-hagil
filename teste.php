@@ -1,42 +1,47 @@
-<?php
-$bike = isset($_POST['bike']);
-$car = isset($_POST['car']);
-// check BIKE
-
-if (!empty($bike) && !empty($car)) {
-    echo "CARA TA TURBINADO";
-}
-
-else if (!empty($bike)) {
-    echo "MONARK";
-} 
-
-// check Car
-else if (isset($_POST['car'])) {
-    echo "HONDA CIVIC";
-}
-else if (empty($bike) && empty($car)) {
-    echo "CAMINHAR É BOM";
-}
-
+<?php 
+    $dataPoints = array( 
+	array("y" => 7,"label" => "March" ),
+	array("y" => 12,"label" => "April" ),
+	array("y" => 28,"label" => "May" ),
+	array("y" => 18,"label" => "June" ),
+	array("y" => 41,"label" => "July" )
+);
+ 
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <title>Form de exemplo com checkboxes</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <form action="" method="post">
-            <p>
-                <input type="checkbox" name="bike" value="on">I have a bike
-            </p>
-            <p>
-                <input type="checkbox" name="car" value="on">I have a car
-            </p>
-            <p>
-                <input type="submit" value="Submit me!" />
-            </p>
-        </form>
-    </body>
-</html>
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function() {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Revenue Chart of Acme Corporation"
+	},
+	axisY: {
+		title: "Revenue (in USD)",
+		includeZero: true,
+		prefix: "$",
+		suffix:  "k"
+	},
+	data: [{
+		type: "bar",
+		yValueFormatString: "$#,##0K",
+		indexLabel: "{y}",
+		indexLabelPlacement: "inside",
+		indexLabelFontWeight: "bolder",
+		indexLabelFontColor: "white",
+		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+chart.render();
+ 
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</body>
+</html>              
