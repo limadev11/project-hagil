@@ -4,37 +4,46 @@ include('verificalogin.php');
 include('connect.php');
 
 $id = $_GET['updateid'];
-$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
-        from venda v
-        inner join produto p
-        on p.id = v.idproduto
-        inner join vendedor ve
-        on ve.id = v.idvendedor';
+
+$sql = "SELECT v.id, p.id AS idp, p.nome AS produto, ve.id AS idv, ve.nome AS vendedor,
+        p.precocusto, p.precovenda, v.quantidade, v.datavenda
+        FROM venda v
+        INNER JOIN produto p ON p.id = v.idproduto
+        INNER JOIN vendedor ve ON ve.id = v.idvendedor
+        WHERE v.id = $id";
 
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($result);
+
 $quantidade = $row['quantidade'];
 $datavenda = $row['datavenda'];
 $precocusto = $row['precocusto'];
 $precovenda = $row['precovenda'];
-$idproduto =  $row['idp'];
-$idvendedor =  $row['idv'];
+$idproduto = $row['idp'];
+$idvendedor = $row['idv'];
+
 if (isset($_POST['submit'])) {
     $quantidade = $_POST['quantidade'];
     $datavenda = $_POST['datavenda'];
     $precocusto = str_replace(',', '.', $_POST['precocusto']);
     $precovenda = str_replace(',', '.', $_POST['precovenda']);
-    $idproduto =  $_POST['idproduto'];
-    $idvendedor =  $_POST['idvendedor'];
-    $sql = 'update venda set idproduto = ' .  $idproduto . ', idvendedor=' . $idvendedor . ', quantidade=' . $quantidade . ', datavenda="' . $datavenda . 
-     '", precocusto=' . $precocusto . ', precovenda=' . $precovenda . 
-        ' where id =' . $id;
-    echo $sql;
+    $idproduto = $_POST['idproduto'];
+    $idvendedor = $_POST['idvendedor'];
+
+    $sql = "UPDATE venda 
+            SET idproduto = $idproduto, 
+                idvendedor = $idvendedor, 
+                quantidade = $quantidade, 
+                datavenda = '$datavenda', 
+                precocusto = $precocusto, 
+                precovenda = $precovenda 
+            WHERE id = $id";
+
     $result = mysqli_query($con, $sql);
+
     if ($result) {
         header('location: vendaselect.php');
+        exit;
     } else {
         die(mysqli_error($con));
     }
@@ -42,183 +51,95 @@ if (isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
-    <meta charset="utf-8">
-    <title>Atualizar Produto</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Venda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
 <body>
-
-
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link active">Sair</a>
-            </div>
-        </div>
-    </nav>
-    <!-- Navbar End -->
-
-    <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar da Venda:</h2>
-            </div>
-        </div>
-
-        <div class="container" style="background-color: #556152;">
-            <form method="post">
-                <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                <div class="row" style="background-color: #556152;">
-                    <div class="col-12"> <br><br>
-                        <div class="form-floating" style="width: 400px; margin-left: 400px;">
-                            <h4 style="color: white;">Dados do Produto:</h4>
-                        </div>
+    <!-- Conteúdo principal -->
+    <main>
+        <div class="container-form-post">
+            <div class="text-center mx-auto">
+                <div class="container p-3">
+                    <div class="container text-center py-2">
+                        <h1>Atualizar Venda</h1>
                     </div>
-                    <!-- Nome do Produto -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Nome do Produto:</h5>
-                        </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <?php
-                        $sqll = 'select * from produto order by id';
-                        $result = mysqli_query($con, $sqll);
-                        if ($result) {
-                            echo '<select  name="idproduto" class="form-control">';
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                if ($idproduto == $row['id']) {
-                                    echo '<option value="' . $row['id'] . '" selected>' .
-                                        $row['nome'] . '</option>';
-                                } else {
-                                    echo '<option value="' . $row['id'] . '" >' .
-                                        $row['nome'] . '</option>';
+
+                    <form method="post" class="mt-3">
+                        <h4>Dados da Venda</h4>
+
+                        <!-- Produto -->
+                        <div class="mb-3">
+                            <label for="idproduto">Produto:</label>
+                            <select name="idproduto" class="form-control">
+                                <?php
+                                $sqll = "SELECT * FROM produto ORDER BY nome";
+                                $result = mysqli_query($con, $sqll);
+                                while ($rowProd = mysqli_fetch_assoc($result)) {
+                                    $selected = ($idproduto == $rowProd['id']) ? 'selected' : '';
+                                    echo "<option value='{$rowProd['id']}' $selected>{$rowProd['nome']}</option>";
                                 }
-                            }
-                            echo '</select>';
-                        }
-                        ?>
-                    </div>
-                    <!-- Fim Nome do Produto -->
-                    <!-- Nome do Vendedor -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Vendedor:</h5>
+                                ?>
+                            </select>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <?php
-                        $sqll = 'select * from vendedor order by id';
-                        $result = mysqli_query($con, $sqll);
-                        if ($result) {
-                            echo '<select 
-                                                name="idvendedor" class="form-control">';
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<option value="' . $row['id'] . '">' .
-                                    $row['nome'] . '</option>';
-                            }
-                            echo '</select>';
-                        }
-                        ?>
-                    </div>
-                    <!-- Fim Nome do Vendedor -->
-                    <!-- Quantidade -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Quantidade:</h5>
+
+                        <!-- Vendedor -->
+                        <div class="mb-3">
+                            <label for="idvendedor">Vendedor:</label>
+                            <select name="idvendedor" class="form-control">
+                                <?php
+                                $sqll = "SELECT * FROM vendedor ORDER BY nome";
+                                $result = mysqli_query($con, $sqll);
+                                while ($rowVend = mysqli_fetch_assoc($result)) {
+                                    $selected = ($idvendedor == $rowVend['id']) ? 'selected' : '';
+                                    echo "<option value='{$rowVend['id']}' $selected>{$rowVend['nome']}</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?php echo $quantidade; ?>" required style="width: 350px;">
-                    </div>
-                    <!-- Fim Quantidade -->
-                    <!-- Data de Venda -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Data da venda:</h5>
+
+                        <!-- Quantidade -->
+                        <div class="mb-3">
+                            <label for="quantidade">Quantidade:</label>
+                            <input type="number" name="quantidade" class="form-control" value="<?php echo $quantidade; ?>" required>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="date" class="form-control" name="datavenda" id="datavenda" value="<?php echo $datavenda; ?>" required style="width: 350px;">
-                    </div>
-                    <!-- Preco Custo -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preco Custo:</h5>
+
+                        <!-- Data -->
+                        <div class="mb-3">
+                            <label for="datavenda">Data da Venda:</label>
+                            <input type="date" name="datavenda" class="form-control" value="<?php echo $datavenda; ?>" required>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="number" class="form-control" name="precocusto" id="precocusto" value="<?php echo $precocusto; ?>" required style="width: 350px;">
-                    </div>
-                    <!-- Fim Comissão -->
-                    <!-- Preco Venda -->
-                    <div class="col"> <br><br>
-                        <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preco Venda:</h5>
+
+                        <!-- Preço Custo -->
+                        <div class="mb-3">
+                            <label for="precocusto">Preço Custo:</label>
+                            <input type="number" name="precocusto" class="form-control" step="0.01" value="<?php echo $precocusto; ?>" required>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
-                        <input type="number" class="form-control" name="precovenda" id="precovenda" value="<?php echo $precovenda; ?>" required style="width: 350px;">
-                    </div>
-                    <!-- </div>ROw -->
-                    
-                    <div class="col">
-                        <br>
-                            <?php
-                            echo
-                            "<a href='vendaselect.php'color:white;'>
-                                <button type='button' style='padding: 9px; width: 100px;'
-                                class='btn btn-dark'>Não, Voltar</button></a>";
-                            ?>
-                            <button class="btn btn-secondary rounded-pill py-3 px-5" type="submit" name="submit">Atualizar</button>
-                        <br><br>
-                    </div>
-            </form>
+
+                        <!-- Preço Venda -->
+                        <div class="mb-3">
+                            <label for="precovenda">Preço Venda:</label>
+                            <input type="number" name="precovenda" class="form-control" step="0.01" value="<?php echo $precovenda; ?>" required>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="text-center mt-4">
+                            <a href="vendaselect.php" class="btn btn-voltar">Voltar</a>
+                            <button type="submit" name="submit" class="btn btn-adicionar">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- Page Header End -->
+    </main>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
 </body>
 
 </html>
