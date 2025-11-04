@@ -68,8 +68,14 @@ if (isset($_POST['submit'])) {
         where data between '0000-01-01' and '$pesqdata2'';
         echo $sql;
     }
-    if(!empty($pesqdata1) && !empty($pesqdata2)) {
-        $sql = $sql . " where data between '$pesqdata1' and '$pesqdata2'";
+    else if(!empty($pesqdata1) && !empty($pesqdata2)) {
+        $sql = "select 'Venda' tipo, v.id, c.nome, v.valortotal as valortotal, v.datavenda as data 
+        from venda v 
+        inner join cliente c on c.id = v.idcliente 
+        where v.datavenda between '$pesqdata1' and '$pesqdata2'
+        union all 
+        select 'Despesa' tipo, d.id, t.nome, d.valor as valortotal, d.data as data 
+        from despesa d inner join tipodespesa t on t.id = d.idtipodespesa where data between '$pesqdata1' and '$pesqdata2'";
         echo $sql;
     }
 }
