@@ -3,127 +3,105 @@ session_start();
 include('verificalogin.php');
 include('connect.php');
 
-// Obter o ID do venda a ser excluído
-$id = $_GET['deleteid'];
-$sql = 'select v.id id, p.id idp, p.nome produto, ve.id idv, ve.nome vendedor,
-        p.precocusto, p.precovenda, v.quantidade, v.datavenda,
-        p.precovenda * v.quantidade as valortotal
-        from venda v
-        inner join produto p
-        on p.id = v.idproduto
-        inner join vendedor ve
-        on ve.id = v.idvendedor where v.id = ' .$id;
-$result = mysqli_query($con, $sql);
-$row = mysqli_fetch_assoc($result);
+// Pegar ID com segurança
+$id = $_GET['deleteid'] ?? 0;
 
+// Buscar dados da venda
+$stmt = $con->prepare("SELECT v.id, p.nome AS produto, ve.nome AS vendedor, 
+                              v.quantidade, v.datavenda
+                       FROM venda v
+                       INNER JOIN produto p ON p.id = v.idproduto
+                       INNER JOIN vendedor ve ON ve.id = v.idvendedor
+                       WHERE v.id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+if (!$row) {
+    die("<h3>Venda não encontrada.</h3>");
+}
+
+$produto = $row['produto'];
+$vendedor = $row['vendedor'];
 $quantidade = $row['quantidade'];
 $datavenda = $row['datavenda'];
-$produto =  $row['produto'];
-$vendedor =  $row['vendedor'];
+
+// Deletar registro ao confirmar
 if (isset($_POST['submit'])) {
-    $sql = 'delete from venda where id =' . $id;
-    $result = mysqli_query($con, $sql);
-    if ($result) {
-        header('location: vendaselect.php');
-    } else {
-        die(mysqli_error($con));
-    }
+    $stmt = $con->prepare("DELETE FROM venda WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    header('Location: vendaselect.php');
+    exit;
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deletar Vendas</title>
+    <title>Deletar Venda</title>
+
+    <!-- CSS Bootstrap e fontes -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-        <h1 class="m-0">Superar</h1>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="menu.php" class="nav-item nav-link">Menu</a>
-                <a href="logout.php" class="nav-item nav-link">Sair</a>
+
+    <div class="container-form-post py-5">
+        <div class="text-center mx-auto">
+            <h2 class="text-center mb-4 text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Deletar Venda</h2>
+
+            <div class="alert alert-danger text-center fw-semibold">
+                Atenção! Esta ação é permanente e não poderá ser desfeita.
             </div>
-        </div>
-    </nav>
 
-    <!-- Página de Deletar Vendas-->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container" style="border-radius: 5px;">
-        <div class="container text-center py-5" style="color: black;">
-            <h2 class="text-center">Deletar Vendas</h2>
+            <form method="post">
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
 
-            <div class="container bg-dark p-4 text-white">
-                <form action="" method="post">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-
-                    <div class="row mb-3">
-                        <!-- Nome do Produto -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Nome do Produto:</label>
-                            <input type="text" class="form-control" name="produto" value="<?php echo $produto; ?>" required>
-                        </div>
-                        <!-- Nome do Vendedor -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Vendedor:</label>
-                            <input type="text" class="form-control" name="vendedor" value="<?php echo $vendedor; ?>" required>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-white">Produto:</label>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($produto); ?>" readonly>
                     </div>
-                    
-                    <div class="row mb-3">
-                        <!-- Quantidade -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Quantidade:</label>
-                            <input type="text" class="form-control" name="quantidade" id="quantidade" value="<?php echo $quantidade; ?>" required>
-                        </div>
-                        <!-- Data de Venda -->
-                        <div class="col-md-6">
-                            <label class="form-label" style="color: white;">Data da venda:</label>
-                            <input type="date" class="form-control" name="datavenda" id="datavenda" value="<?php echo $datavenda; ?>" required>
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-white">Vendedor:</label>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($vendedor); ?>" readonly>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary rounded-pill py-3 px-5" onclick="window.location.href='vendaselect.php'">Não, Voltar</button>
-                        <button type="submit" name="submit" class="btn btn-danger rounded-pill py-3 px-5 mt-3">Deletar</button>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-white">Quantidade:</label>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($quantidade); ?>" readonly>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="col-md-6">
+                        <label class="form-label text-white">Data da Venda:</label>
+                        <input type="date" class="form-control" value="<?php echo htmlspecialchars($datavenda); ?>" readonly>
+                    </div>
+                </div>
 
-
-
-                </form>
-            </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-voltar rounded-pill py-2 px-4"
+                        onclick="window.location.href='vendaselect.php'">
+                        <i class="bi bi-arrow-left-circle"></i> Cancelar
+                    </button>
+                    <button type="submit" name="submit" class="btn btn-danger rounded-pill py-2 px-4">
+                        <i class="bi bi-trash"></i> Deletar Venda
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
