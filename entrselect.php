@@ -32,14 +32,11 @@ if (isset($_POST['submit'])) {
         $sql .= " AND e.quantidade = '$pesqquant'";
     }
     if (!empty($pesqdata)) {
-        // Converter dd/mm/yyyy para yyyy-mm-dd
-        $partes = explode("/", $pesqdata);
-        if (count($partes) == 3) {
-            $dataFormatada = $partes[2] . "-" . $partes[1] . "-" . $partes[0];
-            $sql .= " AND e.dataentrada = '$dataFormatada'";
-        }
+        // O input type="date" já envia no formato yyyy-mm-dd
+        $sql .= " AND e.dataentrada = '$pesqdata'";
     }
 }
+
 
 $sql .= " ORDER BY p.nome ASC";
 $result = mysqli_query($con, $sql);
@@ -109,7 +106,7 @@ $result = mysqli_query($con, $sql);
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <h5 style="margin-top:5px; color:white;">Data:</h5>
-                                        <input type="text" name="pesqdata" placeholder="dd/mm/aaaa" style="height:30px; margin-top:5px" maxlength="10" value="<?php echo $pesqdata; ?>">
+                                        <input type="date" name="pesqdata" placeholder="dd/mm/aaaa" style="height:30px; margin-top:5px" maxlength="10" value="<?php echo $pesqdata; ?>">
                                     </div>
                                 </div>
                             </div>

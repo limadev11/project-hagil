@@ -7,8 +7,7 @@ include('connect.php');
 $sql = 'SELECT d.id, td.nome, d.data, d.valor, d.observacao 
         FROM despesa d
         INNER JOIN tipodespesa td ON td.id = d.idtipodespesa
-        WHERE 1=1';
-
+        '; 
 // Variáveis de pesquisa
 $pesqnome = '';
 $pesqvalor = '';
@@ -27,14 +26,12 @@ if (isset($_POST['submit'])) {
         $sql .= " AND d.valor = '$pesqvalor'";
     }
     if (!empty($pesqdata)) {
-        // Formata data no padrão do banco (YYYY-MM-DD)
-        $partes = explode("/", $pesqdata);
-        if (count($partes) == 3) {
-            $dataFormatada = $partes[2] . "-" . $partes[1] . "-" . $partes[0];
-            $sql .= " AND d.data = '$dataFormatada'";
-        }
-        echo $sql;
+        
+        
+            $sql .= " AND d.data = '$pesqdata'";
+       
     }
+    
 }
 
 $sql .= " ORDER BY td.nome ASC";
