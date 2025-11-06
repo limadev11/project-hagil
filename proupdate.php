@@ -84,85 +84,84 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
     <!-- Page Header Start -->
-    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container" style="background-color: #404A3D; width: 2000px; height: 100px; border-radius: 5px;">
-            <div class="container text-center py-5" style="height: 100px; color: black;">
-                <h2 style="color: rgb(255, 255, 255); font-size: 2.5rem;">Atualizar Produto:</h2>
+    <div class="container-form-post py-5" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="text-center mx-auto">
+                <h2>Atualizar Produto:</h2>
             </div>
         </div>
-        <div class="container" style="background-color: #556152;">
+        <div class="container" >
             <form method="post">
                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-                <div class="row" style="background-color: #556152;">
-                    <div class="col-12"> <br><br>
+                <div class="row">
+                    <div class="col-12"> 
                         <div class="form-floating" style="width: 400px; margin-left: 300p;">
-                            <h4 style="color: white;">Dados do Produto:</h4>
+                            <h4>Dados do Produto:</h4>
                         </div>
                     </div>
                     <!-- Nome do Produto -->
-                    <div class="col"> <br><br>
+                    <div class="col">
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Nome do Produto:</h5>
+                            <h5>Nome do Produto:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;"> 
                         <input type="text" class="form-control" name="nome" id="nome" value="<?php echo $nome; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Nome do Produto -->
                     <!-- Preço -->
-                    <div class="col"> <br><br>
+                    <div class="col"> 
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preço:</h5>
+                            <h5>Preço:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;"> 
                         <input type="text" class="form-control" name="preco" id="preco" value="<?php echo $preco; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Preço -->
                     <!-- Valor da Comissão -->
-                    <div class="col"> <br><br>
+                    <div class="col"> 
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Valor da Comissão:</h5>
+                            <h5>Valor da Comissão:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;"> 
                         <input type="text" class="form-control" name="comissao" id="comissao" value="<?php echo $comissao; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Valor da Comissão -->
                     <!-- Caixa -->
-                    <div class="col"> <br><br>
+                    <div class="col"> 
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Caixa:</h5>
+                            <h5>Caixa:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;"> 
                         <input type="text" class="form-control" name="estoque" id="estoque" value="<?php echo $estoque; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Caixa -->
                     <!-- Preço custo -->
-                    <div class="col"> <br><br>
+                    <div class="col">
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preço de Custo:</h5>
+                            <h5>Preço de Custo:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;"> 
                         <input type="text" class="form-control" name="precocusto" id="precocusto" value="<?php echo $precocusto; ?>" required style="width: 350px;">
                     </div>
                     <!-- Fim Preço Custo -->
                     <!-- Preço Venda -->
-                    <div class="col"> <br><br>
+                    <div class="col"> 
                         <div class="form-floating" style="width: 400px;">
-                            <h5 style="color: white;">Preço de Venda:</h5>
+                            <h5>Preço de Venda:</h5>
                         </div>
                     </div>
-                    <div class="col" style="margin-right: 520px;"> <br><br>
+                    <div class="col" style="margin-right: 520px;">
                         <input type="text" class="form-control" name="precovenda" id="precovenda" value="<?php echo $precovenda; ?>" required style="width: 350px;">
                     </div>
 
                     <!-- Fim Preço de Venda -->
                 </div>
-                <br><br>
-                <div class="row" style="background-color: #556152;">
+                <div class="row">
                     <div class="col">
                         <?php
                         echo
@@ -176,6 +175,7 @@ if (isset($_POST['submit'])) {
                 <br>
             </form>
         </div>
+    </div>
     </div>
     <!-- Page Header End -->
 

@@ -16,3 +16,4 @@ select sum(d.valor) total
    where d.data between "2025-05-01" and "2025-08-05"
 
 
+

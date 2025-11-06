@@ -80,94 +80,102 @@ $result = mysqli_query($con, $sql);
 
 <body>
     <!-- Navbar Start -->
-    <center>
-        <div class="row">
-            <nav class="navbar navbar-expand-lg  navbar-light sticky-top px-4 px-lg-5">
-                <div class="col">
-                    <h1 class="m-0">Superar</h1>
-                </div>
-                <div class="col">
-                    <form method="post" action="" style="width: 1050px; padding: 5px; display: flex; align-items: flex-start; gap: 15px; 
-                    background-color: #556152; border-radius: 10px;">
-                        <div style="flex: 1;">
-                            <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
-                            <!-- Aqui são todos os campos que o cliente irá preencher para fazer a pesquisa e filtrar os resultados -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <h5 style="margin-top:5px">Nome:</h5>
-                                        <input type="text" name="pesqnome" placeholder="Nome..."
-                                            style="height:30px; margin-top:5px" maxlength="37"
-                                            value="<?php echo $pesqnome; ?>">
-                                    </div>
-                                </div>
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top px-4 px-lg-5">
+            <!-- Coluna com o título -->
+            <div class="col">
+                <h1 class="m-0">Superar</h1>
+            </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <h5>Preço Venda:</h5>
-                                        <input type="text" name="pesqpv" placeholder="Nome..." style="height:30px;"
-                                            maxlength="37" value="<?php echo $pesqpv; ?>">
-                                    </div>
+            <!-- Coluna central com o formulário -->
+            <div class="col">
+                <form method="post" action=""
+                    style="width: 1050px; padding: 10px; display: flex; align-items: flex-start; gap: 15px;
+                       background-color: #556152; border-radius: 10px; color: #fff;">
+
+                    <!-- Campos de pesquisa -->
+                    <div style="flex: 1;">
+                        <div class="row">
+                            <!-- Nome -->
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5 style="margin-top:5px;">Nome:</h5>
+                                    <input type="text" name="pesqnome" placeholder="Nome..."
+                                        style="height:30px; margin-top:5px; width:100%; border:none; border-radius:5px; padding-left:5px;"
+                                        maxlength="37" value="<?php echo $pesqnome; ?>">
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <h5>Preço Custo:</h5>
-                                        <input type="text" name="pesqpc" placeholder="Nome..." style="height:30px"
-                                            maxlength="37" value="<?php echo $pesqpc; ?>">
-                                    </div>
+                            <!-- Preço Venda -->
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5 style="margin-top:5px;">Preço Venda:</h5>
+                                    <input type="text" name="pesqpv" placeholder="Preço de Venda..."
+                                        style="height:30px; margin-top:5px; width:100%; border:none; border-radius:5px; padding-left:5px;"
+                                        maxlength="37" value="<?php echo $pesqpv; ?>">
                                 </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-row">
-                                            <h5>Valor Comissão:</h5>
-                                            <input type="text" name="pesqcm" placeholder="Nome..." style="height:30px"
-                                                maxlength="37" value="<?php echo $pesqcm; ?>">
-                                        </div>
-
-                                    </div>
-                                </div>
-
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <h5>Estoque:</h5>
-                                        <input type="text" name="pesqcx" placeholder="Nome..." style="height:30px"
-                                            maxlength="37" value="<?php echo $pesqcx; ?>">
-                                    </div>
-                        
-
-
                         </div>
 
-                        <!-- Aqui fica os 3 botões principais: Pesquisar (de acordo com os valores nos campos), Limpar os valores inseridos e 
-            entrar na área de incluir nova venda -->
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <button class="btn btn-secondary rounded-pill py-2 px-3" type="submit"
-                                name="submit">Pesquisar</button>
-                            <a href="proselect.php" class="btn btn-secondary rounded-pill py-2 px-3">Limpar</a>
-                            <a href="proinsert.php" class="btn btn-secondary rounded-pill py-2 px-3">Incluir</a>
+                        <div class="row mt-3">
+                            <!-- Preço Custo -->
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Preço Custo:</h5>
+                                    <input type="text" name="pesqpc" placeholder="Preço de Custo..."
+                                        style="height:30px; width:100%; border:none; border-radius:5px; padding-left:5px;"
+                                        maxlength="37" value="<?php echo $pesqpc; ?>">
+                                </div>
+                            </div>
+
+                            <!-- Valor Comissão -->
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Valor Comissão:</h5>
+                                    <input type="text" name="pesqcm" placeholder="Comissão..."
+                                        style="height:30px; width:100%; border:none; border-radius:5px; padding-left:5px;"
+                                        maxlength="37" value="<?php echo $pesqcm; ?>">
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
 
-
-                <div class="col">
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav ms-auto p-4 p-lg-0">
-                            <a href="menu.php" class="nav-item nav-link">Menu</a>
-                            <a href="logout.php" class="nav-item nav-link active">Sair</a>
+                        <div class="row mt-3">
+                            <!-- Estoque -->
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <h5>Estoque:</h5>
+                                    <input type="text" name="pesqcx" placeholder="Estoque..."
+                                        style="height:30px; width:100%; border:none; border-radius:5px; padding-left:5px;"
+                                        maxlength="37" value="<?php echo $pesqcx; ?>">
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Botões -->
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-secondary rounded-pill py-2 px-3 fw-bold" type="submit" name="submit">
+                            Pesquisar
+                        </button>
+                        <a href="proselect.php" class="btn btn-secondary rounded-pill py-2 px-3 fw-bold">Limpar</a>
+                        <a href="proinsert.php" class="btn btn-secondary rounded-pill py-2 px-3 fw-bold">Incluir</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Coluna com menu -->
+            <div class="col">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto p-4 p-lg-0">
+                        <a href="menu.php" class="nav-item nav-link">Menu</a>
+                        <a href="logout.php" class="nav-item nav-link active">Sair</a>
+                    </div>
                 </div>
-            </nav>
-        </div>
-    </center>
+            </div>
+        </nav>
+    </div>
     <!-- Navbar End -->
+
 
     <!-- Page Header Start -->
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s">
@@ -245,8 +253,8 @@ $result = mysqli_query($con, $sql);
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#search').keyup(function () {
+        $(document).ready(function() {
+            $('#search').keyup(function() {
                 let query = $(this).val();
                 if (query.length > 0) {
                     $.ajax({
@@ -255,7 +263,7 @@ $result = mysqli_query($con, $sql);
                         data: {
                             query: query
                         },
-                        success: function (data) {
+                        success: function(data) {
                             $('#suggestions').fadeIn().html(data);
                         }
                     });
@@ -265,7 +273,7 @@ $result = mysqli_query($con, $sql);
             });
 
             // Preencher input ao clicar na sugestão
-            $(document).on('click', '#suggestions div', function () {
+            $(document).on('click', '#suggestions div', function() {
                 $('#search').val($(this).text());
                 $('#suggestions').fadeOut();
             });
